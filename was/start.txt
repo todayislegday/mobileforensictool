@@ -1,0 +1,6 @@
+[------cmd-----]
+cd Storage/was/env/Scripts
+activate // 가상환경 구동
+
+cd ../..
+python manage.py runserver
