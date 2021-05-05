@@ -1,7 +1,0 @@
-[------cmd-----]
-virtualenv env // 가상환경 생성, 없을 경우 pip install 필요
-cd Storage/was/env/Scripts
-activate // 가상환경 구동
-
-cd ../..
-python manage.py runserver
