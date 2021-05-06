@@ -9,20 +9,24 @@ from PyQt5 import QtCore
 class QtGUI(QWidget):
  	
 	filepath=''#인스턴스 변수로 등록하여 상태공유
-
-
+	outputpath=''
 	def file_select(self): #파일 선택
 		FileOpen = QFileDialog.getOpenFileName(self, 'Open file', './',"datafile(*.dd *.tar )")#해당 확장자만 파일만 고를수 있도록
-		print(FileOpen)
 		if(FileOpen[0]!=''):
-			self.label1.setText(FileOpen[0])
+			self.label1.setText(f"입력:{FileOpen[0]}")
 			self.filepath=FileOpen[0]
-		
+
+	def out_select(self): #출력 경로 선택
+		folder = QFileDialog.getExistingDirectory(self,'select Dir')
+		if(folder!=''):
+			self.label2.setText(f"출력:{folder}")
+			self.outputpath=folder
+
 	def closeEvent(self,event): # 닫기
 		event.accept() #closeEvent.accept()->event.accept() 변경
     
 	def ok(self):
-		if self.filepath!='':#파일 경로를 지정하였다면 시스템 명령으로 대시보드를 띄운다.
+		if self.filepath!='' and self.outputpath!='':#파일 경로를 지정하였다면 시스템 명령으로 대시보드를 띄운다.
 			try:
 				self.label1.setText("127.0.0.1:8000 으로 접속중입니다...기달려 주세요")
 				self.label1.repaint()  #객체의 label1을 다시 repaint 해준다.
@@ -46,22 +50,27 @@ class QtGUI(QWidget):
 		super().__init__()
 		self.filepath=''
 		self.setWindowTitle("Timmy Room") # 타이틀 바
-		self.resize(600, 50) # 창 사이즈
+		self.resize(600,50) # 창 사이즈
 		#그리드 생성
 		self.Lgrid = QGridLayout()
 		self.setLayout(self.Lgrid)
 		#버튼 생성
 		self.label1 = QLabel('분석할 모바일의 .dd 파일을 선택해 주세요')
-		selectbtn = QPushButton('Select File')
+		self.label2 = QLabel()
+		selectbtn = QPushButton('파일 선택')
+		outtbtn = QPushButton('해제 경로')
 		okbtn = QPushButton('OK')
 		closebtn = QPushButton('Cancel')
 		#버튼 위치
 		self.Lgrid.addWidget(self.label1,0, 0, 1, 5)
+		self.Lgrid.addWidget(self.label2,1, 0, 1, 5)
 		self.Lgrid.addWidget(selectbtn,0, 5)
-		self.Lgrid.addWidget(okbtn,1, 0, 1, 3)
-		self.Lgrid.addWidget(closebtn,1, 3, 1, 3)
+		self.Lgrid.addWidget(outtbtn,0, 6)
+		self.Lgrid.addWidget(okbtn,2, 0, 1, 3)
+		self.Lgrid.addWidget(closebtn,2, 3, 1, 3)
 		#버튼 이벤트 처리
 		selectbtn.clicked.connect(self.file_select) # 파일 선택
+		outtbtn.clicked.connect(self.out_select) #출력 디렉터리 선택
 		okbtn.clicked.connect(self.ok) # ok 버튼 클릭 시
 		closebtn.clicked.connect(QCoreApplication.instance().quit) # Cancel 버튼 클릭 시
 
