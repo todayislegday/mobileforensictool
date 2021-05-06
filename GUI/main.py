@@ -22,7 +22,7 @@ class QtGUI(QWidget):
 
 
 	def file_select(self): #파일 선택
-		FileOpen = QFileDialog.getOpenFileName(self, 'Open file', './',"datafile(*.dd *.tar *.*)")#해당 확장자만 파일만 고를수 있도록
+		FileOpen = QFileDialog.getOpenFileName(self, 'Open file', './',"datafile(*.dd *.tar )")#해당 확장자만 파일만 고를수 있도록
 		print(FileOpen)
 		if(FileOpen[0]!=''):
 			self.label1.setText(FileOpen[0])
