@@ -1,19 +1,9 @@
 import sys,os
 import subprocess #서브 프로세스
 import webbrowser #웹브라우저
-import asyncio #비동기
-import requests #웹 서버에 요청 하는 모듈 
-from multiprocessing import Process#멀티 프로세싱
 from PyQt5.QtCore import QCoreApplication, QEvent
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QGridLayout, QFileDialog, QLabel
 from PyQt5 import QtCore
-
-
-
-
-
-def sub():
-    subprocess.run('cd ../was/&&python manage.py runserver',shell=True, text=True,timeout=7)
 
 
 class QtGUI(QWidget):
@@ -36,7 +26,7 @@ class QtGUI(QWidget):
 			try:
 				self.label1.setText("127.0.0.1:8000 으로 접속중입니다...기달려 주세요")
 				self.label1.repaint()  #객체의 label1을 다시 repaint 해준다.
-				subprocess.run('cd ../was/&&python manage.py runserver',shell=True, text=True,timeout=0.5)
+				subprocess.run('cd ../was/&&python manage.py runserver',shell=True,timeout=0.5)
 			except Exception as e:
 				webbrowser.open("http://127.0.0.1:8000",1)#해당 url을 새 창으로 연다.
 				sys.exit()
