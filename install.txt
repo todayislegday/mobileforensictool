@@ -1,0 +1,5 @@
+[설치]
+pip install django
+
+[먼저 실행해야하는 파일]
+GUI/main.py
