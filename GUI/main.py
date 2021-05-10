@@ -1,10 +1,12 @@
+
+# 분석할 이미징 파일을 선택하는 창
+
 import sys,os
 import subprocess #서브 프로세스
 import webbrowser #웹브라우저
 from PyQt5.QtCore import QCoreApplication, QEvent
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QGridLayout, QFileDialog, QLabel
 from PyQt5 import QtCore
-
 
 class QtGUI(QWidget):
  	
@@ -28,9 +30,15 @@ class QtGUI(QWidget):
 	def ok(self):
 		if self.filepath!='' and self.outputpath!='':#파일 경로를 지정하였다면 시스템 명령으로 대시보드를 띄운다.
 			try:
+				f=open("../경로.txt",'w')
+				data = f"{self.filepath}\n{self.outputpath}"  #파일 경로를 기록한다. 추후에 was에서 읽음
+				f.write(data)
+				f.close()
 				self.label1.setText("127.0.0.1:8000 으로 접속중입니다...기달려 주세요")
+				self.label2.clear()
+				self.label2.repaint()
 				self.label1.repaint()  #객체의 label1을 다시 repaint 해준다.
-				subprocess.run('cd ../was/&&python manage.py runserver',shell=True,timeout=0.5)
+				subprocess.run('cd ../was/&&python manage.py runserver',shell=True,timeout=2)
 			except Exception as e:
 				webbrowser.open("http://127.0.0.1:8000",1)#해당 url을 새 창으로 연다.
 				sys.exit()
@@ -65,7 +73,7 @@ class QtGUI(QWidget):
 		self.Lgrid.addWidget(self.label1,0, 0, 1, 5)
 		self.Lgrid.addWidget(self.label2,1, 0, 1, 5)
 		self.Lgrid.addWidget(selectbtn,0, 5)
-		self.Lgrid.addWidget(outtbtn,0, 6)
+		self.Lgrid.addWidget(outtbtn,1, 5)
 		self.Lgrid.addWidget(okbtn,2, 0, 1, 3)
 		self.Lgrid.addWidget(closebtn,2, 3, 1, 3)
 		#버튼 이벤트 처리
