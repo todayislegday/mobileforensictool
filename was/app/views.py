@@ -6,7 +6,7 @@ from django.http import HttpResponse
 
 # Create your views here.
 def index(request):
-    return render(request,'DashBoard.html')
+    return render(request,'main.html')
 
 def pages(request):
     context = {}
@@ -14,9 +14,9 @@ def pages(request):
     # Pick out the html file name from the url. And load that template.
     try:
         
-        load_template      = request.path.split('/')[-1]
-        context['segment'] = load_template
-        
+        load_template      = request.path.split('/')[-1]  #경로명에서 /를 빼고 뒤에 파일명 .html(랜더)띄워준다.
+        context['segment'] = load_template                #랜더링 하는 이유는 html문안에 변수나 반복문이 사용가능해요
+                                                          #불편하면 자바스크립트+html문서로 작성 하셔도 됩니다.
         html_template = loader.get_template( load_template )
         return HttpResponse(html_template.render(context, request))
         

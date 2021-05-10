@@ -12,3 +12,6 @@ def decompression(file_path, output_path):
         tar.extractall(members=target_name, path=output_path)
 
     tar.close()
+
+
+

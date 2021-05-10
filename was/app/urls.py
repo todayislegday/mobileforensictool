@@ -1,7 +1,7 @@
 #url 리졸버
 
 from django.urls import path,re_path
-from app import views
+from . import views
 
 urlpatterns = [
     #대시보드 페이지

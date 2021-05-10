@@ -4,9 +4,12 @@
 import sys,os
 import subprocess #서브 프로세스
 import webbrowser #웹브라우저
+sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))#상위 경로 함수 사용하기 위해서
+from function import read_tar
 from PyQt5.QtCore import QCoreApplication, QEvent
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QGridLayout, QFileDialog, QLabel
 from PyQt5 import QtCore
+from PyQt5.QtGui import QIcon
 
 class QtGUI(QWidget):
  	
@@ -38,8 +41,11 @@ class QtGUI(QWidget):
 				self.label2.clear()
 				self.label2.repaint()
 				self.label1.repaint()  #객체의 label1을 다시 repaint 해준다.
+				read_tar.decompression(self.filepath,self.outputpath)
+
 				subprocess.run('cd ../was/&&python manage.py runserver',shell=True,timeout=2)
 			except Exception as e:
+				print(e)
 				webbrowser.open("http://127.0.0.1:8000",1)#해당 url을 새 창으로 연다.
 				sys.exit()
 			
@@ -58,6 +64,7 @@ class QtGUI(QWidget):
 		super().__init__()
 		self.filepath=''
 		self.setWindowTitle("Timmy Room") # 타이틀 바
+		self.setWindowIcon(QIcon('icon.png'))
 		self.resize(600,50) # 창 사이즈
 		#그리드 생성
 		self.Lgrid = QGridLayout()
