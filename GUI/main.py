@@ -37,6 +37,7 @@ class QtGUI(QWidget):
 				data = f"{self.filepath}\n{self.outputpath}"  #파일 경로를 기록한다. 추후에 was에서 읽음
 				f.write(data)
 				f.close()
+				
 				self.label1.setText("127.0.0.1:8000 으로 접속중입니다...기달려 주세요")
 				self.label2.clear()
 				self.label2.repaint()

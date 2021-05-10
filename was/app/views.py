@@ -4,28 +4,25 @@ from django.template import loader
 from django.http import HttpResponse
 
 
-# Create your views here.
+# 루트 디렉터리로 처음 띄울 페이지 지정
 def index(request):
     return render(request,'main.html')
 
 def pages(request):
-    context = {}
-    # All resource paths end in .html.
-    # Pick out the html file name from the url. And load that template.
+    context = {}#렌더링된 html페이지에 사용할 변수를 넣는다.
+                # All resource paths end in .html.
+                # Pick out the html file name from the url. And load that template.
     try:
-        
         load_template      = request.path.split('/')[-1]  #경로명에서 /를 빼고 뒤에 파일명 .html(랜더)띄워준다.
-        context['segment'] = load_template                #랜더링 하는 이유는 html문안에 변수나 반복문이 사용가능해요
-                                                          #불편하면 자바스크립트+html문서로 작성 하셔도 됩니다.
-        html_template = loader.get_template( load_template )
-        return HttpResponse(html_template.render(context, request))
-        
+        context['url'] = load_template                    #랜더링 하는 이유는 html문안에 변수나 반복문이 사용가능해요
+                                                          #db에서 내용을 가져오면 context dict자료형에 넣어서 사용하세요:)
+        return render(request,context['url'],context)
+    
     except template.TemplateDoesNotExist:
 
-        html_template = loader.get_template( 'page-404.html' )
-        return HttpResponse(html_template.render(context, request))
+        return render(request,'page-404.html',context)
 
     except:
-    
-        html_template = loader.get_template( 'page-500.html' )
-        return HttpResponse(html_template.render(context, request))
+        
+        return render(request,'page-500.html',context)
+       
