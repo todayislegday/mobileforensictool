@@ -42,7 +42,7 @@ class QtGUI(QWidget):
 				self.label2.clear()
 				self.label2.repaint()
 				self.label1.repaint()  #객체의 label1을 다시 repaint 해준다.
-				read_tar.decompression(self.filepath,self.outputpath)
+				#read_tar.decompression(self.filepath,self.outputpath)
 
 				subprocess.run('cd ../was/&&python manage.py runserver',shell=True,timeout=2)
 			except Exception as e:

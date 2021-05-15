@@ -22,6 +22,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'app.apps.AppConfig',#모델을 앱에서 사용하기 위해서
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -64,10 +65,26 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+DATABASE_ROUTERS = [ #여러 db를 중계
+    'config.dbrouter.MultiDBRouter', 
+]
+
+f = open("../../경로.txt", 'r')
+OUTPATH=f.readlines()[1]
+f.close()
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': f'{BASE_DIR}/db.sqlite3',
+    },
+    'message': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME':f'{OUTPATH}/data/com.samsung.android.messaging/databases/message_content.db',
+    },
+    'map': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME':f'{OUTPATH}/data/com.samsung.cmh/databases/cmh.db',
     }
 }
 
