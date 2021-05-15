@@ -30,7 +30,7 @@ class map_model(models.Model):
         app_label = "map" 
         db_table = 'location'
     
-    loc_p_id = models.AutoField(primary_key=True)
-    latitude=models.FloatField()
-    longitude=models.FloatField()
+    id= models.AutoField(db_column='loc_p_id',primary_key=True)
+    lat=models.FloatField(db_column='latitude')
+    longt=models.FloatField(db_column='longitude')
 

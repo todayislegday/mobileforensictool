@@ -2,7 +2,7 @@ import tarfile
 ### tar파일에서 원하는 폴더 내용 긁어오기.
 ### file_path는 tar경로, output_path는 외부로 db파일
 
-target_folder = ['./data/com.samsung.android.providers.contacts/databases/']
+target_folder = ['./data/com.samsung.cmh/databases/']
 
 def decompression(file_path, output_path):
 
