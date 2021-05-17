@@ -1,0 +1,182 @@
+<?xml version='1.0' encoding='utf-8' standalone='yes' ?>
+<map>
+    <string name="pref_global_config_WebFeatureConfig_data_geolocation_allowed_url_list">http://m.amap.com,http://mo.amap.com,http://map.baidu.com,http://m.51job.com,http://m.ctrip.com,http://m.mtime.cn,http://map.sogou.com,http://fuwu.wap.sogou.com</string>
+    <int name="pref_global_config_NavigationPage_data_pageIndexNumber" value="-1" />
+    <boolean name="pref_global_config_ContentsPush2_data_use_user_profile" value="true" />
+    <string name="pref_global_config_AntiTracking_data_referrer-whitelist-file">https://config-api.internet.apps.samsung.com/features/29/extra/referrer_whitelist_01.json</string>
+    <long name="pref_global_config_CardCapture_version" value="1607069942000" />
+    <boolean name="pref_global_config_TrackingBlocker_support" value="false" />
+    <string name="pref_global_config_PersonalData_data_contactUrl">http://www.samsung.com</string>
+    <boolean name="pref_global_config_NavigationPage_support" value="false" />
+    <string name="pref_global_config_WebApk_data_dev_api_url">http://webapk-api-dev.internet.apps.samsung.com</string>
+    <long name="pref_global_config_WebFeatureConfig_version" value="1615791527000" />
+    <string name="pref_global_config_PublicThings_etag_webContentsProvider">&quot;ac26fa37c6dc3c7e385f4685566ebc80&quot;</string>
+    <int name="pref_global_config_SmartProtect_data_blockUnwantedWebpagesAllowlistMinorVersion" value="11" />
+    <string name="pref_global_config_CommonLogging_data_projectName">default</string>
+    <boolean name="pref_global_config_CommonLogging_support" value="false" />
+    <boolean name="pref_global_config_HelpIntro_support" value="true" />
+    <long name="pref_global_config_SmartProtect_version" value="1618547539000" />
+    <string name="pref_global_config_HelpIntro_data_helpIntroVersionPp">4.2.2</string>
+    <boolean name="pref_global_config_PublicThings_support" value="true" />
+    <string name="pref_global_config_NavigationPage_data_siteResourceUrl"> </string>
+    <long name="pref_global_config_DirectSearch_version" value="1539572279000" />
+    <int name="pref_global_config_ContentClip_data_refreshCycleTimeHours" value="0" />
+    <string name="pref_global_config_CIDFeatureConfig_data_cidRules">https://config-api.internet.apps.samsung.com/features/46/extra/cid_rules.json</string>
+    <int name="pref_global_config_SetAsDefaultBrowser_data_maxPopupCountHotseat" value="2" />
+    <int name="pref_global_config_SetAsDefaultBrowser_data_durationDaysHotseat" value="30" />
+    <int name="pref_global_config_SetAsDefaultBrowser_data_coolingTimeDaysNoneHotseat" value="-1" />
+    <int name="pref_global_config_SmartProtect_data_blockUnwantedWebpagesAllowlistMajorVersion" value="0" />
+    <boolean name="pref_global_config_GoogleNewTab_support" value="true" />
+    <string name="pref_global_config_ContentClip_data_clipItemsEndPoint"></string>
+    <string name="pref_global_config_NavigationPage_data_configHashUrl"></string>
+    <string name="pref_global_config_AntiTracking_data_blacklist-file">https://config-api.internet.apps.samsung.com/features/29/extra/blacklist_01.json</string>
+    <string name="pref_global_config_Rewards_data_webSsoLink">https://us.account.samsung.com/accounts/v1/SA/makeWebSSOGate?clientId=4oe3617251&amp;redirect_uri=https://www.samsungrewards.com/rewards/hwssoV3PartnerSignIn&amp;auth_server_url=us-auth2.samsungosp.com</string>
+    <int name="pref_global_config_AntiTracking_data_metadata-version" value="2" />
+    <string name="pref_global_config_TrendingKeyword_data_searchEngineURL">http://m5.baidu.com/s?from=124n&amp;word=</string>
+    <string name="pref_global_config_Rewards_data_tncSrsUrl">http://www.samsung.com/us/samsung-pay/rewards/terms-and-conditions</string>
+    <long name="pref_global_config_ContentClip_version" value="1516952742000" />
+    <string name="pref_global_config_TrendingKeyword_data_requestCP">baidu</string>
+    <string name="pref_global_config_WebApk_data_prd_cdn_url">https://webapk-cdn.internet.apps.samsung.com</string>
+    <boolean name="pref_global_config_WebFeatureConfig_data_wcg_enabled" value="true" />
+    <long name="pref_global_config_ProtectedBrowsing_version" value="1521693120000" />
+    <string name="pref_global_config_TrackingBlocker_data_initConfig">https://config-api.internet.apps.samsung.com/features/18/extra/tracking_blocker_config.json</string>
+    <boolean name="pref_global_config_QuickAccess_support" value="true" />
+    <boolean name="pref_global_config_AntiTracking_support" value="true" />
+    <boolean name="pref_global_config_ContentsPush2_data_need_tnc_agreement" value="true" />
+    <string name="pref_global_config_Rewards_data_payDeepLink">https://smsng.us/browser</string>
+    <string name="pref_global_config_BFCache_data_BFCacheBlockedFeatures">https://config-api.internet.apps.samsung.com/features/47/extra/BFCacheBlockedFeatures.json</string>
+    <boolean name="pref_global_config_SamsungAccountConfig_support" value="true" />
+    <boolean name="pref_global_config_SmartProtect_data_enableSuspiciousRedirection" value="true" />
+    <long name="pref_global_config_SetAsDefaultBrowser_version" value="1610332460000" />
+    <long name="pref_global_config_AXWhiteList_version" value="1604648765000" />
+    <long name="pref_global_config_GlobalConfigUpdateFeature_version" value="1519365861000" />
+    <int name="pref_global_config_NavigationPage_data_refreshCycleTimeDays" value="0" />
+    <long name="pref_global_config__updated_timestamp_millis" value="1619537026441" />
+    <long name="pref_global_config_PersonalData_version" value="1519093200000" />
+    <string name="pref_global_config_SmartProtect_data_smartProtectAllowlist">https://config-api.internet.apps.samsung.com/features/43/extra/smart-protect-allowlist.json</string>
+    <int name="pref_global_config_SetAsDefaultBrowser_data_maxPopupCountNoneHotseat" value="2" />
+    <string name="pref_global_config__updated_device_model">SM-G885S</string>
+    <int name="pref_global_config_AntiTracking_data_activation-threshold" value="30" />
+    <string name="pref_global_config_PublicThings_data_license">https://www.internet.apps.samsung.com/license/index.html</string>
+    <long name="pref_global_config_UnifiedHomePage_version" value="1585124872000" />
+    <long name="pref_global_config_GoogleNewTab_version" value="1547189957000" />
+    <int name="pref_global_config_UserCenter_data_dailyTaskMaxCount" value="10" />
+    <long name="pref_global_config_WebApk_version" value="1610093499000" />
+    <long name="pref_global_config__last_success_timestamp_millis" value="1619537026441" />
+    <string name="pref_global_config__updated_device_manufacturer">samsung</string>
+    <string name="pref_global_config_UserCenter_data_userCenterURL">https://usercenter.internet.apps.samsung.com/#/user</string>
+    <string name="pref_global_config_SIX_data_sixSuggestedlistData">https://config-api.internet.apps.samsung.com/features/38/extra/SuggestedListData_glo_2_trans.json</string>
+    <string name="pref_global_config_WebApk_data_prd_api_url">https://webapk-api.internet.apps.samsung.com</string>
+    <string name="pref_global_config_SIX_data_sixBlacklistData">https://config-api.internet.apps.samsung.com/features/38/extra/BlacklistData.json</string>
+    <int name="pref_global_config_WebApk_data_shell_apk_version" value="4" />
+    <boolean name="pref_global_config_ContentsPush2_support" value="false" />
+    <string name="pref_global_config_SIX_etag_sixSuggestedlistData">&quot;feecd9b31cd79c6de05cce16195e9404&quot;</string>
+    <string name="pref_global_config_DirectSearch_data_SEARCH_URL"> https://zhujiahua.html5.qq.com/samsung_s</string>
+    <long name="pref_global_config_PersonalizedPromotion_version" value="1566300474000" />
+    <boolean name="pref_global_config_DirectSearch_support" value="false" />
+    <long name="pref_global_config_PwaDiscovery_version" value="1543231785000" />
+    <int name="pref_global_config_SmartProtect_data_suspiciousRedirectionRedirectionBoundary" value="10" />
+    <long name="pref_global_config_CIDFeatureConfig_version" value="1609218633000" />
+    <string name="pref_global_config_PersonalData_data_privacyPolicyUrl">https://account.samsung.com/membership/pp</string>
+    <long name="pref_global_config_SIX_version" value="1614826238000" />
+    <string name="pref_global_config_DirectSearch_data_DOWNLOAD_URL">http://zhujiahua.sparta.html5.qq.com/samsung_d</string>
+    <long name="pref_global_config_UserCenter_version" value="1599565200000" />
+    <string name="pref_global_config_PublicThings_data_privacyPolicy">https://www.internet.apps.samsung.com/pt/index.html?type=pp</string>
+    <long name="pref_global_config_BFCache_version" value="1619414541000" />
+    <boolean name="pref_global_config_Rewards_support" value="false" />
+    <int name="pref_global_config_PersonalizedPromotion_data_initThreshold" value="0" />
+    <string name="pref_global_config_BFCache_data_BFCacheBlockedUrl">https://config-api.internet.apps.samsung.com/features/47/extra/BFCacheBlockedUrl.json</string>
+    <string name="pref_global_config_WebApk_data_dev_cdn_url">http://webapk-cdn-dev.internet.apps.samsung.com</string>
+    <string name="pref_global_config_UnifiedHomePage_data_excludedPathPrefixes">/push.html</string>
+    <long name="pref_global_config_CommonLogging_version" value="1542269350000" />
+    <string name="pref_global_config__updated_internet_release">stable</string>
+    <long name="pref_global_config_NavigationPage_version" value="1517992563000" />
+    <long name="pref_global_config__updated_timestamp_millis__launch" value="1619537026441" />
+    <boolean name="pref_global_config_BFCache_support" value="true" />
+    <boolean name="pref_global_config_SmartProtect_support" value="true" />
+    <int name="pref_global_config_SetAsDefaultBrowser_data_durationDaysNoneHotseat" value="30" />
+    <string name="pref_global_config_PersonalData_data_contactEmail">dataprotection@samsung.com</string>
+    <boolean name="pref_global_config_ProtectedBrowsing_support" value="true" />
+    <string name="pref_global_config_QuickAccess_data_backgroundInfoUrl">http://www.internet.apps.samsung.com/quickaccess/config/background.json</string>
+    <boolean name="pref_global_config_CardCapture_support" value="false" />
+    <boolean name="pref_global_config_ContentClip_support" value="false" />
+    <string name="pref_global_config_HelpIntro_data_helpIntroVersionTos">3.2.0</string>
+    <boolean name="pref_global_config_WebFeatureConfig_support" value="true" />
+    <string name="pref_global_config__updated_internet_version">14.0.1.62.502</string>
+    <string name="pref_global_config_PersonalizedPromotion_data_sites">https://config-api.internet.apps.samsung.com/features/39/extra/promotionSites.json</string>
+    <string name="pref_global_config_Rewards_data_privacyUrl">https://www.samsung.com/us/privacy/</string>
+    <string name="pref_global_config__updated_android_version">29</string>
+    <long name="pref_global_config_Rewards_data_tncSrsVersion" value="1498042810000" />
+    <boolean name="pref_global_config_SetAsDefaultBrowser_support" value="true" />
+    <boolean name="pref_global_config_ContentsPush2_data_enable_topic" value="false" />
+    <long name="pref_global_config_TrendingKeyword_version" value="1581574842000" />
+    <long name="pref_global_config_GlobalConfigUpdateFeature_data_updateCoolingTimeMillis" value="86400000" />
+    <long name="pref_global_config_PublicThings_version" value="1584694033000" />
+    <boolean name="pref_global_config_TrendingKeyword_data_enabled" value="true" />
+    <boolean name="pref_global_config_ContentsPush2_data_need_new_badge" value="false" />
+    <string name="pref_global_config_PersonalizedPromotion_data_items">https://config-api.internet.apps.samsung.com/features/39/extra/promotionItems.json</string>
+    <long name="pref_global_config_HelpIntro_version" value="1615948097000" />
+    <string name="pref_global_config_WebApk_data_stg_cdn_url">http://webapk-cdn-stg.internet.apps.samsung.com</string>
+    <boolean name="pref_global_config_UserCenter_data_userTasksEnable" value="false" />
+    <boolean name="pref_global_config_AXWhiteList_support" value="true" />
+    <long name="pref_global_config_QuickAccess_version" value="1616131054000" />
+    <string name="pref_global_config_AntiTracking_data_metadata-file">https://config-api.internet.apps.samsung.com/features/29/extra/metadata_02.json</string>
+    <string name="pref_global_config__updated_client_type">ms-android-samsung-ss</string>
+    <long name="pref_global_config_SamsungAccountConfig_version" value="1565331556000" />
+    <string name="pref_global_config_SIX_etag_six2ndPartyListData">&quot;d41d8cd98f00b204e9800998ecf8427e&quot;</string>
+    <string name="pref_global_config_SIX_etag_sixBlacklistData">&quot;d41d8cd98f00b204e9800998ecf8427e&quot;</string>
+    <long name="pref_global_config_AntiTracking_version" value="1618929751000" />
+    <int name="pref_global_config_PersonalizedPromotion_data_repeatThreshold" value="0" />
+    <boolean name="pref_global_config_UnifiedHomePage_data_newsFeedEnabledByDefault" value="false" />
+    <boolean name="pref_global_config_UserCenter_data_supportSamsungDeviceOnly" value="true" />
+    <boolean name="pref_global_config_AntiTracking_data_enable-dnt" value="true" />
+    <long name="pref_global_config_Rewards_version" value="1613703626000" />
+    <string name="pref_global_config__updated_server_profile">product</string>
+    <boolean name="pref_global_config_UserCenter_support" value="false" />
+    <boolean name="pref_global_config_WebApk_support" value="true" />
+    <int name="pref_global_config_SetAsDefaultBrowser_data_coolingTimeDaysHotseat" value="-1" />
+    <string name="pref_global_config__updated_operator">SKC</string>
+    <boolean name="pref_global_config_TrendingKeyword_support" value="false" />
+    <string name="pref_global_config_PublicThings_data_termsOfService">https://www.internet.apps.samsung.com/pt/index.html?type=tos</string>
+    <boolean name="pref_global_config_QuickAccess_data_unifiedHomePageEnabled" value="false" />
+    <string name="pref_global_config_ContentsPush2_data_privacy_url">https://www.internet.apps.samsung.com/pp/us/index.html</string>
+    <string name="pref_global_config_WebApk_data_stg_api_url">http://webapk-api-stg.internet.apps.samsung.com</string>
+    <string name="pref_global_config_ContentsPush2_data_landing_page_url">not_supported</string>
+    <boolean name="pref_global_config_UnifiedHomePage_support" value="false" />
+    <string name="pref_global_config_etag">&quot;406e29974b8ebc79b1e2efd942acc352&quot;</string>
+    <string name="pref_global_config_UserCenter_data_serverProfile">PRD</string>
+    <string name="pref_global_config_DirectSearch_data_INSTALLATION_URL">https://zhujiahua.html5.qq.com/samsung_i</string>
+    <string name="pref_global_config_AXWhiteList_data_AXWhiteList">com.android.talkback;com.google.android.accessibility.selecttospeak;com.samsung.android.app.talkback;com.samsung.accessibility;com.samsung.android.accessibility.talkback;com.google.android.marvin.talkback;com.lastpass.lpandroid;com.agilebits.onepassword;com.dashlane;kr.co.vp.loginsafe;com.x8bit.bitwarden;com.safeincloud.free;com.safeincloud;com.callpod.android_apps.keeper;com.siber.roboform;com.symantec.mobile.idsafe;com.nordpass.android.app.password.manager;com.nordpass.android.app.password.manager.debug;com.yeeseong.input;com.azure.authenticator</string>
+    <string name="pref_global_config_BFCache_data_BFCacheMetadata">https://config-api.internet.apps.samsung.com/features/47/extra/BFCacheMetadata.json</string>
+    <string name="pref_global_config_ContentsPush2_data_tnc_url">https://www.internet.apps.samsung.com/tos/us/index.html</string>
+    <boolean name="pref_global_config_PersonalizedPromotion_support" value="false" />
+    <boolean name="pref_global_config_PwaDiscovery_support" value="false" />
+    <string name="pref_global_config_UnifiedHomePage_data_unifiedHomePageUrl"> </string>
+    <boolean name="pref_global_config_ProtectedBrowsing_data_opt-in" value="true" />
+    <boolean name="pref_global_config_AntiTracking_data_enable-bounce-tracking-protection" value="false" />
+    <string name="pref_global_config_TrendingKeyword_data_landingPage"> </string>
+    <boolean name="pref_global_config_SIX_data_sixSupported" value="true" />
+    <int name="pref_global_config_GlobalConfigUpdateFeature_data_retryCountForTimeout" value="3" />
+    <long name="pref_global_config_TrendingKeyword_data_cacheDuration" value="60000" />
+    <long name="pref_global_config_ContentsPush2_version" value="1581598575000" />
+    <boolean name="pref_global_config_BFCache_data_BFCacheAvailableStatus" value="true" />
+    <boolean name="pref_global_config_PersonalData_support" value="false" />
+    <string name="pref_global_config__updated_country">KR</string>
+    <boolean name="pref_global_config_CIDFeatureConfig_support" value="true" />
+    <boolean name="pref_global_config_GoogleNewTab_data_useHomepageSettings" value="false" />
+    <string name="pref_global_config_SamsungAccountConfig_data_client_id">4oe3617251</string>
+    <string name="pref_global_config_CIDFeatureConfig_etag_cidRules">&quot;aab22d8286cabe603d15eb9a27df7eb3&quot;</string>
+    <string name="pref_global_config_PublicThings_data_webContentsProvider">https://config-api.internet.apps.samsung.com/features/40/extra/webContentsProvider.json</string>
+    <string name="pref_global_config_AntiTracking_data_whitelist-file">https://config-api.internet.apps.samsung.com/features/29/extra/whitelist_00_00.json</string>
+    <string name="pref_global_config_Rewards_data_redeemDeepLink">samsungpay://launch?action=rewards_list&amp;source=internet</string>
+    <int name="pref_global_config_AntiTracking_data_automatic-storage-access-state" value="2" />
+    <boolean name="pref_global_config_GlobalConfigUpdateFeature_support" value="true" />
+    <boolean name="pref_global_config_SIX_support" value="true" />
+    <string name="pref_global_config_SIX_data_six2ndPartyListData">https://config-api.internet.apps.samsung.com/features/38/extra/2ndPartyListData.json</string>
+    <long name="pref_global_config_Rewards_data_stateSyncCoolingTimeSec" value="86400" />
+    <boolean name="pref_global_config_SIX_data_sixPrivacyPopup" value="true" />
+    <long name="pref_global_config_ContentsPush2_data_sync_topic_list_cool_time_hours" value="168" />
+    <boolean name="pref_global_config_SmartProtect_data_blockUnwantedWebpagesAvailableStatus" value="true" />
+    <long name="pref_global_config_TrackingBlocker_version" value="1545986590000" />
+    <int name="pref_global_config_SmartProtect_data_suspiciousRedirectionHistoryBoundary" value="10" />
+</map>

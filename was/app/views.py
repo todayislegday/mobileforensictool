@@ -2,12 +2,12 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django import template
 from django.template import loader
-from django.http import HttpResponse
+from django.http import HttpResponse,JsonResponse
 from django.db.models import Value,TextField
 from .models import contacts_model,message1_model,message2_model,map_model
 from django.core.paginator import Paginator
-
-
+from django.views.decorators.csrf import csrf_exempt
+from django.core import serializers
 # 루트 디렉터리로 처음 띄울 페이지 지정
 def index(request):
     return render(request,'main.html')
@@ -36,14 +36,26 @@ def pages(request):
         elif context['url']=="message.html": ##어진
             page = request.GET.get('page', '1')
 
-            m=message1_model.objects.raw('SELECT parts._id,parts.text,messages._id,DATETIME(ROUND(messages.created_timestamp / 1000), "unixepoch") AS created_timestamp,messages.recipients FROM parts,messages where parts._id==messages._id')#raw queryset으로 할수없이 만들었다 ...삽질 ..
+            m=message1_model.objects.raw('SELECT parts._id,parts.text,messages._id,DATETIME(ROUND(messages.created_timestamp / 1000), "unixepoch","+9 hours") AS created_timestamp,messages.recipients FROM parts,messages where parts._id==messages._id')#raw queryset으로 할수없이 만들었다 ...삽질 ..
             paginator = Paginator(m, 10) 
             page_obj = paginator.get_page(page)
 
             context['page']=page_obj
 
         elif context['url']=="geo-Artifact.html":  ##재식
-            context['geo']=map_model.objects.all()
+            if 'id' in request.GET:##ajax 처리
+                id=request.GET['id']
+                return JsonResponse(serializers.serialize('json',map_model.objects.filter(id=id)),safe=False)
+                
+            map_list=map_model.objects.all()
+            map_dict={}
+            for map in map_list:#queryset->dict(list[])
+                map_dict[str(map.id)]=list()
+                map_dict[str(map.id)].append(map.id)
+                map_dict[str(map.id)].append(map.lat)
+                map_dict[str(map.id)].append(map.longt)
+            print(map_dict)  
+            context['geo']=map_dict
  ###########################################################  
 
 

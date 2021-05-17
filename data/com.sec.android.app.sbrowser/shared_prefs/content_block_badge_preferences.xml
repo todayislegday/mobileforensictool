@@ -1,0 +1,5 @@
+<?xml version='1.0' encoding='utf-8' standalone='yes' ?>
+<map>
+    <boolean name="update_direct_download_badge_flag" value="true" />
+    <string name="content_blocker_new_badge_package"></string>
+</map>

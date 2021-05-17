@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8' standalone='yes' ?>
+<map>
+    <int name="quickaccess_update_period" value="14" />
+    <string name="etag">&quot;04ee86415084805723ea5f664a3cf6ca0&quot;</string>
+    <long name="quickaccess_last_failed_time" value="9223372036854775807" />
+    <boolean name="quickaccess_pending_update" value="false" />
+    <boolean name="content_clip_config_is_updated" value="true" />
+</map>

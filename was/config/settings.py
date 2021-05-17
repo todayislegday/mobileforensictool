@@ -75,6 +75,7 @@ OUTPATH=f.readlines()[1]
 f.close()
 
 DATABASES = {
+    
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': f'{BASE_DIR}/db.sqlite3',

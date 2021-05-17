@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8' standalone='yes' ?>
+<map>
+    <boolean name="pref_rewards_global_config_updated" value="false" />
+    <string name="pref_rewards_user_current_iuid"></string>
+    <string name="pref_rewards_user_old_iuid"></string>
+    <string name="pref_rewards_user_name"></string>
+    <boolean name="pref_rewards_config_update_succeed" value="true" />
+    <boolean name="pref_rewards_user_send_action_allowed" value="false" />
+    <int name="pref_rewards_new_promotions_count" value="0" />
+    <set name="pref_rewards_shown_promotions" />
+    <long name="pref_rewards_user_srs_tnc_confirm" value="-1" />
+    <boolean name="pref_rewards_config_is_support" value="false" />
+</map>

@@ -1,0 +1,210 @@
+{
+  "enabled_for_china_ged": false,
+  "default_turn_on": true,
+  "promotion_banner_max_display_count": 5,
+  "provide_new_badge": {
+    "direct_download": true
+  },
+  "update_period": {
+    "config_file": 10080,
+    "icon": 43200,
+    "default_list": 43200
+  },
+  "extension_app_group": [
+    "default",
+    "CN|CHINA"
+  ],
+  "extension_apps": [
+    {
+      "package_name": "com.example.errorapp1",
+      "app_name": {
+        "English": "Error App1"
+      },
+      "group": [
+        "default",
+        "CN|CHINA"
+      ],
+      "store": 0,
+      "ged_supported": true,
+      "is_white": true,
+      "signature": "cdfdaecb18913dbdffbc97f08067a50b21a43e80"
+    },
+    {
+      "package_name": "com.example.blacklistapp1",
+      "app_name": {
+        "English": "BlackList App1"
+      },
+      "group": [
+        "default",
+        "CN|CHINA"
+      ],
+      "store": 0,
+      "ged_supported": true,
+      "is_white": false,
+      "signature": "cdfdaecb18913dbdffbc97f08067a50b21a43e80"
+    },
+    {
+      "package_name": "com.example.whitelistapp1",
+      "app_name": {
+        "English": "WhiteList App1"
+      },
+      "group": [
+        "default",
+        "CN|CHINA"
+      ],
+      "store": 0,
+      "ged_supported": true,
+      "is_white": true,
+      "signature": "cdfdaecb18913dbdffbc97f08067a50b21a43e80"
+    },
+    {
+      "package_name": "co.crystalapp.crystal",
+      "app_name": {
+        "English": "Crystal Adblock for Samsung Internet Browser"
+      },
+      "group": [
+        "default"
+      ],
+      "store": 3,
+      "ged_supported": false,
+      "stub_download_supported": true,
+      "is_white": true,
+      "signature": "6d646b53622d458b69a09f108431a2c7a74526c8"
+    },
+    {
+      "package_name": "com.betafish.adblocksbrowser",
+      "app_name": {
+        "English": "AdBlock for Samsung Internet"
+      },
+      "group": [
+        "default"
+      ],
+      "excluded_devices": [
+        "SM-A426B", "SM-A426N", "SM-A426U", "SM-A426U1", "SM-A4260"
+      ],
+      "store": 3,
+      "ged_supported": false,
+      "stub_download_supported": true,
+      "is_white": true,
+      "signature": "8aecf9160154a80c5ef8ea7726211f1c8d6eda1e"
+    },
+    {
+      "package_name": "com.rocketshipapps.adblockfast",
+      "app_name": {
+        "English": "Adblock fast"
+      },
+      "group": [
+        "default"
+      ],
+      "store": 3,
+      "ged_supported": true,
+      "stub_download_supported": true,
+      "is_white": true,
+      "signature": "2e76cb6bc9095f1bf36be0c7ea31f8ad02ca54dd"
+    },
+    {
+      "package_name": "org.adblockplus.adblockplussbrowser",
+      "app_name": {
+        "English": "Adblock Plus for Samsung Internet",
+        "Korean": "삼성 인터넷용 Adblock Plus"
+      },
+      "group": [
+        "default"
+      ],
+      "store": 3,
+      "ged_supported": true,
+      "stub_download_supported": true,
+      "is_white": true,
+      "signature": "5f8f93e7135201455b82b54334738fd46b5939ac"
+    },
+    {
+      "package_name": "kr.co.lylstudio.unicorn",
+      "app_name": {
+        "English": "Unicorn",
+        "Korean": "유니콘"
+      },
+      "group": [
+        "default"
+      ],
+      "store": 3,
+      "ged_supported": true,
+      "is_paid": true,
+      "is_white": true,
+      "signature": "1a3df241d8917b2f75c144931091426e15efd0b1"
+    },
+    {
+      "package_name": "com.seven.adclear.fsb",
+      "app_name": {
+        "English": "AdClear ad blocker for Samsung Internet"
+      },
+      "group": [
+        "default"
+      ],
+      "excluded_countries": [
+        "HK", "TW"
+      ],
+      "store": 3,
+      "ged_supported": true,
+      "stub_download_supported": true,
+      "is_white": true,
+      "signature": "fac7c8c5e07c3c928c502d5d8861f7741e51624f"
+    },
+    {
+      "package_name": "com.adguard.android.contentblocker",
+      "app_name": {
+        "English": "AdGuard Content Blocker"
+      },
+      "group": [
+        "default"
+      ],
+      "store": 3,
+      "ged_supported": true,
+      "stub_download_supported": true,
+      "is_white": true,
+      "signature": "89f73ad86046bf979c9df761f4f7677a2761703f"
+    },
+    {
+      "package_name": "com.disconnect.samsungcontentblocker",
+      "app_name": {
+        "English": "Disconnect Free for Samsung Browser"
+      },
+      "group": [
+        "default"
+      ],
+      "store": 3,
+      "ged_supported": true,
+      "stub_download_supported": true,
+      "is_white": true,
+      "signature": "df7c8c2d8a56883b0dd4c317f71936f8b9317217"
+    },
+    {
+      "package_name": "org.adblockplus.adblockplussbrowser.cn",
+      "app_name": {
+        "English": "Adblock Plus China for Samsung Internet",
+        "Chinese": "三星浏览器专用 Adblock Plus"
+      },
+      "group": [
+        "CN|CHINA"
+      ],
+      "store": 2,
+      "ged_supported": false,
+      "stub_download_supported": true,
+      "is_white": true,
+      "signature": "5f8f93e7135201455b82b54334738fd46b5939ac"
+    },
+    {
+      "package_name": "com.spear_adblocker",
+      "app_name": {
+        "English": "SPEAR AdBlocker"
+      },
+      "group": [
+        "default"
+      ],
+      "store": 3,
+      "ged_supported": true,
+      "stub_download_supported": true,
+      "is_white": true,
+      "signature": "ea64490144356b897448d27eaf78ffdaadcfd55b"
+    }
+  ]
+}

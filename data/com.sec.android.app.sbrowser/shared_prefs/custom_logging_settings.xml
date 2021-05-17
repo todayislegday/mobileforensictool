@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8' standalone='yes' ?>
+<map>
+    <int name="min_app_version" value="74" />
+    <string name="blacklist">{&quot;webpage_loading_fail&quot;:[&quot;*&quot;]}</string>
+    <string name="etag">&quot;6ff8b090da1b28d8d4e52bad58b3ba87&quot;</string>
+    <boolean name="crash_report" value="false" />
+    <long name="last_update_date" value="1619413499271" />
+</map>

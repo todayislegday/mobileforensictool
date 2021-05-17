@@ -1,0 +1,40 @@
+{
+   "checksum": "0914d87f1df56ff7c7cb776ec878ac3e",
+   "roots": {
+      "bookmark_bar": {
+         "children": [  ],
+         "date_added": "13263959645021388",
+         "date_modified": "0",
+         "guid": "00000000-0000-4000-a000-000000000002",
+         "id": "1",
+         "name": "북마크바",
+         "type": "folder"
+      },
+      "other": {
+         "children": [  ],
+         "date_added": "13263959645021392",
+         "date_modified": "0",
+         "guid": "00000000-0000-4000-a000-000000000003",
+         "id": "2",
+         "name": "기타 북마크",
+         "type": "folder"
+      },
+      "synced": {
+         "children": [ {
+            "date_added": "13263959764231657",
+            "guid": "94e4cda2-7ff2-4882-b353-8a86e3c1db29",
+            "id": "5",
+            "name": "트위터 - Google 검색",
+            "type": "url",
+            "url": "https://www.google.com/search?q=%ED%8A%B8%EC%9C%84%ED%84%B0&client=ms-android-samsung-ss&source=android-home&source=hp&ei=YmWHYKv7J8b7wAPv757QBQ&oq=%ED%8A%B8%EC%9C%84%ED%84%B0&gs_lcp=ChFtb2JpbGUtZ3dzLXdpei1ocBADMggIABCxAxCDATIICAAQsQMQgwEyCAgAELEDEIMBMggIABCxAxCDAVDANFiTO2CDQGgAcAB4AIABggGIAe8FkgEDMi41mAEAoAEBsAEA&sclient=mobile-gws-wiz-hp"
+         } ],
+         "date_added": "13263959645021396",
+         "date_modified": "13263959764231657",
+         "guid": "00000000-0000-4000-a000-000000000004",
+         "id": "3",
+         "name": "모바일 북마크",
+         "type": "folder"
+      }
+   },
+   "version": 1
+}
