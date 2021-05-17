@@ -32,7 +32,7 @@ def pages(request):
             page_obj = paginator.get_page(page)
 
             context['contact']=page_obj
-            print(__file__)
+            
         elif context['url']=="message.html": ##어진
             page = request.GET.get('page', '1')
 

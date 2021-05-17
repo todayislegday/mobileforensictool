@@ -69,7 +69,7 @@ DATABASE_ROUTERS = [ #여러 db를 중계
     'config.dbrouter.MultiDBRouter', 
 ]
 
-path=os.path.dirname(__file__)
+path=os.path.dirname(os.path.abspath(__file__))
 f = open(f"{path}/../../경로.txt", 'r')
 OUTPATH=f.readlines()[1]
 f.close()

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?><FDs version="1">
+  <FD plmn="45005" nwkname="SK Telecom" lcdonfdtime="0" lcdofffdtime="5" lcdonfdtime_Rel8="-1" lcdofffdtime_Rel8="-1" salesCode="SKC"/>
+  <FD plmn="45005" nwkname="SK Telecom Roaming" lcdonfdtime="0" lcdofffdtime="5" lcdonfdtime_Rel8="-1" lcdofffdtime_Rel8="-1" salesCode="SKC"/>
+  <FD plmn="31026" nwkname="T-Mobile" lcdonfdtime="0" lcdofffdtime="0" lcdonfdtime_Rel8="-1" lcdofffdtime_Rel8="-1" salesCode="-1"/>
+  <FD plmn="310160" nwkname="T-Mobile" lcdonfdtime="0" lcdofffdtime="0" lcdonfdtime_Rel8="-1" lcdofffdtime_Rel8="-1" salesCode="-1"/>
+  <FD plmn="310200" nwkname="T-Mobile" lcdonfdtime="0" lcdofffdtime="0" lcdonfdtime_Rel8="-1" lcdofffdtime_Rel8="-1" salesCode="-1"/>
+  <FD plmn="310210" nwkname="T-Mobile" lcdonfdtime="0" lcdofffdtime="0" lcdonfdtime_Rel8="-1" lcdofffdtime_Rel8="-1" salesCode="-1"/>
+  <FD plmn="310220" nwkname="T-Mobile" lcdonfdtime="0" lcdofffdtime="0" lcdonfdtime_Rel8="-1" lcdofffdtime_Rel8="-1" salesCode="-1"/>
+  <FD plmn="310230" nwkname="T-Mobile" lcdonfdtime="0" lcdofffdtime="0" lcdonfdtime_Rel8="-1" lcdofffdtime_Rel8="-1" salesCode="-1"/>
+  <FD plmn="310240" nwkname="T-Mobile" lcdonfdtime="0" lcdofffdtime="0" lcdonfdtime_Rel8="-1" lcdofffdtime_Rel8="-1" salesCode="-1"/>
+  <FD plmn="310250" nwkname="T-Mobile" lcdonfdtime="0" lcdofffdtime="0" lcdonfdtime_Rel8="-1" lcdofffdtime_Rel8="-1" salesCode="-1"/>
+  <FD plmn="310260" nwkname="T-Mobile" lcdonfdtime="0" lcdofffdtime="0" lcdonfdtime_Rel8="-1" lcdofffdtime_Rel8="-1" salesCode="-1"/>
+  <FD plmn="310270" nwkname="T-Mobile" lcdonfdtime="0" lcdofffdtime="0" lcdonfdtime_Rel8="-1" lcdofffdtime_Rel8="-1" salesCode="-1"/>
+  <FD plmn="310310" nwkname="T-Mobile" lcdonfdtime="0" lcdofffdtime="0" lcdonfdtime_Rel8="-1" lcdofffdtime_Rel8="-1" salesCode="-1"/>
+  <FD plmn="310330" nwkname="T-Mobile" lcdonfdtime="0" lcdofffdtime="0" lcdonfdtime_Rel8="-1" lcdofffdtime_Rel8="-1" salesCode="-1"/>
+  <FD plmn="310490" nwkname="T-Mobile" lcdonfdtime="0" lcdofffdtime="0" lcdonfdtime_Rel8="-1" lcdofffdtime_Rel8="-1" salesCode="-1"/>
+  <FD plmn="310660" nwkname="T-Mobile" lcdonfdtime="0" lcdofffdtime="0" lcdonfdtime_Rel8="-1" lcdofffdtime_Rel8="-1" salesCode="-1"/>
+  <FD plmn="310800" nwkname="T-Mobile" lcdonfdtime="0" lcdofffdtime="0" lcdonfdtime_Rel8="-1" lcdofffdtime_Rel8="-1" salesCode="-1"/>
+  <FD plmn="31038" nwkname="Vodafone" lcdonfdtime="0" lcdofffdtime="0" lcdonfdtime_Rel8="-1" lcdofffdtime_Rel8="-1" salesCode="-1"/>
+  <FD plmn="31090" nwkname="Vodafone" lcdonfdtime="0" lcdofffdtime="0" lcdonfdtime_Rel8="-1" lcdofffdtime_Rel8="-1" salesCode="-1"/>
+  <FD plmn="310150" nwkname="ATT" lcdonfdtime="0" lcdofffdtime="3" lcdonfdtime_Rel8="-1" lcdofffdtime_Rel8="-1" salesCode="-1"/>
+  <FD plmn="310410" nwkname="ATT" lcdonfdtime="0" lcdofffdtime="3" lcdonfdtime_Rel8="-1" lcdofffdtime_Rel8="-1" salesCode="-1"/>
+  <FD plmn="310560" nwkname="Vodafone" lcdonfdtime="0" lcdofffdtime="0" lcdonfdtime_Rel8="-1" lcdofffdtime_Rel8="-1" salesCode="-1"/>
+  <FD plmn="310680" nwkname="Vodafone" lcdonfdtime="0" lcdofffdtime="0" lcdonfdtime_Rel8="-1" lcdofffdtime_Rel8="-1" salesCode="-1"/>
+  <FD plmn="310980" nwkname="ATT" lcdonfdtime="0" lcdofffdtime="3" lcdonfdtime_Rel8="-1" lcdofffdtime_Rel8="-1" salesCode="-1"/>
+  <FD plmn="311180" nwkname="ATT" lcdonfdtime="0" lcdofffdtime="3" lcdonfdtime_Rel8="-1" lcdofffdtime_Rel8="-1" salesCode="-1"/>
+</FDs>
