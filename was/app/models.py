@@ -2,6 +2,18 @@ from django.db import models
 
 #db 모델작성
 
+class contacts_model(models.Model): 
+   
+    class Meta: 
+        managed = False 
+        app_label = "contacts" 
+        db_table = 'search_index'
+
+    id = models.AutoField(db_column='contact_id',primary_key=True)
+    name = models.TextField(db_column='sec_name',blank=True,null=True)
+    number = models.TextField(db_column='tokens',blank=True,null=True)
+    
+    
 class message1_model(models.Model): 
    
     class Meta: 

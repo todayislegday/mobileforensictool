@@ -1,7 +1,7 @@
 
 class MultiDBRouter(object): 
     def __init__(self): 
-        self.model_list = ['default','message','map'] 
+        self.model_list = ['default','contacts','message','map'] 
     def db_for_read(self, model, **hints): 
         if model._meta.app_label in self.model_list: 
             return model._meta.app_label 

@@ -1,7 +1,7 @@
 "전체적인 셋팅"
 
 from pathlib import Path
-
+import os
 # 베이스 경로 변수로 설정.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -69,7 +69,8 @@ DATABASE_ROUTERS = [ #여러 db를 중계
     'config.dbrouter.MultiDBRouter', 
 ]
 
-f = open("../../경로.txt", 'r')
+path=os.path.dirname(__file__)
+f = open(f"{path}/../../경로.txt", 'r')
 OUTPATH=f.readlines()[1]
 f.close()
 
@@ -78,6 +79,10 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': f'{BASE_DIR}/db.sqlite3',
     },
+     'contacts': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME':f'{OUTPATH}/data/com.samsung.android.providers.contacts/databases/contacts2.db',
+    },
     'message': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME':f'{OUTPATH}/data/com.samsung.android.messaging/databases/message_content.db',
@@ -85,7 +90,8 @@ DATABASES = {
     'map': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME':f'{OUTPATH}/data/com.samsung.cmh/databases/cmh.db',
-    }
+    },
+   
 }
 
 

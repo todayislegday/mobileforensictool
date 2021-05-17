@@ -33,7 +33,8 @@ class QtGUI(QWidget):
 	def ok(self):
 		if self.filepath!='' and self.outputpath!='':#파일 경로를 지정하였다면 시스템 명령으로 대시보드를 띄운다.
 			try:
-				f=open("../경로.txt",'w')
+				path=os.path.dirname(__file__)
+				f=open(f"{path}/../경로.txt",'w')
 				data = f"{self.filepath}\n{self.outputpath}"  #파일 경로를 기록한다. 추후에 was에서 읽음
 				f.write(data)
 				f.close()
@@ -42,9 +43,8 @@ class QtGUI(QWidget):
 				self.label2.clear()
 				self.label2.repaint()
 				self.label1.repaint()  #객체의 label1을 다시 repaint 해준다.
-				#read_tar.decompression(self.filepath,self.outputpath)
-
-				subprocess.run('cd ../was/&&python manage.py runserver',shell=True,timeout=2)
+				
+				subprocess.run(f'python {path}/../was/manage.py runserver',shell=True,timeout=2)
 			except Exception as e:
 				print(e)
 				webbrowser.open("http://127.0.0.1:8000",1)#해당 url을 새 창으로 연다.

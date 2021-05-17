@@ -4,7 +4,7 @@ from django import template
 from django.template import loader
 from django.http import HttpResponse
 from django.db.models import Value,TextField
-from .models import message1_model,message2_model,map_model
+from .models import contacts_model,message1_model,message2_model,map_model
 from django.core.paginator import Paginator
 
 
@@ -24,12 +24,20 @@ def pages(request):
 
 
 ##################함수로 빼낼 부분########################
-        if context['url']=="message.html": ##어진
+        if context['url']=="contact.html": ##어진
             page = request.GET.get('page', '1')
 
-            c=message1_model.objects.raw('SELECT * FROM parts,messages where parts._id==messages._id')#raw queryset으로 할수없이 만들었다 ...삽질 ..
-           
+            c=contacts_model.objects.all()
             paginator = Paginator(c, 10) 
+            page_obj = paginator.get_page(page)
+
+            context['contact']=page_obj
+            print(__file__)
+        elif context['url']=="message.html": ##어진
+            page = request.GET.get('page', '1')
+
+            m=message1_model.objects.raw('SELECT parts._id,parts.text,messages._id,DATETIME(ROUND(messages.created_timestamp / 1000), "unixepoch") AS created_timestamp,messages.recipients FROM parts,messages where parts._id==messages._id')#raw queryset으로 할수없이 만들었다 ...삽질 ..
+            paginator = Paginator(m, 10) 
             page_obj = paginator.get_page(page)
 
             context['page']=page_obj
