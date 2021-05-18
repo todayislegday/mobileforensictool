@@ -28,142 +28,21 @@
         </div>
         <!-- [ breadcrumb ] end -->
         <div class="main-body">
-            <div class="page-wrapper">
-                <!-- [ Main Content ] start , 동적 UI 수정 필요 (bootstrap.css)-->
-                <div class="row">
-                    <!-- [ Marker-Clustering ] start -->
-                    <div class="col-lg-12 col-xl-6">
-                        <div class="card">
-                            <div class="card-header">
-                                <h5>위치 정보 시각화</h5>
-                                <span class="d-block m-t-5">시간 순서에 따른 위치 표시</span>
-                            </div>
-                            <div class="card-block">
-                                <form method="post" id="geocoding_form6">
-                                    <div id="map" class="set-map" style="height:400px;"></div>
-                                </form>
-                            </div>
-                        </div>
+            <!-- [ Main Content ] start -->
+            <div class="col-lg-12 col-xl-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>위치 정보 시각화</h5>
+                        <span class="d-block m-t-5">시간 순서에 따른 위치 표시</span>
                     </div>
-                    <!-- [ Marker-Clustering ] end -->
-
-
-                    <!-- [ basic-map ] start -->
-                    <!-- <div class="col-lg-12 col-xl-6">
-                        <div class="card">
-                            <div class="card-header">
-                                <h5>Basic</h5>
-                                <span class="d-block m-t-5">Map shows places around the world</span>
-                            </div>
-                            <div class="card-block">
-                                <div id="basic-map" class="set-map" style="height:400px;"></div>
-                            </div>
-                        </div>
-                    </div> -->
-                    <!-- [ basic-map ] end -->
-
-                    <!-- [ Markers-map ] start -->
-                    <!-- <div class="col-lg-12 col-xl-6">
-                        <div class="card">
-                            <div class="card-header">
-                                <h5>Markers</h5>
-                                <span class="d-block m-t-5">Maps shows <code>location</code> of the place</span>
-                            </div>
-                            <div class="card-block">
-                                <div id="markers-map" class="set-map" style="height:400px;"></div>
-                            </div>
-                        </div>
-                    </div> -->
-                    <!-- [ Markers-map ] end -->
-
-                    <!-- [ Geo-Coding-map ] start -->
-                    <!-- <div class="col-lg-12 col-xl-6">
-                        <div class="card">
-                            <div class="card-header">
-                                <h5>Geo-Coding</h5>
-                                <span class="d-block m-t-5">Search your location</span>
-                            </div>
-                            <div class="card-block">
-                                <form method="post" id="geocoding_form1">
-                                    <div class="input-group input-group-button mb-3">
-                                        <input type="text" id="address" class="form-control" placeholder="Write your place">
-                                        <span class="input-group-addon" id="basic-addon1">
-                                      <button class="btn btn-primary m-0">Search Location</button>
-                                      </span>
-                                    </div>
-                                </form>
-                                <div id="mapGeo" class="set-map" style="height:400px;"></div>
-                            </div>
-                        </div>
-                    </div> -->
-                    <!-- [ Geo-Coding-map ] end -->
-
-                    <!-- [ Overlay-map ] start -->
-                    <!-- <div class="col-lg-12 col-xl-6">
-                        <div class="card">
-                            <div class="card-header">
-                                <h5>Overlay</h5>
-                                <span class="d-block m-t-5">Map shows places around the world</span>
-                            </div>
-                            <div class="card-block">
-                                <form method="post" id="geocoding_form2">
-                                    <div id="mapOverlay" class="set-map" style="height:400px;"></div>
-                                </form>
-                            </div>
-                        </div>
-                    </div> -->
-                    <!-- [ Overlay-map ] end -->
-
-                    <!-- [ Street-View-map ] start -->
-                    <!-- <div class="col-lg-12 col-xl-6">
-                        <div class="card">
-                            <div class="card-header">
-                                <h5>Street View</h5>
-                                <span class="d-block m-t-5">Map shows view of street</span>
-                            </div>
-                            <div class="card-block">
-                                <form method="post" id="geocoding_form3">
-                                    <div id="mapStreet" class="set-map" style="height:400px;"></div>
-                                </form>
-                            </div>
-                        </div>
-                    </div> -->
-                    <!-- [ Street-View-map ] end -->
-
-                    <!-- [ Map-Types-map ] start -->
-                    <!-- <div class="col-lg-12 col-xl-6">
-                        <div class="card">
-                            <div class="card-header">
-                                <h5>Map Types</h5>
-                                <span class="d-block m-t-5">Select your <code>map-types</code> to see differant views</span>
-                            </div>
-                            <div class="card-block">
-                                <form method="post" id="geocoding_form4">
-                                    <div id="mapTypes" class="set-map" style="height:400px;"></div>
-                                </form>
-                            </div>
-                        </div>
-                    </div> -->
-                    <!-- [ Map-Types-map ] end -->
-
-                    <!-- [ GeoRSS-Layers ] start -->
-                    <!-- <div class="col-lg-12 col-xl-6">
-                        <div class="card">
-                            <div class="card-header">
-                                <h5>GeoRSS Layers</h5>
-                                <span class="d-block m-t-5">Shows <code>RSS</code> location</span>
-                            </div>
-                            <div class="card-block">
-                                <form method="post" id="geocoding_form5">
-                                    <div id="georssmap" class="set-map" style="height:400px;"></div>
-                                </form>
-                            </div>
-                        </div>
-                    </div> -->
-                    <!-- [ GeoRSS-Layers ] end -->
+                    <div class="card-block">
+                        <form method="post" id="geocoding_form6">
+                            <div id="map" class="set-map" style="height:600px;"></div>
+                        </form>
+                    </div>
                 </div>
-                <!-- [ Main Content ] end -->
             </div>
+            <!-- [ Main Content ] end -->
         </div>
     </div>
 </div>
@@ -173,45 +52,21 @@
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
 
-<!-- 키 숨겨 -->
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDkfnk4My0Tttw-jj8wa01Ii2PcepoiYLc&callback=initMap&libraries=&v=weekly"></script> 
+<script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDkfnk4My0Tttw-jj8wa01Ii2PcepoiYLc&callback=initMap&libraries=&v=weekly"></script>
 <script src="https://unpkg.com/@googlemaps/markerclustererplus/dist/index.min.js"></script>
 <script src="/static/assets/plugins/google-maps/js/gmaps.js"></script>
 <!-- <script src="https://maps.google.com/maps/api/js?sensor=true"></script> -->
 <!-- <script src="/static/assets/js/pages/google-maps.js"></script> 이 파일 삭제 해도 됨 -->
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script><!--jquery 홈페이지에서 import-->
- 
-<script type="text/javascript">
-    $(document).ready(function(){     
-        $('.this').click(function(){  // btn부분에 맵에 새겨논 좌표의 id 사용해
-            $.ajax({
-                url : '/geo-Artifact.html',
-                data : {id:'1'},        // id에 그리고 .this 이런거 넣고
-                success : function(data){  //data엔 id로 검색한 필요한 좌표에 대한 부가적인 정보를 서버에서 전달하여 담겨있다.
-                console.log(data)
-                }
-            });
-        });
-    });
-</script> 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<!--jquery 홈페이지에서 import-->
 
 "{{geo|json_script:'dict-id'}}"
-<script>
+<script type="text/javascript">
 
     var profile = document.getElementById("dict-id").textContent;
     var profileJson = JSON.parse(profile);
-
-
-    // var timestamp = 1619487516851
-    // var date = new Date(timestamp);
-    // window.alert(timestamp);
-    // window.alert("Date: "+date.getDate()+
-    //       "/"+(date.getMonth()+1)+
-    //       "/"+date.getFullYear()+
-    //       " "+date.getHours()+
-    //       ":"+date.getMinutes()+
-    //       ":"+date.getSeconds());
 
     var map = new google.maps.Map(document.getElementById('map'), {
         zoom: 13,
@@ -224,38 +79,34 @@
 
     var infowindow = new google.maps.InfoWindow();
     var size = "{{geo|length}}"; // 마커 개수
-    var markers = []; // 마커 클러스터를 위한 다중 마커
 
     var marker, i;
     for (i = 1; i <= size; i++) {
         marker = new google.maps.Marker({
-            position: {lat:profileJson[i][1], lng : profileJson[i][2]},
-            label: profileJson[i][0]+"",     // id값으로 라벨 표시
-            title: 'Marker with InfoWindow', // 안에 내용도 표시되도록?
+            id: profileJson[i][0],     // id
+            position: { lat: profileJson[i][1], lng: profileJson[i][2] },
             map: map
         });
-        
+
         google.maps.event.addListener(marker, 'click', (function(marker, i) { // 마커 클릭 이벤트
-            return function() {
-                infowindow.setContent("id : " + profileJson[i][0].toString() + '<br/>' +
-                                    "lat : " + profileJson[i][1].toString() + '<br/>' +
-                                    "lng : " + profileJson[i][2].toString() + '<br/>');
-                infowindow.open(map, marker);
+            return function () {
+                $.ajax({
+                    url: '/geo-Artifact.html',
+                    data: { id: marker.id },        // 마커 id 값으로 data 불러오고
+                    success: function (data) {      // data엔 id로 검색한 필요한 좌표에 대한 부가적인 정보를 서버에서 전달하여 담겨있다.
+                        dataJson = JSON.parse(data) // JSON으로 파싱
+                        infowindow.setContent("id : " + dataJson[0]['pk'] + '<br/>' + // 마커 정보 디자인 해야함
+                                            "lat : " + dataJson[0]['fields']['lat'] + '<br/>' +
+                                            "lng : " + dataJson[0]['fields']['longt'] + '<br/>');
+                                            
+                        infowindow.open(map, marker);
+                        map.setZoom(15);
+                        map.panTo(marker.getPosition()); // 마커로 부드러운 이동
+                    }
+                });
             }
         })(marker, i));
-        if(marker) {
-            marker.addListener('click', function() {
-                map.setZoom(15);
-                map.setCenter(this.getPosition());
-            });
-        }
-
-        markers.push(marker);
     }
-
-    var markerCluster = new MarkerClusterer(map, markers, { // 마커 클러스터링
-        imagePath : "https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m"
-    });
 </script>
 
 {% endblock javascripts %}
