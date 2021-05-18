@@ -4,7 +4,7 @@ from django import template
 from django.template import loader
 from django.http import HttpResponse,JsonResponse
 from django.db.models import Value,TextField
-from .models import contacts_model,message1_model,message2_model,map_model
+from .models import contacts_model,message1_model,message2_model,map_model,calllog_model,mms_model,chrome2_model,chrome3_model,chrome4_model,chrome5_model,chrome6_model,Sam1_model, Sam2_model,Sam3_model,Sam4_model,Sam5_model,webdowndata_model,webext_model,Appinslog_model,Media_model
 from django.core.paginator import Paginator
 from django.views.decorators.csrf import csrf_exempt
 from django.core import serializers
@@ -36,7 +36,7 @@ def pages(request):
         elif context['url']=="message.html": ##어진
             page = request.GET.get('page', '1')
 
-            m=message1_model.objects.raw('SELECT parts._id,parts.text,messages._id,DATETIME(ROUND(messages.created_timestamp / 1000), "unixepoch","+9 hours") AS created_timestamp,messages.recipients FROM parts,messages where parts._id==messages._id')#raw queryset으로 할수없이 만들었다 ...삽질 ..
+            m=message1_model.objects.raw('SELECT parts._id,parts.text,messages._id,DATETIME(ROUND(messages.created_timestamp / 1000), "unixepoch","localtime") AS created_timestamp,messages.recipients FROM parts,messages where parts._id==messages._id')#raw queryset으로 할수없이 만들었다 ...삽질 ..
             paginator = Paginator(m, 10) 
             page_obj = paginator.get_page(page)
 
@@ -56,6 +56,37 @@ def pages(request):
                 map_dict[str(map.id)].append(map.longt)
             print(map_dict)  
             context['geo']=map_dict
+        
+        elif context['url']=="time-line.html":#용하
+            mms=mms_model.objects.raw("SELECT datetime((date / 1000), 'unixepoch','localtime') FROM messages ORDER BY date ASC")
+            calllog=calllog_model.objects.raw("SELECT datetime((date / 1000), 'unixepoch','localtime') FROM calls ORDER BY date ASC")
+            chromekeyword=chrome2_model.objects.all()
+            chromeurlhistory=chrome3_model.objects.raw("SELECT urls.id, urls.url, urls.title, datetime(visits.visit_time/1000000 + (strftime('%%s','1601-01-01')),'unixepoch','localtime') AS visit_time FROM urls, visits WHERE urls.id=visits.url ORDER BY visits.visit_time ASC")
+            chromedown=chrome5_model.objects.all()
+            chromedownurl=chrome6_model.objects.all()
+            Samkeyword=Sam1_model.objects.all()
+            Samurlhistory=Sam3_model.objects.raw("SELECT urls.id, urls.url, urls.title, datetime(visits.visit_time/1000000 + (strftime('%%s', '1601-01-01')), 'unixepoch','localtime') FROM urls, visits WHERE urls.id=visits.url ORDER BY visits.visit_time ASC")
+            Samdown=Sam4_model.objects.all()
+            Samdownurl=Sam5_model.objects.all()
+            webdowndata=webdowndata_model.objects.all();
+            webext=webext_model.objects.raw("select datetime(date_added, 'unixepoch','localtime') from downloads")       
+            appinslog=Appinslog_model.objects.raw("select datetime(first_download_ms/1000, 'unixepoch','localtime'),datetime(delivery_data_timestamp_ms/1000, 'unixepoch','localtime'),datetime(last_update_timestamp_ms/1000, 'unixepoch','localtime'),datetime(install_request_timestamp_ms/1000, 'unixepoch','localtime') from appstate")
+            media=Media_model.objects.all()
+            
+            context['mms']=mms
+            context['calllog']=calllog
+            context['chromekeyword']=chromekeyword
+            context['chromeurlhistory']=chromeurlhistory
+            context['chromedown']=chromedown
+            context['chromedownurl']=chromedownurl
+            context['Samkeyword']=Samkeyword
+            context['Samurlhistory']=Samurlhistory
+            context['Samdown']=Samdown
+            context['Samdownurl']=Samdownurl
+            context['webdowndata']=webdowndata
+            context['webext']=webext
+            context['appinslog']=appinslog
+            context['media']=media
  ###########################################################  
 
 

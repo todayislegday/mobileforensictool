@@ -84,14 +84,51 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME':f'{OUTPATH}/data/com.samsung.android.providers.contacts/databases/contacts2.db',
     },
+    'calllog': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME':f'{OUTPATH}/data/com.samsung.android.providers.contacts/databases/calllog.db',
+    },
     'message': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME':f'{OUTPATH}/data/com.samsung.android.messaging/databases/message_content.db',
+    },
+     'mms': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME':f'{OUTPATH}/user_de/0/com.android.providers.telephony/databases/mmssms.db',
     },
     'map': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME':f'{OUTPATH}/data/com.samsung.cmh/databases/cmh.db',
     },
+    'chrome2': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME':f'{OUTPATH}/data/com.android.chrome/app_chrome/Default/History',
+    },
+    'SAMINT': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME':f'{OUTPATH}/data/com.sec.android.app.sbrowser/app_sbrowser/Default/History',
+    },
+    'WebDowndata': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME':f'{OUTPATH}/data/com.android.providers.downloads/databases/downloads.db',
+    },
+    'Webint': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME':f'{OUTPATH}/data/com.android.providers.media/databases/internal.db',
+    },
+    'Webext': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME':f'{OUTPATH}/data/com.android.providers.media/databases/external.db',
+    },
+    'Appinslog': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME':f'{OUTPATH}/data/com.android.vending/databases/localappstate.db',
+    },
+    'Media': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME':f'{OUTPATH}/data/com.samsung.android.providers.media/databases/media.db',
+    },
+
    
 }
 
