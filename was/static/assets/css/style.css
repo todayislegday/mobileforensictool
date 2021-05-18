@@ -10568,6 +10568,25 @@ div.code-toolbar > .toolbar span:hover {
 	bottom: 50px;
 	opacity: 1
 }
+.right-box {
+  float: right;
+}
+
+.col-sm-12 .col-md-6 {
+    position: relative;
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+
+.form-control-sm {
+    height: calc(1.5em + .5rem + 2px);
+    padding: .25rem .5rem;
+    font-size: .875rem;
+    line-height: 1.5;
+    border-radius: .2rem;
+}
 
 @-webkit-keyframes pulse {
 	0% {

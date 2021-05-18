@@ -36,22 +36,26 @@
                         <div class="card">
                             <div class="card-header">
                                 <h5>Basic Table</h5>
-                                <span class="d-block m-t-5">use class <code>table</code> inside table element</span>
-                            </div>
+                                    <div class="d-block m-t-5">use class <code>table</code> inside table element</div>
+                                        <div class="right-box">
+                                            <label> Search:<input onkeyup="filter()" type="search" id="keyword" class="form-control form-control-sm" placeholder="" aria-controls="dtBasicExample">
+                                            </label>
+                                        </div>
+                                    </div>
                             <div class="card-block table-border-style">
                                 <div class="table-responsive">
                                     <table class="table table-hover">
                                         <thead>
                                             <tr>
                                                 <th>ID</th>
-                                                <th>번호</th>
+                                                <th>수신자</th>
                                                 <th>내용</th>
                                                 <th>시간</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             {% for p in page %}
-                                            <tr class>
+                                            <tr class='list_data'>
                                                 <td>{{p.id}}</td>
                                                 <td>{{p.recipients}}</td>
                                                 <td>{{p.text}}</td>
@@ -110,11 +114,7 @@
         </div>
     </div>
 </div>
-
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->
-{% block javascripts %}
-
-
-{% endblock javascripts %}
+{% block javascripts %} <script src="/static/assets/js/filter.js"></script>{% endblock javascripts %}
