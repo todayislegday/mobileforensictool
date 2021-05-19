@@ -8,6 +8,7 @@ from .models import contacts_model,message1_model,message2_model,map_model,calll
 from django.core.paginator import Paginator
 from django.views.decorators.csrf import csrf_exempt
 from django.core import serializers
+import os
 # 루트 디렉터리로 처음 띄울 페이지 지정
 def index(request):
     return render(request,'main.html')
@@ -45,15 +46,26 @@ def pages(request):
         elif context['url']=="geo-Artifact.html":  ##재식
             if 'id' in request.GET:##ajax 처리
                 id=request.GET['id']
-                return JsonResponse(serializers.serialize('json',map_model.objects.filter(id=id)),safe=False)
+                ###############함수로 빼기################
+                path=os.path.dirname(os.path.abspath(__file__))
+                f = open(f"{path}/../../경로.txt", 'r')
+                OUTPATH=f.readlines()[1]
+                f.close()
+                ##########################################
+                print(OUTPATH)
+                a=map_model.objects.raw("select _id,latitude,longitude,_display_name,replace(_data,'/storage/emulated','%s/media')as data,datetaken from files where _id=%s" %(OUTPATH,id))
+                return JsonResponse(serializers.serialize('json',a),safe=False)
                 
             map_list=map_model.objects.all()
             map_dict={}
+            i=1
             for map in map_list:#queryset->dict(list[])
-                map_dict[str(map.id)]=list()
-                map_dict[str(map.id)].append(map.id)
-                map_dict[str(map.id)].append(map.lat)
-                map_dict[str(map.id)].append(map.longt)
+                if map.lat!=None and map.longt!=None:
+                    map_dict[str(i)]=list()
+                    map_dict[str(i)].append(map.id)
+                    map_dict[str(i)].append(map.lat)
+                    map_dict[str(i)].append(map.longt)
+                    i+=1
             print(map_dict)  
             context['geo']=map_dict
         

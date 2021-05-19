@@ -64,12 +64,16 @@ class map_model(models.Model): #재식
     class Meta: 
         managed = False 
         app_label = "map" 
-        db_table = 'location'
+        db_table = 'files'
     
-    id= models.AutoField(db_column='loc_p_id',primary_key=True)
+    id= models.AutoField(db_column='_id',primary_key=True)
     lat=models.FloatField(db_column='latitude',blank=True,null=True)
     longt=models.FloatField(db_column='longitude',blank=True,null=True)
-
+    displayname=models.TextField(db_column='_display_name',blank=True,null=True)
+    data=models.TextField(db_column='_data',blank=True,null=True)
+    datetaken=models.TextField(db_column='_data',blank=True,null=True)
+    
+    
 class chrome2_model(models.Model): #용하
 
     class Meta: 

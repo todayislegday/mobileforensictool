@@ -94,7 +94,9 @@
                     url: '/geo-Artifact.html',
                     data: { id: marker.id },        // 마커 id 값으로 data 불러오고
                     success: function (data) {      // data엔 id로 검색한 필요한 좌표에 대한 부가적인 정보를 서버에서 전달하여 담겨있다.
+                        console.log(data)
                         dataJson = JSON.parse(data) // JSON으로 파싱
+                        console.log(data)
                         infowindow.setContent("id : " + dataJson[0]['pk'] + '<br/>' + // 마커 정보 디자인 해야함
                                             "lat : " + dataJson[0]['fields']['lat'] + '<br/>' +
                                             "lng : " + dataJson[0]['fields']['longt'] + '<br/>');
