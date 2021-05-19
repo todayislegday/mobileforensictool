@@ -36,8 +36,18 @@
                         <span class="d-block m-t-5">시간 순서에 따른 위치 표시</span>
                     </div>
                     <div class="card-block">
+                        <div id="sideInfoNav" class="infonav">
+                            <a href="javascript:void(0)" id="closebtn" onclick="closeNav()">&times;</a>
+                            <ul id="nav-info-list" class="info-list">
+                                <li id="info-Image"><img src= "static/assets/images/20210427_102533.jpg" style='max-width:100%'></img></li>
+                                <li id="info-Name"></li>
+                                <li id="info-Date"></li>
+                                <li id="info-Path"></li>
+                            </ul>
+                         </div>
                         <form method="post" id="geocoding_form6">
                             <div id="map" class="set-map" style="height:600px;"></div>
+                            
                         </form>
                     </div>
                 </div>
@@ -67,6 +77,9 @@
 
     var profile = document.getElementById("dict-id").textContent;
     var profileJson = JSON.parse(profile);
+    
+    //window.alert(profileJson[1]);
+
 
     var map = new google.maps.Map(document.getElementById('map'), {
         zoom: 13,
@@ -78,6 +91,9 @@
     });
 
     var infowindow = new google.maps.InfoWindow();
+
+
+
     var size = "{{geo|length}}"; // 마커 개수
 
     var marker, i;
@@ -87,20 +103,36 @@
             position: { lat: profileJson[i][1], lng: profileJson[i][2] },
             map: map
         });
+    
 
-        google.maps.event.addListener(marker, 'click', (function(marker, i) { // 마커 클릭 이벤트
+        google.maps.event.addListener(marker, 'click', (function (marker, i) { // 마커 클릭 이벤트
             return function () {
                 $.ajax({
                     url: '/geo-Artifact.html',
                     data: { id: marker.id },        // 마커 id 값으로 data 불러오고
                     success: function (data) {      // data엔 id로 검색한 필요한 좌표에 대한 부가적인 정보를 서버에서 전달하여 담겨있다.
-                        console.log(data)
                         dataJson = JSON.parse(data) // JSON으로 파싱
-                        console.log(data)
-                        infowindow.setContent("id : " + dataJson[0]['pk'] + '<br/>' + // 마커 정보 디자인 해야함
-                                            "lat : " + dataJson[0]['fields']['lat'] + '<br/>' +
-                                            "lng : " + dataJson[0]['fields']['longt'] + '<br/>');
-                                            
+                        openNav(); // Info창 열기
+                        var date = new Date(dataJson[0]['fields']['datetaken']); // 타임스탬프 변환
+                        var dateString = date.getFullYear() + "/" + (date.getMonth()+1) + "/" + date.getDate() + " " +
+                                            date.getHours() + ":" + date.getMinutes() + ":" +  date.getSeconds();
+                        document.getElementById('info-Name').innerHTML = "파일명 : " + dataJson[0]['fields']['displayname'];
+                        document.getElementById('info-Date').innerHTML = "촬영시각 : " + dateString;
+                        document.getElementById('info-Path').innerHTML = "경로 : " + dataJson[0]['fields']['data'];
+
+                        var contentString = '<div class="iw-content">' + 
+                                                '<div class="iw-subTitle">' + 
+                                                    '<div class= "iw-image"> ' + // 보안 이유로 로컬경로에서 사진가져오기 불가능, 아래 사진은 예시로 넣어서 테스트함
+                                                        '<img id="info-img" src="static/assets/images/20210427_102533.jpg" style="max-width:100%"></img>' +
+                                                    '</div>' + 
+                                                    '<ul id = "iw-info-list" class="info-list">' +
+                                                        '<li id="info-Name">파일명 : ' + dataJson[0]['fields']['displayname'] + '</li>' +
+                                                        '<li id="info-Date">촬영시각 : ' + dateString + '</li>' +
+                                                        '<li id="info-Path">경로 : ' + dataJson[0]['fields']['data'] + '</li>' +
+                                                    '</ul>' +
+                                                '</div>' +
+                                            '</div>';
+                        infowindow.setContent(contentString);
                         infowindow.open(map, marker);
                         map.setZoom(15);
                         map.panTo(marker.getPosition()); // 마커로 부드러운 이동
@@ -109,6 +141,35 @@
             }
         })(marker, i));
     }
+    
+    // Custom InfoWindow
+    google.maps.event.addListener(infowindow, 'domready', function() {
+            var iwOuter = $('.gm-style-iw');
+            var iwBackground = iwOuter.prev();
+            iwBackground.children(':nth-child(2)').css({'background' : '#252525'});
+            var iwmain = iwBackground.children(':nth-child(2)');
+            iwBackground.children(':nth-child(4)').css({'display' : 'none'});
+            var iwCloseBtn = iwOuter.next();
+        });
+
+    google.maps.event.addListener(map, 'click', function() {
+        closeNav();
+        infowindow.close();
+    });
+
+
+
+    
 </script>
 
+<script>
+    function openNav() {
+         document.getElementById("sideInfoNav").style.width = "40%";
+    }
+    
+    function closeNav() {
+        document.getElementById("sideInfoNav").style.width = "0";
+    }
+
+</script>
 {% endblock javascripts %}
