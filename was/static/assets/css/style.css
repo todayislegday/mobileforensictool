@@ -306,6 +306,142 @@ p.text-muted {
   border-radius: 0;
 }
 
+.card2 {
+  border-radius: 0;
+  -webkit-box-shadow: 0 1px 20px 0 rgba(69, 90, 100, 0.08);
+          box-shadow: 0 1px 20px 0 rgba(69, 90, 100, 0.08);
+  border: none;
+  margin-bottom: 15px;
+  -webkit-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+}
+
+.card2 .card-first {
+  background-color: transparent;
+  border-bottom: 1px solid #f1f1f1;
+  padding: 10px 20px 0px 20px;
+  position: relative;
+}
+
+.card2 .card-second {
+  background-color: transparent;
+  padding: 40px 0px 0px 20px;
+  position: relative;
+}
+
+.card2 .card-header {
+  background-color: transparent;
+  border-bottom: 1px solid #f1f1f1;
+  padding: 20px 25px;
+  position: relative;
+}
+.card2 .card-header h5 {
+  margin-bottom: 0;
+  color: #000;
+  font-size: 17px;
+  font-weight: 400;
+  display: inline-block;
+  margin-right: 10px;
+  line-height: 1.1;
+  position: relative;
+}
+.card2 .card-header h5:after {
+  content: "";
+  background-color: #04a9f5;
+  position: absolute;
+  left: -25px;
+  top: 0;
+  width: 4px;
+  height: 20px;
+}
+.card2 .card-header.borderless {
+  border-bottom: none;
+}
+.card2 .card-header.borderless h5:after {
+  display: none;
+}
+.card2 .card-header .card-header-right {
+  right: 10px;
+  top: 10px;
+  display: inline-block;
+  float: right;
+  padding: 0;
+  position: absolute;
+}
+@media only screen and (max-width: 575px) {
+  .card2 .card-header .card-header-right {
+    display: none;
+  }
+}
+.card2 .card-header .card-header-right .dropdown-menu {
+  margin-top: 0;
+}
+.card2 .card-header .card-header-right .dropdown-menu li a {
+  font-size: 14px;
+  text-transform: capitalize;
+}
+.card2 .card-header .card-header-right .btn.dropdown-toggle {
+  border: none;
+  background: transparent;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  color: #888;
+}
+.card2 .card-header .card-header-right .btn.dropdown-toggle i {
+  margin-right: 0;
+}
+.card2 .card-header .card-header-right .btn.dropdown-toggle:after {
+  display: none;
+}
+.card2 .card-header .card-header-right .btn.dropdown-toggle:focus {
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  outline: none;
+}
+.card2 .card-footer {
+  border-top: 1px solid #f1f1f1;
+  background: transparent;
+  padding: 25px;
+}
+.card2 .card-block,
+.card2 .card-body {
+  padding: 30px 25px;
+}
+.card2.card-load {
+  position: relative;
+  overflow: hidden;
+}
+.card2.card-load .card-loader {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: rgba(255, 255, 255, 0.7);
+  z-index: 999;
+}
+.card2.card-load .card-loader i {
+  margin: 0 auto;
+  color: #04a9f5;
+  font-size: 24px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+.card2.full-card {
+  z-index: 99999;
+  border-radius: 0;
+}
+
 /* ==========  scrollbar End  =========== */
 .scroll-y {
   z-index: 1027;
@@ -8601,7 +8737,7 @@ a.btn-theme.active {
 /* Tabbable tabs */
 /* Hide tabbable panes to start, show them when `.active` */
 .tab-content {
-  padding: 35px 30px;
+  padding: 15px 0px;
   background: #fff;
   -webkit-box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.05);
           box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.05);
@@ -10567,25 +10703,6 @@ div.code-toolbar > .toolbar span:hover {
 .fixed-button.active {
 	bottom: 50px;
 	opacity: 1
-}
-.right-box {
-  float: right;
-}
-
-.col-sm-12 .col-md-6 {
-    position: relative;
-    width: 100%;
-    padding-right: 15px;
-    padding-left: 15px;
-}
-
-
-.form-control-sm {
-    height: calc(1.5em + .5rem + 2px);
-    padding: .25rem .5rem;
-    font-size: .875rem;
-    line-height: 1.5;
-    border-radius: .2rem;
 }
 
 @-webkit-keyframes pulse {
