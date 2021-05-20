@@ -36,15 +36,6 @@
                         <span class="d-block m-t-5">시간 순서에 따른 위치 표시</span>
                     </div>
                     <div class="card-block">
-                        <div id="sideInfoNav" class="infonav">
-                            <a href="javascript:void(0)" id="closebtn" onclick="closeNav()">&times;</a>
-                            <ul id="nav-info-list" class="info-list">
-                                <li id="info-Image"><img src= "static/assets/images/20210427_102533.jpg" style='max-width:100%'></img></li>
-                                <li id="info-Name"></li>
-                                <li id="info-Date"></li>
-                                <li id="info-Path"></li>
-                            </ul>
-                         </div>
                         <form method="post" id="geocoding_form6">
                             <div id="map" class="set-map" style="height:600px;"></div>
                             
@@ -77,9 +68,6 @@
 
     var profile = document.getElementById("dict-id").textContent;
     var profileJson = JSON.parse(profile);
-    
-    //window.alert(profileJson[1]);
-
 
     var map = new google.maps.Map(document.getElementById('map'), {
         zoom: 13,
@@ -91,9 +79,6 @@
     });
 
     var infowindow = new google.maps.InfoWindow();
-
-
-
     var size = "{{geo|length}}"; // 마커 개수
 
     var marker, i;
@@ -104,7 +89,6 @@
             map: map
         });
     
-
         google.maps.event.addListener(marker, 'click', (function (marker, i) { // 마커 클릭 이벤트
             return function () {
                 $.ajax({
@@ -112,14 +96,6 @@
                     data: { id: marker.id },        // 마커 id 값으로 data 불러오고
                     success: function (data) {      // data엔 id로 검색한 필요한 좌표에 대한 부가적인 정보를 서버에서 전달하여 담겨있다.
                         dataJson = JSON.parse(data) // JSON으로 파싱
-                        openNav(); // Info창 열기
-                        var date = new Date(dataJson[0]['fields']['datetaken']); // 타임스탬프 변환
-                        var dateString = date.getFullYear() + "/" + (date.getMonth()+1) + "/" + date.getDate() + " " +
-                                            date.getHours() + ":" + date.getMinutes() + ":" +  date.getSeconds();
-                        document.getElementById('info-Name').innerHTML = "파일명 : " + dataJson[0]['fields']['displayname'];
-                        document.getElementById('info-Date').innerHTML = "촬영시각 : " + dateString;
-                        document.getElementById('info-Path').innerHTML = "경로 : " + dataJson[0]['fields']['data'];
-
                         var contentString = '<div class="iw-content">' + 
                                                 '<div class="iw-subTitle">' + 
                                                     '<div class= "iw-image"> ' + // 보안 이유로 로컬경로에서 사진가져오기 불가능, 아래 사진은 예시로 넣어서 테스트함
@@ -127,7 +103,7 @@
                                                     '</div>' + 
                                                     '<ul id = "iw-info-list" class="info-list">' +
                                                         '<li id="info-Name">파일명 : ' + dataJson[0]['fields']['displayname'] + '</li>' +
-                                                        '<li id="info-Date">촬영시각 : ' + dateString + '</li>' +
+                                                        '<li id="info-Date">촬영시각 : ' + dataJson[0]['fields']['datetaken'] + '</li>' + // 타임스탬프 추후 변환 예정
                                                         '<li id="info-Path">경로 : ' + dataJson[0]['fields']['data'] + '</li>' +
                                                     '</ul>' +
                                                 '</div>' +
@@ -153,23 +129,8 @@
         });
 
     google.maps.event.addListener(map, 'click', function() {
-        closeNav();
         infowindow.close();
     });
-
-
-
-    
-</script>
-
-<script>
-    function openNav() {
-         document.getElementById("sideInfoNav").style.width = "40%";
-    }
-    
-    function closeNav() {
-        document.getElementById("sideInfoNav").style.width = "0";
-    }
 
 </script>
 {% endblock javascripts %}
