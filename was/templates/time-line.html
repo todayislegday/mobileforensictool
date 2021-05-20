@@ -1,6 +1,6 @@
 {% extends "layouts/base.html" %}
 
-{% block title %} Charts Morris {% endblock %} 
+{% block title %} Timeline {% endblock %} 
 
 <!-- Specific CSS goes HERE -->
 {% block stylesheets %}
@@ -19,12 +19,10 @@
                 <div class="row align-items-center">
                     <div class="col-md-12">
                         <div class="page-header-title">
-                            <h5 class="m-b-10">Morris Chart</h5>
+                            <h5 class="m-b-10">Timeline</h5>
                         </div>
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a href="/"><i class="feather icon-home"></i></a></li>
-                            <li class="breadcrumb-item"><a href="javascript:">Chart</a></li>
-                            <li class="breadcrumb-item"><a href="javascript:">Morris Chart</a></li>
                         </ul>
                     </div>
                 </div>
@@ -35,80 +33,161 @@
             <div class="page-wrapper">
                 <!-- [ Main Content ] start -->
                 <div class="row">
-                    <!-- [ Morris Chart ] start -->
-                    <div class="col-xl-6">
-                        <div class="card">
-                            <div class="card-header">
-                                <h5>Bar [ Simple ] Chart</h5>
+                    <div class="col-sm-12">
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active text-uppercase" id="timeline-tab" data-toggle="tab" href="#timeline" role="tab" aria-controls="timeline" aria-selected="true">Timeline</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-uppercase" id="result-tab" data-toggle="tab" href="#result" role="tab" aria-controls="result" aria-selected="false">Result</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="timeline" role="tabpanel" aria-labelledby="timeline-tab">
+                                <!-- [ Morris Chart ] start -->
+                                <div class="col-xl-12">
+                                    <div class="card2">
+                                        <div class="card-block">
+                                            <div id="morris-bar-stacked-chart" style="height:300px;width:1300px;;"></div>
+                                        </div>
+                                    </div>
+                                </div> 
+                                <div class="col-xl-12">
+                                    <div class="card2">
+                                        <div id="morris-bar-chart" style="height:0px"></div>
+                                    </div>
+                                </div>
+                                <!-- [ Morris Chart ] end -->
+
+                                <!-- [ Select Duration ] start -->
+                                <div class="col-xl-12">
+                                    <div class="card2">
+                                            <script language="JavaScript">
+                                                    function chk()
+                                                    {
+                                                        if(document.getElementById('year').checked==true)
+                                                        {
+                                                            document.getElementById('month1').value="1"
+                                                            document.getElementById('month2').value="12"
+                                                            document.getElementById('day1').value="1"
+                                                            document.getElementById('day2').value="31"
+                                                            document.getElementById('hour1').value="0"
+                                                            document.getElementById('hour2').value="23"
+                                                            document.getElementById('minute1').value="0"
+                                                            document.getElementById('minute2').value="59"
+                                                        }
+                                                        if(document.getElementById('month').checked==true)
+                                                        {
+                                                            document.getElementById('month1').value=''
+                                                            document.getElementById('month2').value=''
+                                                            document.getElementById('day1').value="1"
+                                                            document.getElementById('day2').value="31"
+                                                            document.getElementById('hour1').value="0"
+                                                            document.getElementById('hour2').value="23"
+                                                            document.getElementById('minute1').value="0"
+                                                            document.getElementById('minute2').value="59"
+                                                        }
+                                                        if(document.getElementById('day').checked==true)
+                                                        {
+                                                            document.getElementById('month1').value=''
+                                                            document.getElementById('month2').value=''
+                                                            document.getElementById('day1').value=''
+                                                            document.getElementById('day2').value=''
+                                                            document.getElementById('hour1').value="0"
+                                                            document.getElementById('hour2').value="23"
+                                                            document.getElementById('minute1').value="0"
+                                                            document.getElementById('minute2').value="59"
+                                                        }
+                                                        if(document.getElementById('hour').checked==true)
+                                                        {
+                                                            document.getElementById('month1').value=''
+                                                            document.getElementById('month2').value=''
+                                                            document.getElementById('day1').value=''
+                                                            document.getElementById('day2').value=''
+                                                            document.getElementById('hour1').value=''
+                                                            document.getElementById('hour2').value=''
+                                                            document.getElementById('minute1').value="0"
+                                                            document.getElementById('minute2').value="59"
+                                                        }
+                                                        if(document.getElementById('minute').checked==true)
+                                                        {
+                                                            document.getElementById('month1').value=''
+                                                            document.getElementById('month2').value=''
+                                                            document.getElementById('day1').value=''
+                                                            document.getElementById('day2').value=''
+                                                            document.getElementById('hour1').value=''
+                                                            document.getElementById('hour2').value=''
+                                                            document.getElementById('minute1').value=''
+                                                            document.getElementById('minute2').value=''
+                                                        }
+                                                    }
+                                            </script>
+                                            <div style="height:150px;width:1300px">
+                                                <div class="card-first">
+                                                    <form name="form-first">
+                                                        <label for="jb-input-text">단위 : &nbsp;</label>
+                                                        <input type="radio" id="year" name="duration" value="year" onclick="chk()">
+                                                        <label for="year">Year &nbsp;</label>
+                                                        <input type="radio" id="month" name="duration" value="month" onclick="chk()">
+                                                        <label for="month">Month &nbsp;</label>
+                                                        <input type="radio" id="day" name="duration" value="day" onclick="chk()">
+                                                        <label for="day">Day &nbsp;</label>
+                                                        <input type="radio" id="hour" name="duration" value="hour" onclick="chk()">
+                                                        <label for="hour">Hour &nbsp;</label>
+                                                        <input type="radio" id="minute" name="duration" value="minute" onclick="chk()">
+                                                        <label for="minute">Minute &nbsp;</label>
+                                                    </form>
+                                                </div>
+
+                                                <div class="card-second">
+                                                    <form name="form-second">
+                                                        <label for="year">Year : </label>
+                                                        <input type="number" id="year1" name="start" min="0" max="2021">
+                                                        <label for="month">&nbsp; Month : </label>
+                                                        <input type="number" id="month1" name="start" min="1" max="12">
+                                                        <label for="day">&nbsp; Day : </label>
+                                                        <input type="number" id="day1" name="start" min="1" max="31">
+                                                        <label for="hour">&nbsp; Hour : </label>
+                                                        <input type="number" id="hour1" name="start" min="0" max="23">
+                                                        <label for="other">&nbsp; Minute : </label>
+                                                        <input type="number" id="minute1" name="start" min="0" max="59">  
+                                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ~ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                        <label for="year">Year : </label>
+                                                        <input type="number" id="year2" name="end" min="0" max="2021">
+                                                        <label for="month">&nbsp; Month : </label>
+                                                        <input type="number" id="month2" name="end" min="1" max="12">
+                                                        <label for="day">&nbsp; Day : </label>
+                                                        <input type="number" id="day2" name="end" min="1" max="31">
+                                                        <label for="hour">&nbsp; Hour : </label>
+                                                        <input type="number" id="hour2" name="end" min="0" max="23">
+                                                        <label for="other">&nbsp; Minute : </label>
+                                                        <input type="number" id="minute2" name="end" min="0" max="59">        
+                                                        <input type="submit" value="전송" style="margin-left:30px;">    
+                                                    </form>
+                                                </div>
+                                            </div>
+                                    </div>
+                                </div>
+                            <!-- [ Select Duration ] end -->
                             </div>
-                            <div class="card-block">
-                                <div id="morris-bar-chart" style="height:300px"></div>
+                            <div class="tab-pane fade" id="result" role="tabpanel" aria-labelledby="result-tab">
+                                <!-- [ basic-table ] start -->
+                    <div class="col-xl-12">
+                        <div class="card">
+                            <div class="card-block table-border-style">
+                                <div class="table-responsive">
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-6">
-                        <div class="card">
-                            <div class="card-header">
-                                <h5>Bar [ Stacked ] Chart</h5>
-                            </div>
-                            <div class="card-block">
-                                <div id="morris-bar-stacked-chart" style="height:300px"></div>
+                    <!-- [ basic-table ] end -->
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-6">
-                        <div class="card">
-                            <div class="card-header">
-                                <h5>Line [ Angle ] Chart</h5>
-                            </div>
-                            <div class="card-block">
-                                <div id="morris-area-chart" style="height:300px"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-6">
-                        <div class="card">
-                            <div class="card-header">
-                                <h5>Area [ Smooth ] Chart</h5>
-                            </div>
-                            <div class="card-block">
-                                <div id="morris-area-curved-chart" style="height:300px"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-6">
-                        <div class="card">
-                            <div class="card-header">
-                                <h5>Line [ Angle ] Chart</h5>
-                            </div>
-                            <div class="card-block">
-                                <div id="morris-line-chart" class="ChartShadow" style="height:300px"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-6">
-                        <div class="card">
-                            <div class="card-header">
-                                <h5>Line [ Smooth ] Chart</h5>
-                            </div>
-                            <div class="card-block">
-                                <div id="morris-line-smooth-chart" class="ChartShadow" style="height:300px"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-6">
-                        <div class="card">
-                            <div class="card-header">
-                                <h5>Donut Chart</h5>
-                            </div>
-                            <div class="card-block">
-                                <div id="morris-donut-chart" style="height:300px"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- [ Morris Chart ] end -->
                 </div>
                 <!-- [ Main Content ] end -->
+
+            
             </div>
         </div>
     </div>
