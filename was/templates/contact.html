@@ -3,7 +3,7 @@
 {% block title %} Ui Buttons {% endblock %} 
 
 <!-- Specific CSS goes HERE -->
-{% block stylesheets %}{% endblock stylesheets %}
+{% block stylesheets %}<link rel="stylesheet" href="/static/assets/css/right_box.css">{% endblock stylesheets %}
 
 {% block content %}
 
@@ -36,8 +36,12 @@
                         <div class="card">
                             <div class="card-header">
                                 <h5>Basic Table</h5>
-                                <span class="d-block m-t-5">use class <code>table</code> inside table element</span>
-                            </div>
+                                    <div class="d-block m-t-5">use class <code>table</code> inside table element</div>
+                                        <div class="right-box">
+                                            <label> Search:<input onkeyup="filter()" type="search" id="keyword" class="form-control form-control-sm" placeholder="" aria-controls="dtBasicExample">
+                                            </label>
+                                        </div>
+                                    </div>
                             <div class="card-block table-border-style">
                                 <div class="table-responsive">
                                     <table class="table table-hover">
@@ -50,7 +54,7 @@
                                         </thead>
                                         <tbody>
                                             {% for c in contact %}
-                                            <tr>
+                                            <tr class='list_data'>
                                                 <td>{{c.id}}</td>
                                                 <td>{{c.name}}</td>
                                                 <td>{{c.number | slice:"11:"}}</td>
@@ -112,5 +116,5 @@
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->
-{% block javascripts %}{% endblock javascripts %}
+{% block javascripts %}<script src="/static/assets/js/filter.js"></script>{% endblock javascripts %}
 
