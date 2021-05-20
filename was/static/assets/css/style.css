@@ -10735,61 +10735,6 @@ div.code-toolbar > .toolbar span:hover {
 	}
 }
 
-
-
-/* ================= geo Side InfoNav=========== */
-.infonav {
-  height: 748px;
-  width: 0;
-  position:absolute;
-  z-index: 1;
-  top: 0;
-  right: 0;
-  background-color: #3f4d67aa;
-  overflow-x: hidden;
-  transition: 0.5s;
-  padding-top: 60px;
-}
-
-.infonav #nav-info-list{
-  padding: 20px 40px 20px 40px;
-  text-decoration: none;
-  font-size: 15px;
-  color: #ffffff;
-  display: block;
-  transition: 0.3s;
-  list-style: none;
-}
-
-.infonav #nav-info-list li {
-  margin : 10px 0px 10px 0px;
-}
-
-#info-Image {
-  text-align: center;
-  margin-bottom: 50px;
-}
-
-
-.infonav ::-webkit-file-upload-button:hover {
-  color: #f1f1f1;
-}
-
-.infonav #closebtn {
-  position: absolute;
-  top: 0;
-  right: 25px;
-  font-size: 36px;
-  margin-left: 50px;
-  color: #ffffff;
-}
-
-@media screen and (max-height: 450px) {
-  .infonav {padding-top: 15px;}
-  .infonav ul {font-size: 18px;}
-}
-
-
 /* ==================== geo marker infowindow ====================== */
 
 /* 제일 바깥 블럭 : .gm-style */
