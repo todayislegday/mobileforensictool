@@ -9,6 +9,7 @@ from django.core.paginator import Paginator
 from django.views.decorators.csrf import csrf_exempt
 from django.core import serializers
 import os
+
 # 루트 디렉터리로 처음 띄울 페이지 지정
 def index(request):
     return render(request,'main.html')
@@ -48,7 +49,6 @@ def pages(request):
             if 'id' in request.GET:##ajax 처리
                 id=request.GET['id']
                 OUTPATH="/static/assets/images/"
-                print(OUTPATH)
                 a=map_model.objects.raw("select _id,latitude,longitude,_display_name,replace(_data,'/storage/emulated','/static/assets/images/media') as data,DATETIME(ROUND(datetaken / 1000), 'unixepoch','localtime') AS datetaken from files where _id=%s" %id)
                 return JsonResponse(serializers.serialize('json',a),safe=False)
                 
@@ -64,6 +64,56 @@ def pages(request):
                     i+=1
             print(map_dict)  
             context['geo']=map_dict
+
+        elif context['url']=="chrome-history.html":#지호
+            page = request.GET.get('page', '1')
+
+            c=chrome3_model.objects.raw("SELECT id, url, title, datetime(( last_visit_time/1000000)-11644473600,'unixepoch','localtime') as last_visit_time, visit_count FROM urls ")
+            paginator = Paginator(c, 10) 
+            page_obj = paginator.get_page(page)
+
+            context['page']=page_obj
+        elif context['url']=="chrome-download.html":#지호
+            page = request.GET.get('page', '1')
+
+            c=chrome5_model.objects.raw("SELECT id, current_path, target_path,datetime(( start_time/1000000)-11644473600,'unixepoch','localtime') as start_time, datetime((end_time/1000000)-11644473600,'unixepoch','localtime') as end_time,tab_url,original_mime_type, received_bytes, total_bytes FROM downloads ")    
+            paginator = Paginator(c, 10) 
+            page_obj = paginator.get_page(page)
+
+            context['page']=page_obj
+        elif context['url']=="chrome-search.html":#지호
+            page = request.GET.get('page', '1')
+
+            c=chrome2_model.objects.raw("SELECT keyword_id,term,normalized_term FROM keyword_search_terms")
+            paginator = Paginator(c, 10) 
+            page_obj = paginator.get_page(page)
+
+            context['page']=page_obj
+
+        elif context['url']=="sam-history.html":#지호
+            page = request.GET.get('page', '1')
+
+            c=Sam2_model.objects.raw("SELECT id, url, title, datetime(( last_visit_time/1000000)-11644473600,'unixepoch','localtime') as last_visit_time, visit_count FROM urls ")
+            paginator = Paginator(c, 10) 
+            page_obj = paginator.get_page(page)
+
+            context['page']=page_obj
+        elif context['url']=="sam-download.html":#지호
+            page = request.GET.get('page', '1')
+
+            c=Sam4_model.objects.raw("SELECT id, current_path, target_path,datetime(( start_time/1000000)-11644473600,'unixepoch','localtime') as start_time, datetime((end_time/1000000)-11644473600,'unixepoch','localtime') as end_time,tab_url,original_mime_type, received_bytes, total_bytes FROM downloads ")    
+            paginator = Paginator(c, 10) 
+            page_obj = paginator.get_page(page)
+
+            context['page']=page_obj
+        elif context['url']=="sam-search.html":#지호
+            page = request.GET.get('page', '1')
+
+            c=Sam1_model.objects.raw("SELECT keyword_id,term,normalized_term FROM keyword_search_terms")
+            paginator = Paginator(c, 10) 
+            page_obj = paginator.get_page(page)
+
+            context['page']=page_obj
         
         elif context['url']=="time-line.html":#용하
             mms=mms_model.objects.raw("SELECT _id,address,content,datetime((date / 1000), 'unixepoch','localtime') AS date FROM messages ORDER BY date ASC")

@@ -1,0 +1,126 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Ui Buttons {% endblock %} 
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %} <link rel="stylesheet" href="/static/assets/css/right_box.css">{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="pcoded-content">
+    <div class="pcoded-inner-content">
+        <!-- [ breadcrumb ] start -->
+        <div class="page-header">
+            <div class="page-block">
+                <div class="row align-items-center">
+                    <div class="col-md-12">
+                        <div class="page-header-title">
+                            <h5 class="m-b-10">Bootstrap Basic Tables</h5>
+                        </div>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="index.html"><i class="feather icon-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="#!">Tables</a></li>
+                            <li class="breadcrumb-item"><a href="javascript:">Basic Tables</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- [ breadcrumb ] end -->
+        <div class="main-body">
+            <div class="page-wrapper">
+                <!-- [ Main Content ] start -->
+                <div class="row">
+                    <!-- [ basic-table ] start -->
+                    <div class="col-xl-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>Basic Table</h5>
+                                    <div class="d-block m-t-5">use class <code>table</code> inside table element</div>
+                                        <div class="right-box">
+                                            <label> Search:<input onkeyup="filter()" type="search" id="keyword" class="form-control form-control-sm" placeholder="" aria-controls="dtBasicExample">
+                                            </label>
+                                        </div>
+                                    </div>
+                            <div class="card-block table-border-style">
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>URL</th>
+                                                <th>TITLE</th>
+                                                <th>마지막 방문 시간</th>
+                                                <th>방문 횟수</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for p in page %}
+                                            <tr class='list_data'>
+                                                <td>{{p.id}}</td>
+                                                <td>{{p.url}}</td>
+                                                <td>{{p.title}}</td>
+                                                <td>{{p.last_visit_time}}</td>
+                                                <td>{{p.visit_count}}</td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                    <!-- 페이징처리시작-->
+                                    <ul class="pagination justify-content-center">
+                                        <!-- 이전페이지 -->
+                                        {% if page.has_previous %}
+                                        <li class="page-item">
+                                            <a class="page-link" href="?page={{ page.previous_page_number }}">이전</a>
+                                        </li>
+                                        {% else %}
+                                        <li class="page-item disabled">
+                                            <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>
+                                        </li>
+                                        {% endif %}
+                                        <!-- 페이지리스트 -->
+                                        {% for page_number in page.paginator.page_range %}
+                                            {% if page_number == page.number %}
+                                            <li class="page-item active" aria-current="page">
+                                                <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+                                            </li>
+                                            {% else %}
+                                            <li class="page-item">
+                                                <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+                                            </li>
+                                            {% endif %}
+                                        {% endfor %}
+                                        <!-- 다음페이지 -->
+                                        {% if page.has_next %}
+                                        <li class="page-item">
+                                            <a class="page-link" href="?page={{ page.next_page_number }}">다음</a>
+                                        </li>
+                                        {% else %}
+                                        <li class="page-item disabled">
+                                            <a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a>
+                                        </li>
+                                        {% endif %}
+                                    </ul>
+                                    <!-- 페이징처리 끝 -->
+
+
+                                    <!-- 페이징처리끝-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- [ basic-table ] end -->
+                </div>
+                <!-- [ Main Content ] end -->
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %} 
+
+
+<script src="/static/assets/js/filter.js">
+</script>{% endblock javascripts %}
