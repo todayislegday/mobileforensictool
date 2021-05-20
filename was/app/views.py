@@ -47,9 +47,7 @@ def pages(request):
         elif context['url']=="geo-Artifact.html":  ##재식
             if 'id' in request.GET:##ajax 처리
                 id=request.GET['id']
-                ###############함수로 빼기################
                 OUTPATH="/static/assets/images/"
-                ##########################################
                 print(OUTPATH)
                 a=map_model.objects.raw("select _id,latitude,longitude,_display_name,replace(_data,'/storage/emulated','/static/assets/images/media') as data,DATETIME(ROUND(datetaken / 1000), 'unixepoch','localtime') AS datetaken from files where _id=%s" %id)
                 return JsonResponse(serializers.serialize('json',a),safe=False)
@@ -68,7 +66,7 @@ def pages(request):
             context['geo']=map_dict
         
         elif context['url']=="time-line.html":#용하
-            mms=mms_model.objects.raw("SELECT datetime((date / 1000), 'unixepoch','localtime') FROM messages ORDER BY date ASC")
+            mms=mms_model.objects.raw("SELECT _id,address,content,datetime((date / 1000), 'unixepoch','localtime') AS date FROM messages ORDER BY date ASC")
             calllog=calllog_model.objects.raw("SELECT datetime((date / 1000), 'unixepoch','localtime') FROM calls ORDER BY date ASC")
             chromekeyword=chrome2_model.objects.all()
             chromeurlhistory=chrome3_model.objects.raw("SELECT urls.id, urls.url, urls.title, datetime(visits.visit_time/1000000 + (strftime('%%s','1601-01-01')),'unixepoch','localtime') AS visit_time FROM urls, visits WHERE urls.id=visits.url ORDER BY visits.visit_time ASC")
@@ -83,7 +81,20 @@ def pages(request):
             appinslog=Appinslog_model.objects.raw("select datetime(first_download_ms/1000, 'unixepoch','localtime'),datetime(delivery_data_timestamp_ms/1000, 'unixepoch','localtime'),datetime(last_update_timestamp_ms/1000, 'unixepoch','localtime'),datetime(install_request_timestamp_ms/1000, 'unixepoch','localtime') from appstate")
             media=Media_model.objects.all()
             
-            context['mms']=mms
+            ###함수로 빼기#################
+            mms_dict={}
+            i=0
+            for map in mms:#queryset->dict(list[])
+                mms_dict[i]=list()
+                mms_dict[i].append(map.id)
+                mms_dict[i].append(map.address)
+                mms_dict[i].append(map.content)
+                mms_dict[i].append(map.date)
+                i+=1
+            ###################################
+            print(mms_dict)  
+
+            context['mms']=mms_dict
             context['calllog']=calllog
             context['chromekeyword']=chromekeyword
             context['chromeurlhistory']=chromeurlhistory
