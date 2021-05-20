@@ -199,6 +199,16 @@
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
 
+"{{mms|json_script:'dict-id'}}"
+<script>
+var profile = document.getElementById("dict-id").textContent;
+var profileJson = JSON.parse(profile);
+console.log(profileJson)
+console.log(profileJson[0])
+console.log(profileJson[0][0])
+
+</script>
+
     <script src="/static/assets/plugins/chart-morris/js/raphael.min.js"></script>
     <script src="/static/assets/plugins/chart-morris/js/morris.min.js"></script>
     <script src="/static/assets/js/pages/chart-morris-custom.js"></script>
