@@ -51,7 +51,7 @@ def pages(request):
                 OUTPATH="/static/assets/images/"
                 ##########################################
                 print(OUTPATH)
-                a=map_model.objects.raw("select _id,latitude,longitude,_display_name,'%s' || _display_name as data,DATETIME(ROUND(datetaken / 1000), 'unixepoch','localtime') AS datetaken from files where _id=%s" %(OUTPATH,id))
+                a=map_model.objects.raw("select _id,latitude,longitude,_display_name,replace(_data,'/storage/emulated','/static/assets/images/media') as data,DATETIME(ROUND(datetaken / 1000), 'unixepoch','localtime') AS datetaken from files where _id=%s" %id)
                 return JsonResponse(serializers.serialize('json',a),safe=False)
                 
             map_list=map_model.objects.all()
