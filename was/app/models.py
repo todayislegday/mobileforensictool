@@ -71,7 +71,7 @@ class map_model(models.Model): #재식
     longt=models.FloatField(db_column='longitude',blank=True,null=True)
     displayname=models.TextField(db_column='_display_name',blank=True,null=True)
     data=models.TextField(db_column='_data',blank=True,null=True)
-    datetaken=models.TextField(db_column='_data',blank=True,null=True)
+    datetaken=models.TextField(blank=True,null=True)
     
     
 class chrome2_model(models.Model): #용하

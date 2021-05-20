@@ -42,18 +42,16 @@ def pages(request):
             page_obj = paginator.get_page(page)
 
             context['page']=page_obj
-
+        elif context['url']=="smart-info.html":
+            print("hi")
         elif context['url']=="geo-Artifact.html":  ##재식
             if 'id' in request.GET:##ajax 처리
                 id=request.GET['id']
                 ###############함수로 빼기################
-                path=os.path.dirname(os.path.abspath(__file__))
-                f = open(f"{path}/../../경로.txt", 'r')
-                OUTPATH=f.readlines()[1]
-                f.close()
+                OUTPATH="/static/assets/images/"
                 ##########################################
                 print(OUTPATH)
-                a=map_model.objects.raw("select _id,latitude,longitude,_display_name,replace(_data,'/storage/emulated','%s/media')as data,datetaken from files where _id=%s" %(OUTPATH,id))
+                a=map_model.objects.raw("select _id,latitude,longitude,_display_name,'%s' || _display_name as data,DATETIME(ROUND(datetaken / 1000), 'unixepoch','localtime') AS datetaken from files where _id=%s" %(OUTPATH,id))
                 return JsonResponse(serializers.serialize('json',a),safe=False)
                 
             map_list=map_model.objects.all()
