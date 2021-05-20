@@ -8,6 +8,7 @@ target_folder = set(['./data/com.samsung.android.providers.contacts/databases/',
                      './data/com.android.vending/databases/', './data/com.android.providers.downloads/databases/', './data/com.samsung.android.providers.media/',
                       './data/com.android.providers.media/databases/', './media/'])
 image_folder = set(['.png', '.jpg', '.jpeg', '.gif', '.mp4'])
+image_path = os.path.dirname(os.path.abspath(__file__))
 
 def decompression(file_path, output_path):
 
@@ -16,7 +17,7 @@ def decompression(file_path, output_path):
         if folder == './media/':
             for img in image_folder:
                 image_name = set(tarinfo for tarinfo in tar.getmembers() if (tarinfo.name.startswith('./media/') and tarinfo.name.endswith(img)))
-                tar.extractall(members=image_name, path=os.path.dirname(os.path.abspath('./was/static/assets/images/widget')))
+                tar.extractall(members=image_name, path=f"{image_path}/../was/static/assets/images/")
             continue
         target_name = set(tarinfo for tarinfo in tar.getmembers() if tarinfo.name.startswith(folder))  # target_folder에 있는 폴더의 이름을 가진 모든 tarinfo를 target_name으로 둔다.
         tar.extractall(members=target_name, path=output_path)
