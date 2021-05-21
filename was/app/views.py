@@ -13,32 +13,40 @@ import os,mmap
 
 # 루트 디렉터리로 처음 띄울 페이지 지정
 def index(request):
+ try:
     context={}
-    # from .crawling import image1
-    # path=os.path.dirname(os.path.abspath(__file__))
-    # f = open(f"{path}/build.prop", 'r')#경로 추후 
+    from .crawling import image1
+    path=os.path.dirname(os.path.abspath(__file__))
+    f = open(f"{path}/build.prop", 'r')#경로 추후 
            
-    # lines = f.readlines()
-    # for line in lines:
-    #     if 'ro.product.system.model' in line:
-    #         lines1 = line.split("=") 
-    #         context['model']=line.split("=")[1].strip('\n') #model
-    #     elif 'ro.system.build.version.release' in line:
-    #         lines1 = line.split("=") 
-    #         context['osversion']=line.split("=")[1].strip('\n')
-    #     elif 'ro.product.system.manufacturer' in line:
-    #         lines1 = line.split("=") 
-    #         context['manufacturer']=line.split("=")[1].strip('\n')
-    #     elif 'ro.build.characteristics' in line:
-    #         lines1 = line.split("=") 
-    #         context['sdcard']=line.split("=")[1].strip('\n')
-    #     elif 'ro.product.local' in line:
-    #         context['local']=line.split("=")[1].strip('\n')
+    lines = f.readlines()
+    for line in lines:
+        if 'ro.product.system.model' in line:
+            lines1 = line.split("=") 
+            context['model']=line.split("=")[1].strip('\n') #model
+        elif 'ro.system.build.version.release' in line:
+            lines1 = line.split("=") 
+            context['osversion']=line.split("=")[1].strip('\n')
+        elif 'ro.product.system.manufacturer' in line:
+            lines1 = line.split("=") 
+            context['manufacturer']=line.split("=")[1].strip('\n')
+        elif 'ro.build.characteristics' in line:
+            lines1 = line.split("=") 
+            context['sdcard']=line.split("=")[1].strip('\n')
+        elif 'ro.product.local' in line:
+            context['local']=line.split("=")[1].strip('\n')
                     
                    
-    #         context['imgpath']=image1(context['model'])#크롤링 함수,pip install bs4,lxml
+            context['imgpath']=image1(context['model'])#크롤링 함수,pip install bs4,lxml
+
+
+    context['recentcall']=calllog_model.objects.raw('select _id,name,number,DATETIME(ROUND(date/ 1000), "unixepoch","localtime") AS date from calls order by date desc')[:5]
 
     return render(request,'Dashboard.html',context)
+ 
+ except Exception as e:
+        print(e)
+        return render(request,'page-500.html',context)
 
 def pages(request):
     context = {}#렌더링된 html페이지에 사용할 변수를 넣는다.
@@ -69,33 +77,7 @@ def pages(request):
             page_obj = paginator.get_page(page)
 
             context['page']=page_obj
-        # elif context['url']=="smart-info.html":
-        #     from .crawling import image1
-        #     path=os.path.dirname(os.path.abspath(__file__))
-        #     f = open(f"{path}/build.prop", 'r')#경로 추후 
-           
-        #     lines = f.readlines()
-        #     for line in lines:
-        #         if 'ro.product.system.model' in line:
-        #             lines1 = line.split("=") 
-        #             context['model']=line.split("=")[1].strip('\n') #model
-        #         elif 'ro.system.build.version.release' in line:
-        #             lines1 = line.split("=") 
-        #             context['osversion']=line.split("=")[1].strip('\n')
-        #         elif 'ro.product.system.manufacturer' in line:
-        #             lines1 = line.split("=") 
-        #             context['manufacturer']=line.split("=")[1].strip('\n')
-        #         elif 'ro.build.characteristics' in line:
-        #             lines1 = line.split("=") 
-        #             context['sdcard']=line.split("=")[1].strip('\n')
-        #         elif 'ro.product.local' in line:
-        #             context['local']=line.split("=")[1].strip('\n')
-                    
-                   
-        #     context['imgpath']=image1(context['model'])#크롤링 함수,pip install bs4,lxml
-
-        
-
+    
         elif context['url']=="geo-Artifact.html":  ##재식
             if 'id' in request.GET:##ajax 처리
                 id=request.GET['id']

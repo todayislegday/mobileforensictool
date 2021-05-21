@@ -1,5 +1,6 @@
 from django.db import models
 
+
 #db 모델작성
 
 class contacts_model(models.Model): #어진
@@ -24,7 +25,7 @@ class calllog_model(models.Model): #용하
     number = models.TextField(blank=True,null=True)
     date = models.TextField(blank=True,null=True)
     duration = models.TextField(blank=True,null=True)
-    
+    name=models.TextField(blank=True,null=True)
     
 class message1_model(models.Model): #어진
    
