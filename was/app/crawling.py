@@ -1,6 +1,5 @@
 import urllib.request
 from urllib.request import urlopen
-#import ssl
 import re #정규표현식
 from bs4 import BeautifulSoup
 import urllib.parse
@@ -9,20 +8,20 @@ from urllib.parse import quote_plus
 
 
 
-def read(): #추후 삭제
-    f = open("build.prop.txt", 'r') #경로 추후 지정
-    lines = f.readlines()
-    print("lines : ", lines[14])
+# def read(): #추후 삭제
+#     f = open("build.prop.txt", 'r') #경로 추후 지정
+#     lines = f.readlines()
+#     print("lines : ", lines[14])
 
-    lines1 = [] #=기준으로 나눈 문자열이 들어갈 리스트
+#     lines1 = [] #=기준으로 나눈 문자열이 들어갈 리스트
 
-    lines1 = lines[14].split("=") 
-    model = lines1[1].strip('\n') #model
+#     lines1 = lines[14].split("=") 
+#     model = lines1[1].strip('\n') #model
 
-    return image1( model)
+#     return image1(model)
 
 
-def image1( model): #크롤링코드
+def image1(model): #크롤링코드
    
     baseUrl = 'https://www.google.com/search?q=' # 검색
     plusUrl = '&sxsrf=ALeKk03NvT-d6AcF-V5oJ8bgTDKo4J78Iw:1589354807929&source=lnms&tbm=isch&sa=X&ved=2ahUKEwjxo_6FqLDpAhWx-GEKHdr6CUQQ_AUoAXoECBUQAw&biw=958&bih=927'
@@ -62,8 +61,8 @@ def image1( model): #크롤링코드
 
 
 #insert data into sqlite
-if __name__=="__main__":
-    read()
+# if __name__=="__main__":
+#     read()
     #image1(sys.argv[1]) #모델만 넘겨줌
     
 

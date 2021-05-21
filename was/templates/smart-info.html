@@ -39,8 +39,7 @@
                                 </div>
                                 <div class="card-body">
                                     <!-- 여기에 이미지-->
-                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtCdfWbA_FVfr6UX9MgtLlx51BY-Hyq13rEKeTnQl-u9duVOJAPCLJDoUguw&s" >
-                                    <!-- <img src="{%static 'img/~~~~.PNG'}" alt="~~"> --> 
+                                    <img src="{{imgpath}}" >
                                 </div>
                             </div>
                         </div>
@@ -52,23 +51,23 @@
                                 <table class="table">
                                         <tr>
                                             <th>안드로이드 버전: </th>
-                                            <td>11</td>
+                                            <td>{{osversion}}</td>
                                         </tr>
                                         <tr>
                                             <th>제조사: </th>
-                                            <td>22</td>
+                                            <td>{{manufacturer}}</td>
                                         </tr>
                                         <tr>
                                             <th>모델번호: </th>
-                                            <td>33</td>
+                                            <td>{{model}}</td>
                                         </tr>
                                         <tr>
                                             <th>SD카드: </th>
-                                            <td>44</td>
+                                            <td>{{sdcard}}</td>
                                         </tr>
                                         <tr>
                                             <th>Local: </th>
-                                            <td>55</td>
+                                            <td>{{local}}</td>
                                         </tr>    
                                 </table>       
                             </div>

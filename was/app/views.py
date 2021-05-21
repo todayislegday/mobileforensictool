@@ -8,7 +8,8 @@ from .models import contacts_model,message1_model,message2_model,map_model,calll
 from django.core.paginator import Paginator
 from django.views.decorators.csrf import csrf_exempt
 from django.core import serializers
-import os
+import os,mmap
+
 
 # 루트 디렉터리로 처음 띄울 페이지 지정
 def index(request):
@@ -44,7 +45,32 @@ def pages(request):
 
             context['page']=page_obj
         elif context['url']=="smart-info.html":
-            print("hi")
+            from .crawling import image1
+            path=os.path.dirname(os.path.abspath(__file__))
+            f = open(f"{path}/build.prop", 'r')#경로 추후 
+           
+            lines = f.readlines()
+            for line in lines:
+                if 'ro.product.system.model' in line:
+                    lines1 = line.split("=") 
+                    context['model']=line.split("=")[1].strip('\n') #model
+                elif 'ro.system.build.version.release' in line:
+                    lines1 = line.split("=") 
+                    context['osversion']=line.split("=")[1].strip('\n')
+                elif 'ro.product.system.manufacturer' in line:
+                    lines1 = line.split("=") 
+                    context['manufacturer']=line.split("=")[1].strip('\n')
+                elif 'ro.build.characteristics' in line:
+                    lines1 = line.split("=") 
+                    context['sdcard']=line.split("=")[1].strip('\n')
+                elif 'ro.product.local' in line:
+                    context['local']=line.split("=")[1].strip('\n')
+                    
+                   
+            context['imgpath']=image1(context['model'])#크롤링 함수,pip install bs4,lxml
+
+        
+
         elif context['url']=="geo-Artifact.html":  ##재식
             if 'id' in request.GET:##ajax 처리
                 id=request.GET['id']

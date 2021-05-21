@@ -66,7 +66,7 @@ class QtGUI(QWidget):
 		super().__init__()
 		self.filepath=''
 		self.setWindowTitle("Timmy Room") # 타이틀 바
-		self.setWindowIcon(QIcon('icon.png'))
+		self.setWindowIcon(QIcon(f'{os.path.dirname(os.path.abspath(__file__))}/icon.png'))
 		self.resize(600,50) # 창 사이즈
 		#그리드 생성
 		self.Lgrid = QGridLayout()
