@@ -96,19 +96,31 @@
                     data: { id: marker.id },        // 마커 id 값으로 data 불러오고
                     success: function (data) {      // data엔 id로 검색한 필요한 좌표에 대한 부가적인 정보를 서버에서 전달하여 담겨있다.
                         dataJson = JSON.parse(data) // JSON으로 파싱
-                        console.log(dataJson)
+                        
+                        video_type = ['.mp4']; // 여기에 영상 확장자 다 넣어
+                        var path = dataJson[0]['fields']['data']; // 경로를 넣어, 나중에 확장자 구하려고
+
                         var contentString = '<div class="iw-content">' + 
                                                 '<div class="iw-subTitle">' + 
-                                                    '<div class= "iw-image"> ' + // 보안 이유로 로컬경로에서 사진가져오기 불가능, 아래 사진은 예시로 넣어서 테스트함
-                                                        '<img id="info-img" src='+ dataJson[0]['fields']['data']+' style="max-width:100%"></img>' +
+                                                    '<div class= "iw-image"> ' +
+                                                        '<img id="info-img" src="' + dataJson[0]['fields']['data'] + '"style="max-width:100%"></img>' +
+                                                        // '<video id="info-video" controls src="' + dataJson[0]['fields']['data'] + '" style="max-width:100%"></video>' +
                                                     '</div>' + 
                                                     '<ul id = "iw-info-list" class="info-list">' +
                                                         '<li id="info-Name">파일명 : ' + dataJson[0]['fields']['displayname'] + '</li>' +
-                                                        '<li id="info-Date">촬영시각 : ' + dataJson[0]['fields']['datetaken'] + '</li>' + // 타임스탬프 추후 변환 예정
-                                                        '<li id="info-Path">경로 : ' + dataJson[0]['fields']['data'] + '</li>' +
+                                                        '<li id="info-Date">찍은 날짜 : ' + dataJson[0]['fields']['datetaken'] + '</li>' +
+                                                        // 경로는 tar 파일 전체 압축해제가 아니라서 보여줄 필요 X 삭제하자
                                                     '</ul>' +
                                                 '</div>' +
                                             '</div>';
+                        
+                        for(var i=0; i<video_type.length; i++) {
+                            if(path.substr(-4) == video_type[i]) {      // 경로 뒤 4개(확장자)를 잘라서 영상 확장자와 비교
+                                contentString= contentString.replace('<img id="info-img', '<video controls id="info-video"');
+                                contentString = contentString.replace('</img>', '</vedio>');
+                            }
+                        } 
+
                         infowindow.setContent(contentString);
                         infowindow.open(map, marker);
                         map.setZoom(15);
