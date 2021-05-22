@@ -63,12 +63,13 @@ def pages(request):
         if context['url']=="contact.html": ##어진
             page = request.GET.get('page', '1')
 
-            c=contacts_model.objects.all()
+            c=contacts_model.objects.values()
             paginator = Paginator(c, 10) 
             page_obj = paginator.get_page(page)
             
             context['calllog']=calllog_model.objects.values()
-            context['contact']=page_obj
+            context['contact']=c
+            context['page']=page_obj
             
         elif context['url']=="message.html": ##어진
             page = request.GET.get('page', '1')
@@ -78,6 +79,8 @@ def pages(request):
             page_obj = paginator.get_page(page)
 
             context['page']=page_obj
+            context['msg']=m
+
     
         elif context['url']=="geo-Artifact.html":  ##재식
             if 'id' in request.GET:##ajax 처리

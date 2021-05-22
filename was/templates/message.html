@@ -54,7 +54,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {% for p in page %}
+                                            {% for p in msg%}
                                             <tr class='list_data'>
                                                 <td>{{p.id}}</td>
                                                 <td>{{p.recipients}}</td>
@@ -76,7 +76,7 @@
                                             <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>
                                         </li>
                                         {% endif %}
-                                        <!-- 페이지리스트 -->
+                                       <!-- 페이지리스트 -->
                                         {% for page_number in page.paginator.page_range %}
                                             {% if page_number == page.number %}
                                             <li class="page-item active" aria-current="page">
@@ -89,6 +89,14 @@
                                             {% endif %}
                                         {% endfor %}
                                         <!-- 다음페이지 -->
+                                        {% comment %} <!-- 페이지리스트 -->
+                                            <li class="page-item active" aria-current="page">
+                                                <a class="page-link" href="?page=1">1</a>
+                                            </li>
+                                            <li class="page-item">
+                                                <a class="page-link" href="?page=2">2</a>
+                                            </li>
+                                        <!-- 다음페이지 --> {% endcomment %}
                                         {% if page.has_next %}
                                         <li class="page-item">
                                             <a class="page-link" href="?page={{ page.next_page_number }}">다음</a>
@@ -117,4 +125,10 @@
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->
-{% block javascripts %} <script src="/static/assets/js/filter.js"></script>{% endblock javascripts %}
+{% block javascripts %}
+<script>
+a="{{msg|length}}"
+console.log(a)
+</script> 
+<script src="/static/assets/js/filter.js"></script>
+{% endblock javascripts %}
