@@ -66,7 +66,8 @@ def pages(request):
             c=contacts_model.objects.all()
             paginator = Paginator(c, 10) 
             page_obj = paginator.get_page(page)
-
+            
+            context['calllog']=calllog_model.objects.values()
             context['contact']=page_obj
             
         elif context['url']=="message.html": ##어진
