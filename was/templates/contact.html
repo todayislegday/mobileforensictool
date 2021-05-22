@@ -53,7 +53,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {% for c in contact %}
+                                            {% for c in page %}
                                             <tr class='list_data'>
                                                 <td>{{c.id}}</td>
                                                 <td>{{c.name}}</td>
@@ -89,7 +89,7 @@
                                         <!-- 다음페이지 -->
                                         {% if page.has_next %}
                                         <li class="page-item">
-                                            <a class="page-link" href="?page={{ page.next_page_number }}">다음</a>
+                                            <a class="page-link" href="?page={{ page.next_spage_number }}">다음</a>
                                         </li>
                                         {% else %}
                                         <li class="page-item disabled">

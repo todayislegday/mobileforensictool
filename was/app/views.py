@@ -1,4 +1,4 @@
-
+from . import parsing_xml
 from django.shortcuts import render, get_object_or_404, redirect
 from django import template
 from django.template import loader
@@ -81,6 +81,17 @@ def pages(request):
             context['page']=page_obj
             context['msg']=m
 
+        elif context['url']=="wifi.html": ##귀수
+            path=os.path.dirname(os.path.abspath(__file__))
+            f = open(f"{path}/../../경로.txt", 'r')
+            OUTPATH=f.readlines()[1]
+            wifi=parsing_xml.xml_parsing(OUTPATH)
+            page = request.GET.get('page', '1')
+
+            
+            paginator = Paginator(wifi, 10) 
+            page_obj = paginator.get_page(page)
+            context['page']=page_obj
     
         elif context['url']=="geo-Artifact.html":  ##재식
             if 'id' in request.GET:##ajax 처리

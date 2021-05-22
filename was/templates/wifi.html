@@ -47,19 +47,21 @@
                                     <table class="table table-hover">
                                         <thead>
                                             <tr>
-                                                <th>ID</th>
-                                                <th>수신자</th>
-                                                <th>내용</th>
-                                                <th>시간</th>
+                                                <th>SSID</th>
+                                                <th>보안종류</th>
+                                                <th>접속 시간</th>
+                                                <th>MAC 주소</th>
+                                                <th>사전 공유 키</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             {% for p in page%}
                                             <tr class='list_data'>
-                                                <td>{{p.id}}</td>
-                                                <td>{{p.recipients}}</td>
-                                                <td>{{p.text}}</td>
-                                                <td>{{p.created_timestamp}}</td>
+                                                <td>{{p.SSID}}</td>
+                                                <td>{{p.encryption}}</td>
+                                                <td>{{p.creation_time}}</td>
+                                                <td>{{p.MAC}}</td>
+                                                <td>{{p.pre_shared_key}}</td>
                                             </tr>
                                             {% endfor %}
                                         </tbody>
