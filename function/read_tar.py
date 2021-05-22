@@ -6,7 +6,7 @@ import os
 target_folder = set(['./data/com.samsung.android.providers.contacts/databases/', './data/com.samsung.cmh/databases/', './data/com.samsung.android.messaging/databases/',
                       './user_de/0/com.android.providers.telephony/databases/', './data/com.android.chrome/', './data/com.sec.android.app.sbrowser/',
                      './data/com.android.vending/databases/', './data/com.android.providers.downloads/databases/', './data/com.samsung.android.providers.media/',
-                      './data/com.android.providers.media/databases/', './media/'])
+                      './data/com.android.providers.media/databases/', './media/', './misc/wifi/'])
 image_folder = set(['.png', '.jpg', '.jpeg', '.gif', '.mp4'])
 image_path = os.path.dirname(os.path.abspath(__file__))
 
