@@ -30,85 +30,96 @@
         <div class="main-body">
             <div class="page-wrapper">
                 <!-- [ Main Content ] start -->
-                <div class="row">
-                    <!-- [ basic-table ] start -->
-                    <div class="col-xl-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h5>Basic Table</h5>
-                                    <div class="d-block m-t-5">use class <code>table</code> inside table element</div>
-                                        <div class="right-box">
+                
+                <!-- [ Main Content ] end -->
+                 <div class>
+                                 <!--[연락처]start -->
+
+                            <div class="card"  style="overflow-y:scroll; float:left; margin-right:20px; height: 650px;">
+                            
+                                <div class="card-header">
+                                  {% comment %} <div class="right-box">
                                             <label> Search:<input onkeyup="filter()" type="search" id="keyword" class="form-control form-control-sm" placeholder="" aria-controls="dtBasicExample">
                                             </label>
-                                        </div>
-                                    </div>
-                            <div class="card-block table-border-style">
-                                <div class="table-responsive">
-                                    <table class="table table-hover">
+                                        </div> {% endcomment %}
+                                    <h5>연락처</h5>
+                                </div>
+                               
+                                         <table class="table table-hover tablesorter" id="contact">
                                         <thead>
                                             <tr>
                                                 <th>ID</th>
                                                 <th>이름</th>
                                                 <th>연락처</th>
+                                                <th>전화 횟수<i class="fas fa-sort" style="margin-left:5px "></i></th> 
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            {% for c in page %}
-                                            <tr class='list_data'>
+                                        <tbody >
+                                            {% for c in contact %}
+                                            <tr class='list_data' id={{c.id}}>
                                                 <td>{{c.id}}</td>
                                                 <td>{{c.name}}</td>
-                                                <td>{{c.number | slice:"11:"}}</td>
+                                                <td>{{c.number | slice:":11"}}</td>
+                                                <td></td>                           
                                             </tr>
                                             {% endfor %}
+                                            {% comment %} <tr class='list_data' id=2>
+                                                <td>2</td>
+                                                <td>이재훈</td>
+                                                <td>01084824720</td>
+                                                <td></td>                           
+                                            </tr>  {% endcomment %}
                                         </tbody>
                                     </table>
-                                    <!-- 페이징처리시작-->
-                                    <ul class="pagination justify-content-center">
-                                        <!-- 이전페이지 -->
-                                        {% if page.has_previous %}
-                                        <li class="page-item">
-                                            <a class="page-link" href="?page={{ page.previous_page_number }}">이전</a>
-                                        </li>
-                                        {% else %}
-                                        <li class="page-item disabled">
-                                            <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>
-                                        </li>
-                                        {% endif %}
-                                        <!-- 페이지리스트 -->
-                                        {% for page_number in page.paginator.page_range %}
-                                            {% if page_number == page.number %}
-                                            <li class="page-item active" aria-current="page">
-                                                <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
-                                            </li>
-                                            {% else %}
-                                            <li class="page-item">
-                                                <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
-                                            </li>
-                                            {% endif %}
-                                        {% endfor %}
-                                        <!-- 다음페이지 -->
-                                        {% if page.has_next %}
-                                        <li class="page-item">
-                                            <a class="page-link" href="?page={{ page.next_spage_number }}">다음</a>
-                                        </li>
-                                        {% else %}
-                                        <li class="page-item disabled">
-                                            <a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a>
-                                        </li>
-                                        {% endif %}
-                                    </ul>
-                                    <!-- 페이징처리 끝 -->
-
-
-                                    <!-- 페이징처리끝-->
-                                </div>
+                                      
                             </div>
-                        </div>
-                    </div>
-                    <!-- [ basic-table ] end -->
+                            <!--[연락처]end -->
+                            <!--[전화기록]start -->
+                             <div class="card"  style="overflow-y:scroll;height: 650px;">
+                                <div class="card-header">
+                                    <h5>전화기록</h5>
+                                </div>
+                                         <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>이름</th>
+                                                <th>연락처</th>
+                                                <th>날짜</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="calllog">
+                                            {% for c in calllog %}
+                                            <tr class='list_data' number={{c.number}}>
+                                                <td>{{c.id}}</td>
+                                                <td>{{c.name}}</td>
+                                                <td>{{c.number}}</td>
+                                                <td>{{c.date}}</td>
+                                            </tr>
+                                            {% endfor %}
+                                             {% comment %} <tr class='list_data' number=01084824720>
+                                                <td>8</td>
+                                                <td>이재훈</td>
+                                                <td >01084824720</td>
+                                                <td>123123123</td>
+                                            </tr>
+                                             <tr class='list_data' number=01084824720>
+                                                <td>9</td>
+                                                <td>이재훈</td>
+                                                <td >01084824720</td>
+                                                <td>123123123</td>
+                                            </tr>  {% endcomment %}
+                                        </tbody>
+                                    </table>
+                               
+                            </div>
+                         <!--[전화기록]end -->
+
                 </div>
-                <!-- [ Main Content ] end -->
+                        
             </div>
+                
+
         </div>
     </div>
 </div>
@@ -116,5 +127,73 @@
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->
-{% block javascripts %}<script src="/static/assets/js/filter.js"></script>{% endblock javascripts %}
+{% block javascripts %}
+<script>
+var ctl="{{contact|length}}" //연락처 행길이
+var cll="{{calllog|length}}" //전화기록 행길이
+
+$( document ).ready(function() {
+
+
+    for(var i=1;i<=ctl;i++){//연락처의 전화횟수 알아내는 소스
+    var findnumber=$(`#${i}`).find("td").eq(2).html()
+    var count=$('#calllog').find(`tr[number=${findnumber}]`).length
+    $(`#${i}`).find("td").eq(3).text(count)
+
+}
+
+$("#contact").tablesorter();
+var flags=false
+
+$('tr').click(function(){//연락처에서 선택시 전화기록에 해당 연락처 관련 기록만 보여준다.
+if(this.id!=''&&(flags==false||this.id==flags)){         //toggle 방식이있는데 직관적인 if문으로 그냥 했다.
+ flags=this.id
+ console.log(flags)
+if($(this).attr('style')==undefined||$(this).attr('style')==''){ //연락처에서 선택한 줄 색칠하기
+     $(this).css("background-color", "#b2ddef")
+     
+ }else{
+     $(this).css("background-color", "")
+    flags=false
+ }
+
+
+ var findnumber=$(`#${this.id}`).find("td").eq(2).html()
+
+ for(var i=0;i<cll;i++){
+    if(findnumber==$(`#calllog`).find("tr").eq(i).attr('number'))
+ {
+     
+        $(`#calllog`).find("tr").eq(i).css("display","")
+
+ }else{
+     if($(`#calllog`).find("tr").eq(i).attr('style')=="display: none;"){
+          findnumber==$(`#calllog`).find("tr").eq(i).css("display","")
+     }else{
+          findnumber==$(`#calllog`).find("tr").eq(i).css("display","none")
+     }
+ }
+ }
+
+ 
+
+
+
+}
+
+})
+
+
+
+
+
+
+});
+
+</script>
+<script src="/static/assets/plugins/jquery/js/jquery.tablesorter.min.js"></script>
+<script src="/static/assets/js/filter.js"></script>
+
+
+{% endblock javascripts %}
 

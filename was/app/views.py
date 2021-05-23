@@ -67,7 +67,7 @@ def pages(request):
             paginator = Paginator(c, 10) 
             page_obj = paginator.get_page(page)
             
-            context['calllog']=calllog_model.objects.values()
+            context['calllog']=calllog_model.objects.raw("SELECT _id,datetime((date / 1000), 'unixepoch','localtime') AS date FROM calls ORDER BY date ASC")
             context['contact']=c
             context['page']=page_obj
             
@@ -165,7 +165,7 @@ def pages(request):
         
         elif context['url']=="time-line.html":#용하
             mms=mms_model.objects.raw("SELECT _id,address,content,datetime((date / 1000), 'unixepoch','localtime') AS date FROM messages ORDER BY date ASC")
-            calllog=calllog_model.objects.raw("SELECT datetime((date / 1000), 'unixepoch','localtime') FROM calls ORDER BY date ASC")
+            calllog=calllog_model.objects.raw("SELECT _id,datetime((date / 1000), 'unixepoch','localtime') FROM calls ORDER BY date ASC")
             chromekeyword=chrome2_model.objects.all()
             chromeurlhistory=chrome3_model.objects.raw("SELECT urls.id, urls.url, urls.title, datetime(visits.visit_time/1000000 + (strftime('%%s','1601-01-01')),'unixepoch','localtime') AS visit_time FROM urls, visits WHERE urls.id=visits.url ORDER BY visits.visit_time ASC")
             chromedown=chrome5_model.objects.all()
