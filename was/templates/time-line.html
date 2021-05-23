@@ -2,12 +2,6 @@
 
 {% block title %} Timeline {% endblock %} 
 
-<!-- Specific CSS goes HERE -->
-{% block stylesheets %}
-
-    <link rel="stylesheet" href="/static/assets/plugins/chart-morris/css/morris.css">
-
-{% endblock stylesheets %}
 
 {% block content %}
 
@@ -23,6 +17,7 @@
                         </div>
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a href="/"><i class="feather icon-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="javascript:">Timeline</a></li>
                         </ul>
                     </div>
                 </div>
@@ -36,7 +31,7 @@
                     <div class="col-sm-12">
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link active text-uppercase" id="timeline-tab" data-toggle="tab" href="#timeline" role="tab" aria-controls="timeline" aria-selected="true">Timeline</a>
+                                <a class="nav-link active text-uppercase" id="timeline-tab" data-toggle="tab" href="#timeline" role="tab" aria-controls="timeline" aria-selected="true">Stacked Chart</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-uppercase" id="result-tab" data-toggle="tab" href="#result" role="tab" aria-controls="result" aria-selected="false">Result</a>
@@ -44,131 +39,256 @@
                         </ul>
                         <div class="tab-content" id="myTabContent">
                             <div class="tab-pane fade show active" id="timeline" role="tabpanel" aria-labelledby="timeline-tab">
-                                <!-- [ Morris Chart ] start -->
-                                <div class="col-xl-12">
-                                    <div class="card2">
-                                        <div class="card-block">
-                                            <div id="morris-bar-stacked-chart" style="height:300px;width:1300px;;"></div>
+                                <!-- [ Stacked Chart ] start -->
+                                <div class="card">
+                                    <div class="card-block">
+                                        <div id="chartdiv"></div>
+                                        <!-- Chart code -->
+                                        <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+                                        <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+                                        <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
+                                        <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+                                        <script src="/static/assets/js/mobiscroll.jquery.min.js?"></script>
+                                        <link href="/static/assets/css/mobiscroll.jquery.min.css" rel="stylesheet" />
+
+                                        <script type="text/javascript">
+
+                                            // Themes begin
+                                            am4core.useTheme(am4themes_animated);
+                                            // Themes end
+
+                                            var chart = am4core.create("chartdiv", am4charts.XYChart);
+
+                                            chart.data = [{
+                                            "year": "1994",
+                                            "cars": 1587,
+                                            "motorcycles": 650,
+                                            "bicycles": 121
+                                            }, {
+                                            "year": "1995",
+                                            "cars": 1567,
+                                            "motorcycles": 683,
+                                            "bicycles": 146
+                                            }, {
+                                            "year": "1996",
+                                            "cars": 1617,
+                                            "motorcycles": 691,
+                                            "bicycles": 138
+                                            }, {
+                                            "year": "1997",
+                                            "cars": 1630,
+                                            "motorcycles": 642,
+                                            "bicycles": 127
+                                            }, {
+                                            "year": "1998",
+                                            "cars": 1660,
+                                            "motorcycles": 699,
+                                            "bicycles": 105
+                                            }, {
+                                            "year": "1999",
+                                            "cars": 1683,
+                                            "motorcycles": 721,
+                                            "bicycles": 109
+                                            }, {
+                                            "year": "2000",
+                                            "cars": 1691,
+                                            "motorcycles": 737,
+                                            "bicycles": 112
+                                            }, {
+                                            "year": "2001",
+                                            "cars": 1298,
+                                            "motorcycles": 680,
+                                            "bicycles": 101
+                                            }, {
+                                            "year": "2002",
+                                            "cars": 1275,
+                                            "motorcycles": 664,
+                                            "bicycles": 97
+                                            }, {
+                                            "year": "2003",
+                                            "cars": 1246,
+                                            "motorcycles": 648,
+                                            "bicycles": 93
+                                            }, {
+                                            "year": "2004",
+                                            "cars": 1318,
+                                            "motorcycles": 697,
+                                            "bicycles": 111
+                                            }, {
+                                            "year": "2005",
+                                            "cars": 1213,
+                                            "motorcycles": 633,
+                                            "bicycles": 87
+                                            }, {
+                                            "year": "2006",
+                                            "cars": 1199,
+                                            "motorcycles": 621,
+                                            "bicycles": 79
+                                            }, {
+                                            "year": "2007",
+                                            "cars": 1110,
+                                            "motorcycles": 210,
+                                            "bicycles": 81
+                                            }, {
+                                            "year": "2008",
+                                            "cars": 1165,
+                                            "motorcycles": 232,
+                                            "bicycles": 75
+                                            }, {
+                                            "year": "2009",
+                                            "cars": 1145,
+                                            "motorcycles": 219,
+                                            "bicycles": 88
+                                            }, {
+                                            "year": "2010",
+                                            "cars": 1163,
+                                            "motorcycles": 201,
+                                            "bicycles": 82
+                                            }, {
+                                            "year": "2011",
+                                            "cars": 1180,
+                                            "motorcycles": 285,
+                                            "bicycles": 87
+                                            }, {
+                                            "year": "2012",
+                                            "cars": 1159,
+                                            "motorcycles": 277,
+                                            "bicycles": 71
+                                            }];
+
+                                            chart.dateFormatter.inputDateFormat = "yyyy";
+                                            var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+                                            dateAxis.renderer.minGridDistance = 60;
+                                            dateAxis.startLocation = 0.5;
+                                            dateAxis.endLocation = 0.5;
+                                            dateAxis.baseInterval = {
+                                            timeUnit: "year",
+                                            count: 1
+                                            }
+
+                                            var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+                                            valueAxis.tooltip.disabled = true;
+
+                                            var series = chart.series.push(new am4charts.LineSeries());
+                                            series.dataFields.dateX = "year";
+                                            series.name = "cars";
+                                            series.dataFields.valueY = "cars";
+                                            series.tooltipHTML = "<img src='https://www.amcharts.com/lib/3/images/car.png' style='vertical-align:bottom; margin-right: 10px; width:28px; height:21px;'><span style='font-size:14px; color:#000000;'><b>{valueY.value}</b></span>";
+                                            series.tooltipText = "[#000]{valueY.value}[/]";
+                                            series.tooltip.background.fill = am4core.color("#FFF");
+                                            series.tooltip.getStrokeFromObject = true;
+                                            series.tooltip.background.strokeWidth = 3;
+                                            series.tooltip.getFillFromObject = false;
+                                            series.fillOpacity = 0.6;
+                                            series.strokeWidth = 2;
+                                            series.stacked = true;
+
+                                            var series2 = chart.series.push(new am4charts.LineSeries());
+                                            series2.name = "motorcycles";
+                                            series2.dataFields.dateX = "year";
+                                            series2.dataFields.valueY = "motorcycles";
+                                            series2.tooltipHTML = "<img src='https://www.amcharts.com/lib/3/images/motorcycle.png' style='vertical-align:bottom; margin-right: 10px; width:28px; height:21px;'><span style='font-size:14px; color:#000000;'><b>{valueY.value}</b></span>";
+                                            series2.tooltipText = "[#000]{valueY.value}[/]";
+                                            series2.tooltip.background.fill = am4core.color("#FFF");
+                                            series2.tooltip.getFillFromObject = false;
+                                            series2.tooltip.getStrokeFromObject = true;
+                                            series2.tooltip.background.strokeWidth = 3;
+                                            series2.sequencedInterpolation = true;
+                                            series2.fillOpacity = 0.6;
+                                            series2.stacked = true;
+                                            series2.strokeWidth = 2;
+
+                                            var series3 = chart.series.push(new am4charts.LineSeries());
+                                            series3.name = "bicycles";
+                                            series3.dataFields.dateX = "year";
+                                            series3.dataFields.valueY = "bicycles";
+                                            series3.tooltipHTML = "<img src='https://www.amcharts.com/lib/3/images/bicycle.png' style='vertical-align:bottom; margin-right: 10px; width:28px; height:21px;'><span style='font-size:14px; color:#000000;'><b>{valueY.value}</b></span>";
+                                            series3.tooltipText = "[#000]{valueY.value}[/]";
+                                            series3.tooltip.background.fill = am4core.color("#FFF");
+                                            series3.tooltip.getFillFromObject = false;
+                                            series3.tooltip.getStrokeFromObject = true;
+                                            series3.tooltip.background.strokeWidth = 3;
+                                            series3.sequencedInterpolation = true;
+                                            series3.fillOpacity = 0.6;
+                                            series3.defaultState.transitionDuration = 1000;
+                                            series3.stacked = true;
+                                            series3.strokeWidth = 2;
+
+                                            chart.cursor = new am4charts.XYCursor();
+                                            chart.cursor.xAxis = dateAxis;
+                                            chart.scrollbarX = new am4core.Scrollbar();
+
+                                            // Add a legend
+                                            chart.legend = new am4charts.Legend();
+                                            chart.legend.position = "top";
+
+                                            // axis ranges
+                                            var range = dateAxis.axisRanges.create();
+                                            range.date = new Date(2001, 0, 1);
+                                            range.endDate = new Date(2003, 0, 1);
+                                            range.axisFill.fill = chart.colors.getIndex(7);
+                                            range.axisFill.fillOpacity = 0.2;
+
+                                            range.label.text = "Fines for speeding increased";
+                                            range.label.inside = true;
+                                            range.label.rotation = 90;
+                                            range.label.horizontalCenter = "right";
+                                            range.label.verticalCenter = "bottom";
+
+                                            var range2 = dateAxis.axisRanges.create();
+                                            range2.date = new Date(2007, 0, 1);
+                                            range2.grid.stroke = chart.colors.getIndex(7);
+                                            range2.grid.strokeOpacity = 0.6;
+                                            range2.grid.strokeDasharray = "5,2";
+
+
+                                            range2.label.text = "Motorcycle fee introduced";
+                                            range2.label.inside = true;
+                                            range2.label.rotation = 90;
+                                            range2.label.horizontalCenter = "right";
+                                            range2.label.verticalCenter = "bottom";
+                                        </script>
+
+                                        <div id="sform">
+                                            <form>
+                                                <label for="jb-input-text">단위 : &nbsp;</label>
+                                                <input type="radio" id="year" name="duration" value="year" onclick="chk()">
+                                                <label for="year">Year &nbsp;</label>
+                                                <input type="radio" id="month" name="duration" value="month" onclick="chk()">
+                                                <label for="month">Month &nbsp;</label>
+                                                <input type="radio" id="day" name="duration" value="day" onclick="chk()">
+                                                <label for="day">Day &nbsp;</label>
+                                                <input type="radio" id="hour" name="duration" value="hour" onclick="chk()">
+                                                <label for="hour">Hour &nbsp;</label>
+                                                <input type="radio" id="minute" name="duration" value="minute" onclick="chk()">
+                                                <label for="minute">Minute &nbsp;</label>
+                                            </form>
                                         </div>
                                     </div>
-                                </div> 
-                                <div class="col-xl-12">
-                                    <div class="card2">
-                                        <div id="morris-bar-chart" style="height:0px"></div>
+                                    <div class="demo-time-picker">
+                                        <label>
+                                            24 hour picker 
+                                            <input id="demo-24h" mbsc-input data-input-style="outline" data-label-style="stacked" placeholder="Select" />
+                                        </label>
                                     </div>
+                                    <script type="text/javascript">
+                                      
+                                        
+                                            mobiscroll.setOptions({
+                                                theme: 'windows',
+                                                themeVariant: 'light',
+                                                locale: mobiscroll.localeDe
+                                            });
+                                        
+                                            $('#demo-24h').mobiscroll().datepicker({
+                                                controls: ['time'],
+                                                timeFormat: 'h:mm A',
+                                                touchUi: true
+                                            });
+                                    
+                                    </script>
                                 </div>
-                                <!-- [ Morris Chart ] end -->
-
-                                <!-- [ Select Duration ] start -->
-                                <div class="col-xl-12">
-                                    <div class="card2">
-                                            <script language="JavaScript">
-                                                    function chk()
-                                                    {
-                                                        if(document.getElementById('year').checked==true)
-                                                        {
-                                                            document.getElementById('month1').value="1"
-                                                            document.getElementById('month2').value="12"
-                                                            document.getElementById('day1').value="1"
-                                                            document.getElementById('day2').value="31"
-                                                            document.getElementById('hour1').value="0"
-                                                            document.getElementById('hour2').value="23"
-                                                            document.getElementById('minute1').value="0"
-                                                            document.getElementById('minute2').value="59"
-                                                        }
-                                                        if(document.getElementById('month').checked==true)
-                                                        {
-                                                            document.getElementById('month1').value=''
-                                                            document.getElementById('month2').value=''
-                                                            document.getElementById('day1').value="1"
-                                                            document.getElementById('day2').value="31"
-                                                            document.getElementById('hour1').value="0"
-                                                            document.getElementById('hour2').value="23"
-                                                            document.getElementById('minute1').value="0"
-                                                            document.getElementById('minute2').value="59"
-                                                        }
-                                                        if(document.getElementById('day').checked==true)
-                                                        {
-                                                            document.getElementById('month1').value=''
-                                                            document.getElementById('month2').value=''
-                                                            document.getElementById('day1').value=''
-                                                            document.getElementById('day2').value=''
-                                                            document.getElementById('hour1').value="0"
-                                                            document.getElementById('hour2').value="23"
-                                                            document.getElementById('minute1').value="0"
-                                                            document.getElementById('minute2').value="59"
-                                                        }
-                                                        if(document.getElementById('hour').checked==true)
-                                                        {
-                                                            document.getElementById('month1').value=''
-                                                            document.getElementById('month2').value=''
-                                                            document.getElementById('day1').value=''
-                                                            document.getElementById('day2').value=''
-                                                            document.getElementById('hour1').value=''
-                                                            document.getElementById('hour2').value=''
-                                                            document.getElementById('minute1').value="0"
-                                                            document.getElementById('minute2').value="59"
-                                                        }
-                                                        if(document.getElementById('minute').checked==true)
-                                                        {
-                                                            document.getElementById('month1').value=''
-                                                            document.getElementById('month2').value=''
-                                                            document.getElementById('day1').value=''
-                                                            document.getElementById('day2').value=''
-                                                            document.getElementById('hour1').value=''
-                                                            document.getElementById('hour2').value=''
-                                                            document.getElementById('minute1').value=''
-                                                            document.getElementById('minute2').value=''
-                                                        }
-                                                    }
-                                            </script>
-                                            <div style="height:150px;width:1300px">
-                                                <div class="card-first">
-                                                    <form name="form-first">
-                                                        <label for="jb-input-text">단위 : &nbsp;</label>
-                                                        <input type="radio" id="year" name="duration" value="year" onclick="chk()">
-                                                        <label for="year">Year &nbsp;</label>
-                                                        <input type="radio" id="month" name="duration" value="month" onclick="chk()">
-                                                        <label for="month">Month &nbsp;</label>
-                                                        <input type="radio" id="day" name="duration" value="day" onclick="chk()">
-                                                        <label for="day">Day &nbsp;</label>
-                                                        <input type="radio" id="hour" name="duration" value="hour" onclick="chk()">
-                                                        <label for="hour">Hour &nbsp;</label>
-                                                        <input type="radio" id="minute" name="duration" value="minute" onclick="chk()">
-                                                        <label for="minute">Minute &nbsp;</label>
-                                                    </form>
-                                                </div>
-
-                                                <div class="card-second">
-                                                    <form name="form-second">
-                                                        <label for="year">Year : </label>
-                                                        <input type="number" id="year1" name="start" min="0" max="2021">
-                                                        <label for="month">&nbsp; Month : </label>
-                                                        <input type="number" id="month1" name="start" min="1" max="12">
-                                                        <label for="day">&nbsp; Day : </label>
-                                                        <input type="number" id="day1" name="start" min="1" max="31">
-                                                        <label for="hour">&nbsp; Hour : </label>
-                                                        <input type="number" id="hour1" name="start" min="0" max="23">
-                                                        <label for="other">&nbsp; Minute : </label>
-                                                        <input type="number" id="minute1" name="start" min="0" max="59">  
-                                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ~ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                        <label for="year">Year : </label>
-                                                        <input type="number" id="year2" name="end" min="0" max="2021">
-                                                        <label for="month">&nbsp; Month : </label>
-                                                        <input type="number" id="month2" name="end" min="1" max="12">
-                                                        <label for="day">&nbsp; Day : </label>
-                                                        <input type="number" id="day2" name="end" min="1" max="31">
-                                                        <label for="hour">&nbsp; Hour : </label>
-                                                        <input type="number" id="hour2" name="end" min="0" max="23">
-                                                        <label for="other">&nbsp; Minute : </label>
-                                                        <input type="number" id="minute2" name="end" min="0" max="59">        
-                                                        <input type="submit" value="전송" style="margin-left:30px;">    
-                                                    </form>
-                                                </div>
-                                            </div>
-                                    </div>
-                                </div>
-                            <!-- [ Select Duration ] end -->
+                                <!-- [ Stacked Chart ] end -->
                             </div>
                             <div class="tab-pane fade" id="result" role="tabpanel" aria-labelledby="result-tab">
                                 <!-- [ basic-table ] start -->
@@ -180,37 +300,19 @@
                             </div>
                         </div>
                     </div>
-                    <!-- [ basic-table ] end -->
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 <!-- [ Main Content ] end -->
-
-            
             </div>
         </div>
     </div>
-</div>
 
+    
+</div>
 
 {% endblock content %}
 
-<!-- Specific Page JS goes HERE  -->
-{% block javascripts %}
 
-"{{mms|json_script:'dict-id'}}"
-<script>
-var profile = document.getElementById("dict-id").textContent;
-var profileJson = JSON.parse(profile);
-console.log(profileJson)
-console.log(profileJson[0])
-console.log(profileJson[0][0])
 
-</script>
 
-    <script src="/static/assets/plugins/chart-morris/js/raphael.min.js"></script>
-    <script src="/static/assets/plugins/chart-morris/js/morris.min.js"></script>
-    <script src="/static/assets/js/pages/chart-morris-custom.js"></script>
 
-{% endblock javascripts %}
+
