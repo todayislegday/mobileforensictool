@@ -64,48 +64,47 @@
                                             {% endfor %}
                                         </tbody>
                                     </table>
+
                                     <!-- 페이징처리시작-->
                                     <ul class="pagination justify-content-center">
                                         <!-- 이전페이지 -->
                                         {% if page.has_previous %}
                                         <li class="page-item">
-                                            <a class="page-link" href="?page={{ page.previous_page_number }}">이전</a>
+                                            <button class="page-link"  id = "pre">이전</button>
                                         </li>
                                         {% else %}
                                         <li class="page-item disabled">
-                                            <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>
+                                            <button class="page-link"  id = "pre">이전</button>
                                         </li>
                                         {% endif %}
                                        <!-- 페이지리스트 -->
-                                        {% comment %} {% for page_number in page.paginator.page_range %}
-                                            {% if page_number == page.number %}
-                                            <li class="page-item active" aria-current="page">
-                                                <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
-                                            </li>
-                                            {% else %}
-                                            <li class="page-item">
-                                                <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
-                                            </li>
-                                            {% endif %}
-                                        {% endfor %} {% endcomment %}
                                         <!-- 다음페이지 -->
+                                        
                                         <!-- 페이지리스트 -->
-                                            <li class="page-item active" aria-current="page">
-                                                <button class="page-link" id='pb1'>1</button>
+                                        {% for page_number in page.paginator.page_range %}
+                                            {% if page_number == page.number %}
+                                        <div id = {{page_number}} class = now_page > 
+                                            <li class="page-item" aria-current="page">
+                                                <button class="page-link" id='pb{{page_number}}'>{{page_number}}</button>
                                             </li>
-                                            <li class="page-item">
-                                                <a class="page-link" id='pb2'>2</a>
-                                            </li>
-                                        <!-- 다음페이지 --> 
-                                        {% if page.has_next %}
-                                        <li class="page-item">
-                                            <a class="page-link" href="?page={{ page.next_page_number }}">다음</a>
-                                        </li>
+                                        </div>
                                         {% else %}
-                                        <li class="page-item disabled">
-                                            <a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a>
-                                        </li>
+                                        <!-- 페이지가 더 많아지면 id=3, id=4 될듯-->
+                                        <div id = {{page_number}}>
+                                            <li class="page-item">
+                                                <button class="page-link" id='pb{{page_number}}'>{{page_number}}</button>
+                                            </li>
+                                        </div>
                                         {% endif %}
+                                        {% endfor %}
+                                        
+                                        <!-- 다음페이지 --> 
+                                       
+                                        <li class="page-item">
+                                            <button class="page-link" id="next">다음</button>
+                                            
+                                        </li>
+
                                     </ul>
                                     <!-- 페이징처리 끝 -->
 
@@ -127,43 +126,125 @@
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
 <script>
- $(document).ready(function() {
-   $("#pb1").click(function() {
-  console.log( $(this).parents()[0])
-  var x = document.getElementsByClassName("list_data");
-  var y=this.id.substring(2,3)
-for(var i=0;i<a;i++){
-    if(x[i].id!=y){
-        console.log(x[i])
-       $(x[i]).css("display", "none");
-    }else{
-        console.log("나는tr1다")
-       $(x[i]).css("display", "");
-    }
+function nana(){
+    //alert(aa)
+    var regex = /[^0-9]/g
+    var num = aa.replace(regex, "")
+    num -= 1
+    //alert(num)
+    num = "#pb"+num
+
+    $("#pri").children().attr('id', num)
+
 }
-});
-$( "#pb2" ).click(function() {
-  console.log('2')
-  var x = document.getElementsByClassName("list_data");
-  var y=this.id.substring(2,3)
-    console.log($(this).parents()[0])
-    $(this).parents()[0]
+var class_value = 'page-item';
 
-for(var i=0;i<a;i++){
-  if(x[i].id!=y){
-              console.log("나는tr2다")
-       $(x[i]).css("display", "none");
-    }
-    else{
-        console.log("나는tr1다")
-       $(x[i]).css("display", "");
-    }
-}
-}); 
-
-});
-
+//var class_id = $('.now_page').attr('id'); 
 a="{{msg|length}}"
+max_length=a/10
+
+var aa
+var pagesu = max_length //"총 페이지 갯수"
+
+$(document).ready(function() { //시작
+
+for(var i=0;i<a;i++){ //첫화면 1부터 10까지 출력
+if(x[i].id!=1){
+   $(x[i]).css("display", "none");
+}else{
+   $(x[i]).css("display", "");
+}
+}
+ for(var i = 0; i < pagesu+1; i++ )   {
+    aa = "#pb" + i   
+
+    $(aa).click(function() {//클릭시
+
+    console.log( $(this).parents()[0])
+        for(var x=0; x<=pagesu+2; x++){
+
+            var aaa= "#pb" + x
+            $(aaa).parent().attr('class', 'page-item')
+        }
+
+$(this).parent().addClass('page-item active')
+
+var x = document.getElementsByClassName("list_data");
+var y=this.id.substring(2,3) ////3번째 id 값을 가져옴
+
+for(var i=0;i<a;i++){
+if(x[i].id!=y){
+   $(x[i]).css("display", "none");
+}else{
+   $(x[i]).css("display", "");
+}
+}
+});
+
+} //for문 끝
+///////////////////////////////////////////////////// 이전, 다음 버튼
+$("#pre").click(function() { //이전 버튼 클릭 시
+    var regex = /[^0-9]/g
+    var num = aa.replace(regex, "")
+   
+
+
+$(aa).parent().attr('class', 'page-item')
+
+aa = "#pb" + num-1
+if(num > 0){
+    $(aa).parent().attr('class', 'page-item active')//ㄴㄴ
+}
+//$(aa).parent().attr('class', 'page-item active')
+
+var x = document.getElementsByClassName("list_data");
+var y= num-1 ////3번째 id 값을 가져옴
+
+for(var i=0;i<a;i++){
+if(x[i].id!=y){
+   $(x[i]).css("display", "none");
+}else{
+   $(x[i]).css("display", "");
+}
+}
+
+});
+
+$("#next").click(function() { //다음 버튼 클릭 시
+    var regex = /[^0-9]/g
+    var num = aa.replace(regex, "")
+   
+var x = document.getElementsByClassName("list_data");
+var y= num ////3번째 id 값을 가져옴
+
+var num1 = aa.replace(regex, "")
+num1 -=1
+var aa1 = "#pb" + num1
+
+$(aa1).parent().attr('class', 'page-item')
+aa = "#pb" + num
+if(num <= max_length){
+    $(aa).parent().attr('class', 'page-item active')
+}
+
+for(var i=0;i<a;i++){
+if(x[i].id!=y){
+   $(x[i]).css("display", "none");
+}else{
+   $(x[i]).css("display", "");
+}
+}
+
+});
+
+});
+
+
+//id부여
+a="{{msg|length}}"
+max_length=a/10
+console.log(max_length)
+
 //console.log(a/10)
 var x = document.getElementsByClassName("list_data");
 for(var j=0,i=0;i<14;i++){
