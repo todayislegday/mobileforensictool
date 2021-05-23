@@ -63,6 +63,8 @@
 
     var profile = document.getElementById("dict-id").textContent;
     var profileJson = JSON.parse(profile);
+    var markers = [];
+    var size = "{{geo|length}}"; // 마커 개수
 
     var map = new google.maps.Map(document.getElementById('map'), {
         zoom: 13,
@@ -74,11 +76,9 @@
     });
 
     var infowindow = new google.maps.InfoWindow();
-    var size = "{{geo|length}}"; // 마커 개수
 
-    var marker, i;
-    for (i = 1; i <= size; i++) {
-        marker = new google.maps.Marker({
+    for (var i = 1; i <= size; i++) {
+        var marker = new google.maps.Marker({
             id: profileJson[i][0],     // id
             position: { lat: profileJson[i][1], lng: profileJson[i][2] },
             map: map
@@ -124,8 +124,47 @@
                 });
             }
         })(marker, i));
+
+        markers.push(marker);
     }
-    
+
+    google.maps.event.addListener(map, 'idle', function() { // 맵 로딩이 완료 후 함수 실행
+        updateMarkers(map, markers);
+    });
+
+    function updateMarkers(map, markers) {
+
+        var mapBounds = map.getBounds(); // 좌표경계 얻어서  
+        var startLo = mapBounds.getSouthWest();
+        var endLo = mapBounds.getNorthEast();      
+        var marker, position;
+
+        for (var i = 0; i < markers.length; i++) {
+            marker = markers[i] 
+            position = marker.getPosition(); // 마커 하나의 위치
+
+            if (position.lat() >= startLo.lat() && position.lat() <= endLo.lat() &&
+            position.lng() >= startLo.lng() && position.lng() <= endLo.lng()) { // 마커가 현재 화면에 있는지 체크
+                console.log("show");
+                showMarker(map, marker);
+                
+            } else {
+                console.log("hide");
+                hideMarker(map, marker);
+            }
+        }
+    }
+
+    function showMarker(map, marker) {
+        if (marker.getMap()) return;
+        marker.setMap(map);
+    }
+
+    function hideMarker(map, marker) {
+        if (!marker.getMap()) return;
+        marker.setMap(null);
+    }
+
     // Custom InfoWindow
     google.maps.event.addListener(infowindow, 'domready', function() {
             var iwOuter = $('.gm-style-iw');
