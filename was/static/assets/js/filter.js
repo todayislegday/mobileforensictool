@@ -9,10 +9,10 @@ function filter(){
         for(j=0; j<name.length; j++) {
             console.log(name[j])
             if(name[j].innerHTML.toUpperCase().indexOf(keyword)>-1) {
-               list[i].style.visibility="visible";
+               list[i].style.display="";
                break;
             } else {
-               list[i].style.visibility="collapse";
+               list[i].style.display="none";
             }
         }
     }
