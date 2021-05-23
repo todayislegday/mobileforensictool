@@ -3,6 +3,7 @@
 {% block title %} Timeline {% endblock %} 
 
 
+
 {% block content %}
 
 <div class="pcoded-content">
@@ -29,6 +30,178 @@
                 <!-- [ Main Content ] start -->
                 <div class="row">
                     <div class="col-sm-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>Duration</h5>
+                                <form id="duration" style="text-align: center;">
+                                    <input id="datetimepicker1" type="text">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input id="datetimepicker2" type="text">
+                                    &nbsp;&nbsp;&nbsp;
+                                    <input id="sendbutton" type="button" value="입력" onclick="send()">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+                    <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+                    <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
+                    <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+                    <link rel="stylesheet" type="text/css" href="/static/assets/css/jquery.datetimepicker.css"/ >
+                    <script src="/static/assets/js/jquery.datetimepicker.full.min.js"></script>
+
+                    {{mms|json_script:'dict-id'}}
+                    <script type="text/javascript">
+
+                        // Themes begin
+                        am4core.useTheme(am4themes_animated);
+                        // Themes end
+
+                        var chart = am4core.create("chartdiv", am4charts.XYChart);
+
+                        var data = [];
+                        var cars = 50;
+                        var motorcycles = 50;
+                        var bicycles = 50;
+                        for (let i = -1400; i < 0; i++) {
+                        let date = new Date();
+                        date.setHours(0, 0, 0, 0);
+                        date.setDate(i);
+                        cars -= Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 10);
+                        motorcycles -= Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 10);
+                        bicycles -= Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 10);
+                        if (cars < 0) {
+                            cars = Math.round(Math.random() * 10);
+                        }
+                        if (motorcycles < 0) {
+                            motorcycles = Math.round(Math.random() * 10);
+                        }
+                        if (bicycles < 0) {
+                            bicycles = Math.round(Math.random() * 10);
+                        }
+                        data.push({ date: date, cars: cars, motorcycles: motorcycles, bicycles: bicycles });
+                        }
+
+                        chart.data = data;
+
+                        // Create axes
+                        var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+                        dateAxis.renderer.minGridDistance = 10;
+                        dateAxis.renderer.labels.template.rotation = 90;
+                        dateAxis.renderer.labels.template.horizontalCenter = "left";
+                        dateAxis.renderer.labels.template.verticalCenter = "middle";
+                        dateAxis.groupData = true;
+
+                        var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+                        //valueAxis.tooltip.disabled = true;
+
+                        // Create series
+                        var series = chart.series.push(new am4charts.LineSeries());
+                        series.dataFields.dateX = "date";
+                        series.name = "cars";
+                        series.dataFields.valueY = "cars";
+                        series.tooltipHTML = "<img src='https://www.amcharts.com/lib/3/images/car.png' style='vertical-align:bottom; margin-right: 10px; width:28px; height:21px;'><span style='font-size:14px; color:#000000;'><b>{valueY.value}</b></span>";
+                        series.tooltipText = "[#000]{valueY.value}[/]";
+                        series.tooltip.background.fill = am4core.color("#FFF");
+                        series.tooltip.getStrokeFromObject = true;
+                        series.tooltip.background.strokeWidth = 3;
+                        series.tooltip.getFillFromObject = false;
+                        series.fillOpacity = 0.6;
+                        series.strokeWidth = 2;
+                        series.stacked = true;
+
+                        series.tooltip.pointerOrientation = "vertical";
+
+                        var series2 = chart.series.push(new am4charts.LineSeries());
+                        series2.dataFields.dateX = "date";
+                        series2.name = "motorcycles";
+                        series2.dataFields.valueY = "motorcycles";
+                        series2.tooltipHTML = "<img src='https://www.amcharts.com/lib/3/images/motorcycle.png' style='vertical-align:bottom; margin-right: 10px; width:28px; height:21px;'><span style='font-size:14px; color:#000000;'><b>{valueY.value}</b></span>";
+                        series2.tooltipText = "[#000]{valueY.value}[/]";
+                        series2.tooltip.background.fill = am4core.color("#FFF");
+                        series2.tooltip.getFillFromObject = false;
+                        series2.tooltip.getStrokeFromObject = true;
+                        series2.tooltip.background.strokeWidth = 3;
+                        series2.sequencedInterpolation = true;
+                        series2.fillOpacity = 0.6;
+                        series2.strokeWidth = 2;
+                        series2.stacked = true;
+
+                        series2.tooltip.pointerOrientation = "vertical";
+
+                        var series3 = chart.series.push(new am4charts.LineSeries());
+                        series3.name = "bicycles";
+                        series3.dataFields.dateX = "date";
+                        series3.dataFields.valueY = "bicycles";
+                        series3.tooltipHTML = "<img src='https://www.amcharts.com/lib/3/images/bicycle.png' style='vertical-align:bottom; margin-right: 10px; width:28px; height:21px;'><span style='font-size:14px; color:#000000;'><b>{valueY.value}</b></span>";
+                        series3.tooltipText = "[#000]{valueY.value}[/]";
+                        series3.tooltip.background.fill = am4core.color("#FFF");
+                        series3.tooltip.getFillFromObject = false;
+                        series3.tooltip.getStrokeFromObject = true;
+                        series3.tooltip.background.strokeWidth = 3;
+                        series3.sequencedInterpolation = true;
+                        series3.fillOpacity = 0.6;
+                        series3.strokeWidth = 2;
+                        series3.stacked = true;
+                        series3.defaultState.transitionDuration = 1000;
+
+                        series3.tooltip.pointerOrientation = "vertical";
+
+                        chart.cursor = new am4charts.XYCursor();
+                        chart.cursor.xAxis = dateAxis;
+
+                        chart.scrollbarX = new am4core.Scrollbar();
+
+                        // Set up drill-down
+                        dateAxis.renderer.labels.template.events.on("hit", function(ev) {
+                        var start = ev.target.dataItem.date;
+                        var end = new Date(start);
+                        end.setMonth(end.getMonth() + 1);
+                        dateAxis.zoomToDates(start, end);
+                        })
+
+                        // Add a legend
+                        chart.legend = new am4charts.Legend();
+                        chart.legend.position = "top";
+
+                        function send()
+                        {
+                            const startDate = new Date(document.getElementById("datetimepicker1").value)
+                            const endDate = new Date(document.getElementById("datetimepicker2").value)
+
+                            var profile = document.getElementById("dict-id").textContent
+                            var profileJson = JSON.parse(profile)
+
+                            var mSize = "{{mms|length}}" // 마커 개수
+                            var mDate
+                            var mcount = 0
+                            for (var i = 0; i < mSize; i++) {
+                                mDate = new Date(profileJson[i][3])
+                                console.log(mDate)
+                                if (startDate <= mDate && mDate <= endDate) {
+                                    mcount = mcount + 1
+                                }
+                            }
+                            console.log(mcount)
+                            console.log(startDate.getFullYear())
+                            console.log(endDate.getFullYear())
+                            chart.data = [{
+                            "year": startDate.getFullYear().toString(),
+                            "cars": mcount,
+                            "motorcycles": mcount,
+                            "bicycles": mcount
+                            }, {
+                            "year": endDate.getFullYear().toString(),
+                            "cars": mcount,
+                            "motorcycles": mcount,
+                            "bicycles": mcount 
+                            }];
+                        }
+
+                    </script>
+                    
+                    <div class="col-sm-12">
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
                             <li class="nav-item">
                                 <a class="nav-link active text-uppercase" id="timeline-tab" data-toggle="tab" href="#timeline" role="tab" aria-controls="timeline" aria-selected="true">Stacked Chart</a>
@@ -44,248 +217,10 @@
                                     <div class="card-block">
                                         <div id="chartdiv"></div>
                                         <!-- Chart code -->
-                                        <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
-                                        <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
-                                        <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
-                                        <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
-                                        <script src="/static/assets/js/mobiscroll.jquery.min.js?"></script>
-                                        <link href="/static/assets/css/mobiscroll.jquery.min.css" rel="stylesheet" />
-
-                                        <script type="text/javascript">
-
-                                            // Themes begin
-                                            am4core.useTheme(am4themes_animated);
-                                            // Themes end
-
-                                            var chart = am4core.create("chartdiv", am4charts.XYChart);
-
-                                            chart.data = [{
-                                            "year": "1994",
-                                            "cars": 1587,
-                                            "motorcycles": 650,
-                                            "bicycles": 121
-                                            }, {
-                                            "year": "1995",
-                                            "cars": 1567,
-                                            "motorcycles": 683,
-                                            "bicycles": 146
-                                            }, {
-                                            "year": "1996",
-                                            "cars": 1617,
-                                            "motorcycles": 691,
-                                            "bicycles": 138
-                                            }, {
-                                            "year": "1997",
-                                            "cars": 1630,
-                                            "motorcycles": 642,
-                                            "bicycles": 127
-                                            }, {
-                                            "year": "1998",
-                                            "cars": 1660,
-                                            "motorcycles": 699,
-                                            "bicycles": 105
-                                            }, {
-                                            "year": "1999",
-                                            "cars": 1683,
-                                            "motorcycles": 721,
-                                            "bicycles": 109
-                                            }, {
-                                            "year": "2000",
-                                            "cars": 1691,
-                                            "motorcycles": 737,
-                                            "bicycles": 112
-                                            }, {
-                                            "year": "2001",
-                                            "cars": 1298,
-                                            "motorcycles": 680,
-                                            "bicycles": 101
-                                            }, {
-                                            "year": "2002",
-                                            "cars": 1275,
-                                            "motorcycles": 664,
-                                            "bicycles": 97
-                                            }, {
-                                            "year": "2003",
-                                            "cars": 1246,
-                                            "motorcycles": 648,
-                                            "bicycles": 93
-                                            }, {
-                                            "year": "2004",
-                                            "cars": 1318,
-                                            "motorcycles": 697,
-                                            "bicycles": 111
-                                            }, {
-                                            "year": "2005",
-                                            "cars": 1213,
-                                            "motorcycles": 633,
-                                            "bicycles": 87
-                                            }, {
-                                            "year": "2006",
-                                            "cars": 1199,
-                                            "motorcycles": 621,
-                                            "bicycles": 79
-                                            }, {
-                                            "year": "2007",
-                                            "cars": 1110,
-                                            "motorcycles": 210,
-                                            "bicycles": 81
-                                            }, {
-                                            "year": "2008",
-                                            "cars": 1165,
-                                            "motorcycles": 232,
-                                            "bicycles": 75
-                                            }, {
-                                            "year": "2009",
-                                            "cars": 1145,
-                                            "motorcycles": 219,
-                                            "bicycles": 88
-                                            }, {
-                                            "year": "2010",
-                                            "cars": 1163,
-                                            "motorcycles": 201,
-                                            "bicycles": 82
-                                            }, {
-                                            "year": "2011",
-                                            "cars": 1180,
-                                            "motorcycles": 285,
-                                            "bicycles": 87
-                                            }, {
-                                            "year": "2012",
-                                            "cars": 1159,
-                                            "motorcycles": 277,
-                                            "bicycles": 71
-                                            }];
-
-                                            chart.dateFormatter.inputDateFormat = "yyyy";
-                                            var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
-                                            dateAxis.renderer.minGridDistance = 60;
-                                            dateAxis.startLocation = 0.5;
-                                            dateAxis.endLocation = 0.5;
-                                            dateAxis.baseInterval = {
-                                            timeUnit: "year",
-                                            count: 1
-                                            }
-
-                                            var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-                                            valueAxis.tooltip.disabled = true;
-
-                                            var series = chart.series.push(new am4charts.LineSeries());
-                                            series.dataFields.dateX = "year";
-                                            series.name = "cars";
-                                            series.dataFields.valueY = "cars";
-                                            series.tooltipHTML = "<img src='https://www.amcharts.com/lib/3/images/car.png' style='vertical-align:bottom; margin-right: 10px; width:28px; height:21px;'><span style='font-size:14px; color:#000000;'><b>{valueY.value}</b></span>";
-                                            series.tooltipText = "[#000]{valueY.value}[/]";
-                                            series.tooltip.background.fill = am4core.color("#FFF");
-                                            series.tooltip.getStrokeFromObject = true;
-                                            series.tooltip.background.strokeWidth = 3;
-                                            series.tooltip.getFillFromObject = false;
-                                            series.fillOpacity = 0.6;
-                                            series.strokeWidth = 2;
-                                            series.stacked = true;
-
-                                            var series2 = chart.series.push(new am4charts.LineSeries());
-                                            series2.name = "motorcycles";
-                                            series2.dataFields.dateX = "year";
-                                            series2.dataFields.valueY = "motorcycles";
-                                            series2.tooltipHTML = "<img src='https://www.amcharts.com/lib/3/images/motorcycle.png' style='vertical-align:bottom; margin-right: 10px; width:28px; height:21px;'><span style='font-size:14px; color:#000000;'><b>{valueY.value}</b></span>";
-                                            series2.tooltipText = "[#000]{valueY.value}[/]";
-                                            series2.tooltip.background.fill = am4core.color("#FFF");
-                                            series2.tooltip.getFillFromObject = false;
-                                            series2.tooltip.getStrokeFromObject = true;
-                                            series2.tooltip.background.strokeWidth = 3;
-                                            series2.sequencedInterpolation = true;
-                                            series2.fillOpacity = 0.6;
-                                            series2.stacked = true;
-                                            series2.strokeWidth = 2;
-
-                                            var series3 = chart.series.push(new am4charts.LineSeries());
-                                            series3.name = "bicycles";
-                                            series3.dataFields.dateX = "year";
-                                            series3.dataFields.valueY = "bicycles";
-                                            series3.tooltipHTML = "<img src='https://www.amcharts.com/lib/3/images/bicycle.png' style='vertical-align:bottom; margin-right: 10px; width:28px; height:21px;'><span style='font-size:14px; color:#000000;'><b>{valueY.value}</b></span>";
-                                            series3.tooltipText = "[#000]{valueY.value}[/]";
-                                            series3.tooltip.background.fill = am4core.color("#FFF");
-                                            series3.tooltip.getFillFromObject = false;
-                                            series3.tooltip.getStrokeFromObject = true;
-                                            series3.tooltip.background.strokeWidth = 3;
-                                            series3.sequencedInterpolation = true;
-                                            series3.fillOpacity = 0.6;
-                                            series3.defaultState.transitionDuration = 1000;
-                                            series3.stacked = true;
-                                            series3.strokeWidth = 2;
-
-                                            chart.cursor = new am4charts.XYCursor();
-                                            chart.cursor.xAxis = dateAxis;
-                                            chart.scrollbarX = new am4core.Scrollbar();
-
-                                            // Add a legend
-                                            chart.legend = new am4charts.Legend();
-                                            chart.legend.position = "top";
-
-                                            // axis ranges
-                                            var range = dateAxis.axisRanges.create();
-                                            range.date = new Date(2001, 0, 1);
-                                            range.endDate = new Date(2003, 0, 1);
-                                            range.axisFill.fill = chart.colors.getIndex(7);
-                                            range.axisFill.fillOpacity = 0.2;
-
-                                            range.label.text = "Fines for speeding increased";
-                                            range.label.inside = true;
-                                            range.label.rotation = 90;
-                                            range.label.horizontalCenter = "right";
-                                            range.label.verticalCenter = "bottom";
-
-                                            var range2 = dateAxis.axisRanges.create();
-                                            range2.date = new Date(2007, 0, 1);
-                                            range2.grid.stroke = chart.colors.getIndex(7);
-                                            range2.grid.strokeOpacity = 0.6;
-                                            range2.grid.strokeDasharray = "5,2";
-
-
-                                            range2.label.text = "Motorcycle fee introduced";
-                                            range2.label.inside = true;
-                                            range2.label.rotation = 90;
-                                            range2.label.horizontalCenter = "right";
-                                            range2.label.verticalCenter = "bottom";
-                                        </script>
-
-                                        <div id="sform">
-                                            <form>
-                                                <label for="jb-input-text">단위 : &nbsp;</label>
-                                                <input type="radio" id="year" name="duration" value="year" onclick="chk()">
-                                                <label for="year">Year &nbsp;</label>
-                                                <input type="radio" id="month" name="duration" value="month" onclick="chk()">
-                                                <label for="month">Month &nbsp;</label>
-                                                <input type="radio" id="day" name="duration" value="day" onclick="chk()">
-                                                <label for="day">Day &nbsp;</label>
-                                                <input type="radio" id="hour" name="duration" value="hour" onclick="chk()">
-                                                <label for="hour">Hour &nbsp;</label>
-                                                <input type="radio" id="minute" name="duration" value="minute" onclick="chk()">
-                                                <label for="minute">Minute &nbsp;</label>
-                                            </form>
-                                        </div>
                                     </div>
-                                    <div class="demo-time-picker">
-                                        <label>
-                                            24 hour picker 
-                                            <input id="demo-24h" mbsc-input data-input-style="outline" data-label-style="stacked" placeholder="Select" />
-                                        </label>
-                                    </div>
-                                    <script type="text/javascript">
-                                      
-                                        
-                                            mobiscroll.setOptions({
-                                                theme: 'windows',
-                                                themeVariant: 'light',
-                                                locale: mobiscroll.localeDe
-                                            });
-                                        
-                                            $('#demo-24h').mobiscroll().datepicker({
-                                                controls: ['time'],
-                                                timeFormat: 'h:mm A',
-                                                touchUi: true
-                                            });
-                                    
+                                    <script>
+                                        $('#datetimepicker1').datetimepicker();
+                                        $('#datetimepicker2').datetimepicker();
                                     </script>
                                 </div>
                                 <!-- [ Stacked Chart ] end -->
@@ -308,6 +243,9 @@
 
     
 </div>
+
+
+
 
 {% endblock content %}
 
