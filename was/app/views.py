@@ -100,7 +100,8 @@ def pages(request):
                 a=map_model.objects.raw("select _id,latitude,longitude,_display_name,replace(_data,'/storage/emulated','/static/assets/images/media') as data,DATETIME(ROUND(datetaken / 1000), 'unixepoch','localtime') AS datetaken from files where _id=%s" %id)
                 return JsonResponse(serializers.serialize('json',a),safe=False)
                 
-            map_list=map_model.objects.all()
+            map_list=map_model.objects.all().order_by('datetaken')
+            print(map_list)
             map_dict={}
             i=1
             for map in map_list:#queryset->dict(list[])
@@ -109,6 +110,7 @@ def pages(request):
                     map_dict[str(i)].append(map.id)
                     map_dict[str(i)].append(map.lat)
                     map_dict[str(i)].append(map.longt)
+                    map_dict[str(i)].append(map.datetaken)
                     i+=1
             print(map_dict)  
             context['geo']=map_dict

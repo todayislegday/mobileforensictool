@@ -91,7 +91,8 @@
                     data: { id: marker.id },        // 마커 id 값으로 data 불러오고
                     success: function (data) {      // data엔 id로 검색한 필요한 좌표에 대한 부가적인 정보를 서버에서 전달하여 담겨있다.
                         dataJson = JSON.parse(data) // JSON으로 파싱
-                        
+                        console.log(data)
+
                         video_type = ['.mp4']; // 여기에 영상 확장자 다 넣어
                         var path = dataJson[0]['fields']['data']; // 경로를 넣어, 나중에 확장자 구하려고
 
@@ -145,11 +146,9 @@
 
             if (position.lat() >= startLo.lat() && position.lat() <= endLo.lat() &&
             position.lng() >= startLo.lng() && position.lng() <= endLo.lng()) { // 마커가 현재 화면에 있는지 체크
-                console.log("show");
                 showMarker(map, marker);
                 
             } else {
-                console.log("hide");
                 hideMarker(map, marker);
             }
         }
