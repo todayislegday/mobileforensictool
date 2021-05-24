@@ -66,7 +66,7 @@
                                     </table>
 
                                     <!-- 페이징처리시작-->
-                                    <ul class="pagination justify-content-center">
+                                    <ul class="pagination justify-content-center " id="buttonset">
                                         <!-- 이전페이지 -->
                                         {% if page.has_previous %}
                                         <li class="page-item">
@@ -245,9 +245,8 @@ a="{{msg|length}}"
 max_length=a/10
 console.log(max_length)
 
-//console.log(a/10)
 var x = document.getElementsByClassName("list_data");
-for(var j=0,i=0;i<14;i++){
+for(var j=0,i=0;i<a;i++){
 if(i%10==0)j++
 x[i].id=j.toString();
 console.log(x[i]);
