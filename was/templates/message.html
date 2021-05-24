@@ -84,7 +84,7 @@
                                         {% for page_number in page.paginator.page_range %}
                                             {% if page_number == page.number %}
                                         <div id = {{page_number}} class = now_page > 
-                                            <li class="page-item" aria-current="page">
+                                            <li class="page-item active" aria-current="page">
                                                 <button class="page-link" id='pb{{page_number}}'>{{page_number}}</button>
                                             </li>
                                         </div>
