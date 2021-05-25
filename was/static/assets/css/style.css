@@ -10745,33 +10745,30 @@ div.code-toolbar > .toolbar span:hover {
   width: 300px !important;
   padding: 20px !important;
   min-height: 120px !important;
+  max-height: 500px !important;
   display: block !important;
 }    
+
 
 /*style the paragraph tag*/
 .gm-style .gm-style-iw #google-popup p{
   padding: 10px;
-
 }
+
 
 /*style the annoying little arrow at the bottom*/
 .gm-style div div div div div div div div {
   margin: 0;
   top: 0;
   color: #fff;
-  overflow: hidden !important;
+  overflow: hidden !important; 
   font-size: 13px;
-}
-
-/*style the link*/
-.gm-style div div div div div div div div a {
-  color: #222222aa;
-  font-weight: bold;
 }
 
 #iw-info-list {
   padding: 0;
   list-style: none;
+  width: 100%;
 }
 
 #iw-info-list li {
@@ -10780,6 +10777,8 @@ div.code-toolbar > .toolbar span:hover {
 
 .gm-style #info-img {
   object-fit: cover;
-  max-width: 100%;
+  width: 100%;
   height: auto;
+  margin-bottom: 5px;
+  max-height: 340px !important;
 }
