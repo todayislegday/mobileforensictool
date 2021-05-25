@@ -119,7 +119,7 @@
 <boolean name="MeteredHint" value="false" />
 <int name="MeteredOverride" value="0" />
 <boolean name="UseExternalScores" value="false" />
-<int name="NumAssociation" value="6" />
+<int name="NumAssociation" value="7" />
 <int name="CreatorUid" value="1000" />
 <string name="CreatorName">android.uid.system:1000</string>
 <string name="CreationTime">time=01-04 17:08:02.806</string>
@@ -131,13 +131,13 @@
 <string name="RandomizedMacAddress">aa:27:39:0f:5b:df</string>
 <int name="MacRandomizationSetting" value="1" />
 <long name="semCreationTime" value="1609747682807" />
-<long name="semUpdateTime" value="1619420652773" />
-<long name="LastConnectedTime" value="1619425790786" />
+<long name="semUpdateTime" value="1620884265088" />
+<long name="LastConnectedTime" value="1620880277595" />
 <boolean name="isVendorSpecificSsid" value="false" />
 <int name="AutoReconnect" value="1" />
 <boolean name="semIsRecommended" value="false" />
 <byte-array name="SamsungSpecificFlags" num="0"></byte-array>
-<int name="SEM_AUTO_WIFI_SCORE" value="1" />
+<int name="SEM_AUTO_WIFI_SCORE" value="2" />
 <int name="WapiPskKeyType" value="0" />
 <int name="WapiCertIndex" value="0" />
 <null name="WapiAsCert" />
@@ -187,7 +187,7 @@
 <boolean name="MeteredHint" value="false" />
 <int name="MeteredOverride" value="0" />
 <boolean name="UseExternalScores" value="false" />
-<int name="NumAssociation" value="1" />
+<int name="NumAssociation" value="2" />
 <int name="CreatorUid" value="1000" />
 <string name="CreatorName">android.uid.system:1000</string>
 <string name="CreationTime">time=04-26 17:25:49.752</string>
@@ -199,13 +199,13 @@
 <string name="RandomizedMacAddress">36:8b:b5:57:40:03</string>
 <int name="MacRandomizationSetting" value="1" />
 <long name="semCreationTime" value="1619425549752" />
-<long name="semUpdateTime" value="1619425549752" />
-<long name="LastConnectedTime" value="1619425554777" />
+<long name="semUpdateTime" value="1620894707348" />
+<long name="LastConnectedTime" value="1620887684924" />
 <boolean name="isVendorSpecificSsid" value="false" />
 <int name="AutoReconnect" value="1" />
 <boolean name="semIsRecommended" value="false" />
 <byte-array name="SamsungSpecificFlags" num="0"></byte-array>
-<int name="SEM_AUTO_WIFI_SCORE" value="0" />
+<int name="SEM_AUTO_WIFI_SCORE" value="1" />
 <int name="WapiPskKeyType" value="0" />
 <int name="WapiCertIndex" value="0" />
 <null name="WapiAsCert" />
@@ -255,7 +255,7 @@
 <boolean name="MeteredHint" value="false" />
 <int name="MeteredOverride" value="0" />
 <boolean name="UseExternalScores" value="false" />
-<int name="NumAssociation" value="2" />
+<int name="NumAssociation" value="19" />
 <int name="CreatorUid" value="10121" />
 <string name="CreatorName">com.google.android.setupwizard</string>
 <string name="CreationTime">time=04-26 19:06:41.538</string>
@@ -267,13 +267,13 @@
 <string name="RandomizedMacAddress">76:40:66:7b:ce:9e</string>
 <int name="MacRandomizationSetting" value="1" />
 <long name="semCreationTime" value="1619431601538" />
-<long name="semUpdateTime" value="1619665674825" />
-<long name="LastConnectedTime" value="1619666224906" />
+<long name="semUpdateTime" value="1620876160069" />
+<long name="LastConnectedTime" value="1621769653727" />
 <boolean name="isVendorSpecificSsid" value="false" />
 <int name="AutoReconnect" value="1" />
 <boolean name="semIsRecommended" value="false" />
 <byte-array name="SamsungSpecificFlags" num="0"></byte-array>
-<int name="SEM_AUTO_WIFI_SCORE" value="2" />
+<int name="SEM_AUTO_WIFI_SCORE" value="4" />
 <int name="WapiPskKeyType" value="0" />
 <int name="WapiCertIndex" value="0" />
 <null name="WapiAsCert" />
@@ -335,13 +335,81 @@
 <string name="RandomizedMacAddress">42:5d:ac:5e:dd:1a</string>
 <int name="MacRandomizationSetting" value="1" />
 <long name="semCreationTime" value="1619697686114" />
-<long name="semUpdateTime" value="1619697686114" />
+<long name="semUpdateTime" value="1620642733569" />
 <long name="LastConnectedTime" value="1619697693372" />
 <boolean name="isVendorSpecificSsid" value="false" />
 <int name="AutoReconnect" value="1" />
 <boolean name="semIsRecommended" value="false" />
 <byte-array name="SamsungSpecificFlags" num="0"></byte-array>
-<int name="SEM_AUTO_WIFI_SCORE" value="0" />
+<int name="SEM_AUTO_WIFI_SCORE" value="2" />
+<int name="WapiPskKeyType" value="0" />
+<int name="WapiCertIndex" value="0" />
+<null name="WapiAsCert" />
+<null name="WapiUserCert" />
+<int name="EntryRssi24GHz" value="-78" />
+<int name="EntryRssi5GHz" value="-75" />
+<boolean name="CaptivePortal" value="false" />
+</WifiConfiguration>
+<NetworkStatus>
+<string name="SelectionStatus">NETWORK_SELECTION_ENABLED</string>
+<string name="DisableReason">NETWORK_SELECTION_ENABLE</string>
+<null name="ConnectChoice" />
+<long name="ConnectChoiceTimeStamp" value="-1" />
+<boolean name="HasEverConnected" value="true" />
+</NetworkStatus>
+<IpConfiguration>
+<string name="IpAssignment">DHCP</string>
+<string name="ProxySettings">NONE</string>
+</IpConfiguration>
+</Network>
+<Network>
+<WifiConfiguration>
+<string name="ConfigKey">&quot;Coffeebean&quot;NONE</string>
+<string name="SSID">&quot;Coffeebean&quot;</string>
+<null name="BSSID" />
+<null name="PreSharedKey" />
+<null name="WEPKeys" />
+<int name="WEPTxKeyIndex" value="0" />
+<boolean name="HiddenSSID" value="false" />
+<boolean name="RequirePMF" value="false" />
+<byte-array name="AllowedKeyMgmt" num="1">01</byte-array>
+<byte-array name="AllowedProtocols" num="1">03</byte-array>
+<byte-array name="AllowedAuthAlgos" num="1">01</byte-array>
+<byte-array name="AllowedGroupCiphers" num="1">0f</byte-array>
+<byte-array name="AllowedPairwiseCiphers" num="1">06</byte-array>
+<byte-array name="AllowedGroupMgmtCiphers" num="0"></byte-array>
+<byte-array name="AllowedSuiteBCiphers" num="0"></byte-array>
+<boolean name="Shared" value="true" />
+<int name="Status" value="2" />
+<null name="FQDN" />
+<null name="ProviderFriendlyName" />
+<null name="LinkedNetworksList" />
+<null name="DefaultGwMacAddress" />
+<boolean name="ValidatedInternetAccess" value="true" />
+<boolean name="NoInternetAccessExpected" value="false" />
+<int name="UserApproved" value="0" />
+<boolean name="MeteredHint" value="false" />
+<int name="MeteredOverride" value="0" />
+<boolean name="UseExternalScores" value="false" />
+<int name="NumAssociation" value="1" />
+<int name="CreatorUid" value="1000" />
+<string name="CreatorName">android.uid.system:1000</string>
+<string name="CreationTime">time=05-22 12:40:31.749</string>
+<int name="LastUpdateUid" value="1000" />
+<string name="LastUpdateName">android.uid.system:1000</string>
+<int name="LastConnectUid" value="1000" />
+<boolean name="IsLegacyPasspointConfig" value="false" />
+<long-array name="RoamingConsortiumOIs" num="0" />
+<string name="RandomizedMacAddress">2a:56:86:a2:5b:bf</string>
+<int name="MacRandomizationSetting" value="1" />
+<long name="semCreationTime" value="1621654831749" />
+<long name="semUpdateTime" value="1621657556108" />
+<long name="LastConnectedTime" value="1621654836864" />
+<boolean name="isVendorSpecificSsid" value="false" />
+<int name="AutoReconnect" value="1" />
+<boolean name="semIsRecommended" value="false" />
+<byte-array name="SamsungSpecificFlags" num="0"></byte-array>
+<int name="SEM_AUTO_WIFI_SCORE" value="1" />
 <int name="WapiPskKeyType" value="0" />
 <int name="WapiCertIndex" value="0" />
 <null name="WapiAsCert" />

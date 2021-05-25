@@ -1,2 +1,8 @@
-2021/04/27-10:14:21.955 223 Creating DB /data/user/0/com.android.chrome/app_chrome/Default/IndexedDB/https_www.google.com_0.indexeddb.leveldb since it was missing.
-2021/04/27-10:14:21.974 223 Reusing MANIFEST /data/user/0/com.android.chrome/app_chrome/Default/IndexedDB/https_www.google.com_0.indexeddb.leveldb/MANIFEST-000001
+2021/05/20-18:06:57.344 21a4 Reusing MANIFEST /data/user/0/com.android.chrome/app_chrome/Default/IndexedDB/https_www.google.com_0.indexeddb.leveldb/MANIFEST-000001
+2021/05/20-18:06:57.347 21a4 Recovering log #56
+2021/05/20-18:06:57.348 21a4 Reusing old log /data/user/0/com.android.chrome/app_chrome/Default/IndexedDB/https_www.google.com_0.indexeddb.leveldb/000056.log 
+2021/05/20-18:10:26.500 21a4 Level-0 table #61: started
+2021/05/20-18:10:26.501 21a4 Level-0 table #61: 0 bytes OK
+2021/05/20-18:10:26.510 21a4 Delete type=0 #56
+2021/05/20-18:10:26.511 21a4 Manual compaction at level-0 from (begin) .. (end); will stop at (end)
+2021/05/20-18:10:26.512 21a4 Manual compaction at level-1 from (begin) .. (end); will stop at (end)

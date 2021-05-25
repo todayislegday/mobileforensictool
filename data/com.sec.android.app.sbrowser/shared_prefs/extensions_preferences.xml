@@ -1,4 +1,4 @@
 <?xml version='1.0' encoding='utf-8' standalone='yes' ?>
 <map>
-    <boolean name="extensions_has_new_fixed_extension" value="true" />
+    <boolean name="extensions_has_new_fixed_extension" value="false" />
 </map>

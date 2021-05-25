@@ -38,7 +38,7 @@
     <string name="0030">0</string>
     <string name="0029">-1</string>
     <string name="0026">NONE</string>
-    <string name="0023">-1</string>
+    <int name="0023" value="0" />
     <string name="8600">0</string>
     <string name="5178">0</string>
     <string name="0042">1</string>
@@ -47,13 +47,13 @@
     <string name="5290">0</string>
     <string name="0039">1</string>
     <int name="0037" value="0" />
-    <string name="0038">-1</string>
+    <int name="0038" value="8" />
     <string name="0035">1</string>
     <string name="0036">1</string>
     <string name="0033">0</string>
     <string name="0034">1</string>
     <string name="9301">-1</string>
-    <string name="6158">no_enter</string>
+    <string name="6158">khmmfcceknncifmkiimjnnjldibgajpl</string>
     <string name="0053">-1</string>
     <string name="0054">-1</string>
     <string name="0052">0</string>
@@ -71,7 +71,7 @@
     <string name="5355">6</string>
     <string name="8742">0</string>
     <string name="5356">6</string>
-    <int name="0064" value="0" />
+    <int name="0064" value="9" />
     <string name="0065">A</string>
     <string name="0062">0</string>
     <int name="0060" value="0" />

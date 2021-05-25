@@ -104,13 +104,14 @@ def pages(request):
             print(map_list)
             map_dict={}
             i=1
-            for map in map_list:#queryset->dict(list[])
-                if map.lat!=None and map.longt!=None:
+            for m in map_list:#queryset->dict(list[])
+                if m.lat!=None and m.longt!=None:
                     map_dict[str(i)]=list()
-                    map_dict[str(i)].append(map.id)
-                    map_dict[str(i)].append(map.lat)
-                    map_dict[str(i)].append(map.longt)
-                    map_dict[str(i)].append(map.datetaken)
+                    map_dict[str(i)].append(m.id)
+                    map_dict[str(i)].append(m.lat)
+                    map_dict[str(i)].append(m.longt)
+                    map_dict[str(i)].append(m.datetaken)
+                    map_dict[str(i)].append("안녕")
                     i+=1
             print(map_dict)  
             context['geo']=map_dict
@@ -184,12 +185,12 @@ def pages(request):
             ###함수로 빼기#################
             mms_dict={}
             i=0
-            for map in mms:#queryset->dict(list[])
+            for m in mms:#queryset->dict(list[])
                 mms_dict[i]=list()
-                mms_dict[i].append(map.id)
-                mms_dict[i].append(map.address)
-                mms_dict[i].append(map.content)
-                mms_dict[i].append(map.date)
+                mms_dict[i].append(m.id)
+                mms_dict[i].append(m.address)
+                mms_dict[i].append(m.content)
+                mms_dict[i].append(m.date)
                 i+=1
             ###################################
             print(mms_dict)  
@@ -210,8 +211,35 @@ def pages(request):
             context['media']=media
         
         
-        elif context['url']=="keyword-search.html":#용하
-            pass
+        elif context['url']=="keyword-search.html":
+            text=message1_model.objects.values('text')
+
+            ###############################
+            c=list()
+            for a in text:#쿼리셋->list
+                c.append(a['text'])
+            litost=" ".join(map(str,c)) #list를 전체 문자열로 만든다.
+            print(litost)
+            
+            c=litost.split()#중복이 있는 list
+            list1=set(c)
+            list1=list(list1)#중복이 제거된 list
+            
+            list2=list()
+            list3=list()
+            for text in c:
+                list2.append({"text":text})
+            for text in list1:
+                list3.append({"text":text})
+            
+
+            for a in list2:
+                find =a['text']
+                for e in list3:
+                    if find==e['text']:
+                        try:e['weight']=e['weight']+1
+                        except:e['weight']=1
+            context['words']=list3
  ###########################################################  
 
 

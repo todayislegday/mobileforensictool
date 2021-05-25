@@ -4,5 +4,5 @@
     <string name="blacklist">{&quot;webpage_loading_fail&quot;:[&quot;*&quot;]}</string>
     <string name="etag">&quot;6ff8b090da1b28d8d4e52bad58b3ba87&quot;</string>
     <boolean name="crash_report" value="false" />
-    <long name="last_update_date" value="1619413499271" />
+    <long name="last_update_date" value="1621493229732" />
 </map>

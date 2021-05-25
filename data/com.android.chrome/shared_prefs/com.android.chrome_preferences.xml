@@ -4,6 +4,7 @@
     <boolean name="org.chromium.chrome.browser.tabmodel.TabPersistentStore.HAS_RUN_MULTI_INSTANCE_FILE_MIGRATION" value="true" />
     <int name="org.chromium.chrome.browser.webapps.last_sdk_version" value="29" />
     <boolean name="Chrome.Flags.CachedFlag.ReportFeedUserActions" value="false" />
+    <int name="signin_promo_last_shown_chrome_version" value="90" />
     <boolean name="snapshot_database_removed" value="true" />
     <int name="Chrome.Flags.FieldTrialParamCached.TabGridLayoutAndroid:price_tracking_display_time_ms" value="604800000" />
     <boolean name="first_backup_done" value="true" />
@@ -11,7 +12,7 @@
     <boolean name="Chrome.Flags.CachedFlag.ShareByDefaultInCCT" value="true" />
     <boolean name="incognito-shortcut-added" value="true" />
     <boolean name="Chrome.Flags.FieldTrialParamCached.TabGridLayoutAndroid:enable_price_notification" value="false" />
-    <long name="com.google.android.apps.chrome.ChromeMobileApplication.BOOT_TIMESTAMP" value="1619669723268" />
+    <long name="com.google.android.apps.chrome.ChromeMobileApplication.BOOT_TIMESTAMP" value="1621424853494" />
     <boolean name="Chrome.Flags.FieldTrialParamCached.StartSurfaceAndroid:omnibox_focused_on_new_tab" value="false" />
     <boolean name="command_line_on_non_rooted_enabled" value="false" />
     <int name="browser_crash_success_upload" value="0" />
@@ -19,30 +20,28 @@
     <boolean name="service_manager_for_background_prefetch" value="true" />
     <boolean name="Chrome.Flags.CachedFlag.UseChimeAndroidSdk" value="false" />
     <set name="bts_cached_uma">
-        <string>Android.BackgroundTaskScheduler.TaskCreated.WithoutExpiration:1:2</string>
-        <string>Android.BackgroundTaskScheduler.TaskCanceled:8:3</string>
-        <string>Android.BackgroundTaskScheduler.TaskCanceled:18:3</string>
-        <string>Android.BackgroundTaskScheduler.TaskCanceled:25:3</string>
-        <string>Android.BackgroundTaskScheduler.TaskCreated.WithExpiration:19:1</string>
-        <string>Servicification.Startup3:0:3</string>
-        <string>Android.BackgroundTaskScheduler.TaskScheduled.Success:19:1</string>
-        <string>Android.BackgroundTaskScheduler.TaskStarted:1:2</string>
-        <string>Android.BackgroundTaskScheduler.TaskScheduled.Success:1:2</string>
-        <string>Android.BackgroundTaskScheduler.TaskExpired:19:1</string>
+        <string>Android.BackgroundTaskScheduler.TaskCanceled:25:7</string>
+        <string>Android.BackgroundTaskScheduler.TaskCanceled:8:4</string>
+        <string>Android.BackgroundTaskScheduler.TaskCreated.WithoutExpiration:1:1</string>
+        <string>Servicification.Startup3:0:2</string>
+        <string>Android.BackgroundTaskScheduler.TaskCanceled:18:7</string>
+        <string>Android.BackgroundTaskScheduler.TaskScheduled.Success:1:1</string>
+        <string>Android.BackgroundTaskScheduler.TaskStarted:1:1</string>
     </set>
     <int name="Chrome.Flags.FieldTrialParamCached.StartSurfaceAndroid:trendy_failure_min_period_ms" value="7200000" />
     <boolean name="Chrome.Flags.CachedFlag.CloseTabSuggestions" value="false" />
-    <long name="MainIntent.LaunchTimestamp" value="1619486050652" />
+    <long name="MainIntent.LaunchTimestamp" value="1621494735499" />
     <string name="org.chromium.chrome.browser.searchwidget.SEARCH_ENGINE_SHORTNAME">Google</string>
     <boolean name="Chrome.Flags.FieldTrialParamCached.LensCameraAssistedSearch:enableCameraAssistedSearchOnLowEndDevice" value="false" />
     <int name="LocaleManager_USR_TYPE" value="3" />
     <boolean name="LocaleManager_SEARCH_WIDGET_PRESENT_FIRST_START" value="false" />
+    <string name="pref_last_custom_tab_url">content://media/external/downloads/124</string>
     <boolean name="first_run_flow" value="true" />
     <boolean name="Chrome.Flags.FieldTrialParamCached.TabGridLayoutAndroid:enable_launch_bug_fix" value="false" />
     <boolean name="bg_startup_tracing" value="false" />
-    <long name="Chrome.Flags.LastCachedMinimalBrowserFlagsTimeMillis" value="1619703125788" />
+    <long name="Chrome.Flags.LastCachedMinimalBrowserFlagsTimeMillis" value="1621765922678" />
     <boolean name="in_metrics_sample" value="false" />
-    <int name="NextDownloadNotificationId" value="1000002" />
+    <int name="NextDownloadNotificationId" value="1000008" />
     <boolean name="Chrome.Flags.FieldTrialParamCached.TabGridLayoutAndroid:enable_search_term_chip" value="false" />
     <boolean name="Chrome.Flags.FieldTrialParamCached.TabGridLayoutAndroid:allow_to_refetch" value="true" />
     <boolean name="Chrome.Flags.CachedFlag.CCTRemoveRemoteViewIds" value="true" />
@@ -64,7 +63,8 @@
     <int name="renderer_crash_success_upload" value="0" />
     <string name="enhanced_bookmark_last_used_url">chrome-native://bookmarks/folder/3</string>
     <boolean name="Chrome.Flags.FieldTrialParamCached.TabGridLayoutAndroid:enable_launch_polish" value="false" />
-    <long name="ChromeTabbedActivity.BackgroundTimeMs" value="1619486180264" />
+    <long name="ChromeTabbedActivity.BackgroundTimeMs" value="1621501124613" />
+    <boolean name="Chrome.Flags.CachedFlag.BookmarkBottomSheet" value="false" />
     <boolean name="download_auto_resumption_in_native" value="true" />
     <boolean name="Chrome.Flags.CachedFlag.LensCameraAssistedSearch" value="false" />
     <boolean name="org.chromium.chrome.browser.tabmodel.TabPersistentStore.HAS_COMPUTED_MAX_ID" value="true" />
@@ -109,7 +109,8 @@
     <boolean name="Chrome.Flags.CachedFlag.TabToGTSAnimation" value="true" />
     <boolean name="Chrome.Flags.CachedFlag.CriticalPersistedTabData" value="false" />
     <boolean name="Chrome.Flags.CachedFlag.OfflineMeasurementsBackgroundTask" value="false" />
-    <int name="MainIntent.LaunchCount" value="1" />
+    <int name="MainIntent.LaunchCount" value="3" />
+    <long name="displayed_data_reduction_promo_time_ms" value="1620718471690" />
     <string name="com.google.android.apps.chrome.rlz.CHROME_CLIENT_ID">ms-android-samsung-ss</string>
     <boolean name="Chrome.Flags.CachedFlag.PaintPreviewDemo" value="false" />
     <int name="Chrome.Flags.FieldTrialParamCached.StartSurfaceAndroid:trendy_success_min_period_ms" value="86400000" />
@@ -132,7 +133,7 @@
     <string name="Chrome.Flags.FieldTrialParamCached.StartSurfaceAndroid:start_surface_variation"></string>
     <string name="locale">ko-KR</string>
     <boolean name="Chrome.Flags.FieldTrialParamCached.StartSurfaceAndroid:home_button_on_grid_tab_switcher" value="false" />
-    <long name="com.google.android.apps.chrome.rlz.CHROME_VERSION_CODE" value="443008233" />
+    <long name="com.google.android.apps.chrome.rlz.CHROME_VERSION_CODE" value="443021033" />
     <int name="Chrome.Flags.FieldTrialParamCached.ConditionalTabStripAndroid:conditional_tab_strip_session_time_ms" value="3600000" />
     <boolean name="Chrome.Flags.CachedFlag.CCTIncognito" value="true" />
     <boolean name="promos_skipped_on_first_start" value="true" />
@@ -144,10 +145,15 @@
     <boolean name="Chrome.Flags.CachedFlag.TabbedAppOverflowMenuRegroup" value="true" />
     <boolean name="Chrome.Flags.FieldTrialParamCached.StartSurfaceAndroid:exclude_mv_tiles" value="false" />
     <string name="Chrome.Flags.FieldTrialParamCached.LensCameraAssistedSearch:minAgsaVersionForLensCameraAssistedSearch">12.7</string>
+    <boolean name="displayed_data_reduction_promo" value="true" />
     <boolean name="first_run_signin_setup" value="false" />
     <boolean name="Chrome.Flags.CachedFlag.TabbedAppOverflowMenuThreeButtonActionbar" value="false" />
-    <int name="org.chromium.chrome.browser.tab.TabIdManager.NEXT_ID" value="1" />
+    <int name="org.chromium.chrome.browser.tab.TabIdManager.NEXT_ID" value="2" />
+    <string name="displayed_data_reduction_promo_version">Chrome 90.0.4430.91</string>
     <boolean name="Chrome.Flags.CachedFlag.ConditionalTabStripAndroid" value="false" />
+    <set name="key_modules_deferred_requested_previously">
+        <string>image_editor</string>
+    </set>
     <string name="com.google.android.apps.chrome.rlz.RLZ_STRING"></string>
     <boolean name="Chrome.Flags.CachedFlag.ChromeStartupDelegate" value="true" />
     <boolean name="Chrome.Flags.FieldTrialParamCached.StartSurfaceAndroid:trendy_enabled" value="false" />

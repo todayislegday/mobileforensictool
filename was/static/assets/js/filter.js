@@ -17,15 +17,3 @@ function filter(){
     }
 }
 
-$( document ).ready(function() {
-    console.log( "ready!" );
-    $("#keyword").keyup(function(e) {
-        if($(this).val()==''){
-console.log(1)
-console.log( $("#buttonset").find('li[class="page-item active"]').children("button").attr("id") );
-     var id=$("#buttonset").find('li[class="page-item active"]').children("button").attr("id")
-     id=id.substring(2,3)
-    $(`.list_data[id!=${id}]`).css("display","none")
-}
-    });
-});

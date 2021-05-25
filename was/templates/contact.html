@@ -38,10 +38,10 @@
                             <div class="card"  style="overflow-y:scroll; float:left; margin-right:20px; height: 650px;">
                             
                                 <div class="card-header">
-                                  {% comment %} <div class="right-box">
+                                <div class="right-box">
                                             <label> Search:<input onkeyup="filter()" type="search" id="keyword" class="form-control form-control-sm" placeholder="" aria-controls="dtBasicExample">
                                             </label>
-                                        </div> {% endcomment %}
+                                        </div> 
                                     <h5>연락처</h5>
                                 </div>
                                
@@ -90,7 +90,7 @@
                                         </thead>
                                         <tbody id="calllog">
                                             {% for c in calllog %}
-                                            <tr class='list_data' number={{c.number}}>
+                                            <tr  number={{c.number}}>
                                                 <td>{{c.id}}</td>
                                                 <td>{{c.name}}</td>
                                                 <td>{{c.number}}</td>

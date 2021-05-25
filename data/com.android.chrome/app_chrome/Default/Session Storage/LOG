@@ -1,2 +1,5 @@
-2021/04/27-10:14:07.081 221 Creating DB /data/user/0/com.android.chrome/app_chrome/Default/Session Storage since it was missing.
-2021/04/27-10:14:07.093 221 Reusing MANIFEST /data/user/0/com.android.chrome/app_chrome/Default/Session Storage/MANIFEST-000001
+2021/05/20-17:56:58.182 21a2 Creating DB /data/user/0/com.android.chrome/app_chrome/Default/Session Storage since it was missing.
+2021/05/20-17:56:58.205 21a2 Reusing MANIFEST /data/user/0/com.android.chrome/app_chrome/Default/Session Storage/MANIFEST-000001
+2021/05/20-17:57:14.710 21a4 Level-0 table #5: started
+2021/05/20-17:57:14.725 21a4 Level-0 table #5: 98048 bytes OK
+2021/05/20-17:57:14.732 21a4 Delete type=0 #3

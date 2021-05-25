@@ -1,26 +1,33 @@
 <?xml version='1.0' encoding='utf-8' standalone='yes' ?>
 <map>
     <string name="toolbar_l_item">[&quot;action_backward&quot;,&quot;action_forward&quot;]</string>
+    <int name="pref_saved_page_visited_count" value="1" />
     <boolean name="last_fixed_tab_mode_instance1" value="true" />
     <string name="toolbar_r_item">[&quot;action_home&quot;,&quot;action_bookmarks&quot;,&quot;action_tabs&quot;,&quot;action_more&quot;]</string>
     <string name="pref_preconfigured_country_code_origin">Csc Country Iso</string>
     <int name="block_unwanted_webpages_allowlist_minor_version" value="11" />
     <long name="customize_toolbar_more_menu_first_launch_time_stamp" value="1619413499428" />
     <string name="pref_preconfigured_country_code">KR</string>
+    <string name="pref_multi_tab_mode">mode_list</string>
     <boolean name="clear_stale_native_notification_data" value="true" />
     <boolean name="pref_desktop_website" value="false" />
+    <boolean name="used_weblogin_at_least_once" value="false" />
     <string name="pref_chrome_extension_url">samsunginternet.com</string>
     <boolean name="force_set_as_true_force_zoom" value="true" />
     <string name="current_search_engine_name">google_kr</string>
     <string name="pref_system_font_dir"></string>
     <boolean name="enable_javascript" value="true" />
     <string name="factoryreset_url">http://www.google.com/m?client=ms-android-samsung-ss&amp;source=android-home</string>
+    <boolean name="pref_high_contrast_mode_on_off" value="false" />
     <string name="more_menu_item_list">[&quot;action_downloads&quot;,&quot;action_history&quot;,&quot;action_saved_page&quot;,&quot;action_add_to&quot;,&quot;action_share&quot;,&quot;action_night_mode&quot;,&quot;action_content_blocker&quot;,&quot;find_on_page_id&quot;,&quot;request_pc_version&quot;,&quot;action_text_size&quot;,&quot;action_extensions&quot;,&quot;print_id&quot;,&quot;action_settings&quot;]</string>
+    <long name="perf_show bookmark_sfinder" value="-1" />
     <boolean name="remember_passwords" value="true" />
     <boolean name="pref_reset_country_code_done" value="true" />
     <boolean name="download_delete_temporary_files" value="false" />
+    <boolean name="crash_report" value="false" />
     <float name="bfcache_blocked_url_version" value="1.1" />
     <float name="bfcache_allowed_features_version" value="1.1" />
+    <boolean name="pref_web_signin_checked" value="false" />
     <string name="pref_previous_saved_path">/storage/emulated/0/Download</string>
     <boolean name="pref_request_permission_storage" value="true" />
     <set name="PendingDownloadNotifications">
@@ -28,38 +35,46 @@
     </set>
     <boolean name="wcg.enabled" value="true" />
     <boolean name="web_notification_state" value="true" />
-    <boolean name="HasRequestedAndroidPermission::android.permission.WRITE_EXTERNAL_STORAGE" value="true" />
     <boolean name="geolocation.allowed_enabled" value="true" />
+    <boolean name="share_intent_launch" value="false" />
     <boolean name="bgsync_launch_next_online" value="false" />
-    <int name="NextDownloadNotificationId" value="1000001" />
-    <boolean name="safe_browsing" value="true" />
+    <int name="NextDownloadNotificationId" value="1000007" />
     <int name="blacklist_version" value="1" />
+    <boolean name="safe_browsing" value="true" />
     <boolean name="download_delete_old_db" value="false" />
     <string name="home_page_type">default</string>
+    <boolean name="first_time_use_listmode_of_tabmanager" value="false" />
     <boolean name="block_auto_download" value="true" />
     <int name="pref_shell_apk_version" value="-1" />
     <string name="sa_logging_status_log_homepage_group">A</string>
+    <int name="currentTab" value="0" />
     <string name="locale">ko-KR</string>
     <boolean name="accept_cookies" value="true" />
-    <string name="home_page">http://www.google.com/m?client=ms-android-samsung-ss&amp;source=android-home</string>
     <boolean name="search_suggestions" value="true" />
+    <string name="home_page">http://www.google.com/m?client=ms-android-samsung-ss&amp;source=android-home</string>
+    <boolean name="com.amazon.aa" value="false" />
     <boolean name="pref_hide_status_bar" value="false" />
     <string name="pref_extension_list_data">[{&quot;packageName&quot;:&quot;com.amazon.aa&quot;,&quot;applicationName&quot;:&quot;Amazon Assistant&quot;,&quot;description&quot;:&quot;Amazon Assistant를 사용하면 온라인 쇼핑 중에 제품이나 가격 등을 빠르게 비교할 수 있습니다.&quot;,&quot;storeUrl&quot;:&quot;https:\/\/play.google.com\/store\/apps\/details?id=com.amazon.aa&amp;referrer=utm_source%3Dsmsg%26utm_campaign%3Dsmg01&quot;,&quot;category&quot;:&quot;basic&quot;}]</string>
+    <long name="pref_saved_page_visited_time" value="1620891855417" />
+    <int name="notification_tab" value="-1" />
     <boolean name="pref_country_sa_logging_needed" value="false" />
     <string name="locale_ondestroy">ko</string>
     <boolean name="pref_menu_customized" value="false" />
+    <boolean name="cloud_sync" value="false" />
     <string name="previous_version">0</string>
     <int name="last_display" value="1" />
     <boolean name="last_desktop_mode_instance1" value="false" />
     <boolean name="main_activity_inflated" value="true" />
     <string name="hidden_menu_item_list">[&quot;action_close_internet&quot;,&quot;action_temporarily_allow_ads&quot;,&quot;action_search&quot;,&quot;action_new_tab&quot;,&quot;action_refresh&quot;,&quot;action_secret_mode&quot;,&quot;action_scan_qrcode&quot;]</string>
+    <int name="pref_bookmark_visited_count" value="1" />
     <string name="content_blocker_saved_package"></string>
     <boolean name="enable_content_blocker_for_china_ged" value="false" />
     <string name="download_default_storyage">PHONE</string>
     <int name="metadata_version" value="2" />
     <boolean name="autofill_setting_value_before_knoxmode" value="true" />
-    <long name="TimestampManager.NEXT_TIMESTAMP" value="8" />
     <string name="bfcache_allowed_features">{&quot;list&quot;:[]}&#10;    </string>
+    <boolean name="pref_add_ons_visited" value="true" />
+    <long name="TimestampManager.NEXT_TIMESTAMP" value="31" />
     <string name="geolocation.allowed_list">http://m.amap.com,http://mo.amap.com,http://map.baidu.com,http://m.51job.com,http://m.ctrip.com,http://m.mtime.cn,http://map.sogou.com,http://fuwu.wap.sogou.com</string>
     <boolean name="force_enable_zoom" value="true" />
     <float name="webcontentsprovider_min_interface_version" value="1.0" />
@@ -69,13 +84,17 @@
     <string name="sa_logging_status_log_initialized_version">14.0.1.62</string>
     <boolean name="block_popups" value="true" />
     <boolean name="show_status_bar" value="true" />
+    <boolean name="pref_nbadge_security_panel" value="true" />
+    <long name="pref_bookmark_visited_time" value="1620891921147" />
     <string name="last_known_google_base_url">https://www.google.com/</string>
-    <int name="TabIdManager.NEXT_ID" value="2" />
+    <int name="TabIdManager.NEXT_ID" value="3" />
+    <set name="verified_digital_asset_links" />
     <string name="bfcache_blocked_url">{&quot;list&quot;:[]}&#10;    </string>
     <boolean name="download_show_rename_popup" value="false" />
     <boolean name="HasRequestedAndroidPermission::android.permission-group.UNDEFINED" value="true" />
     <int name="referrer_whitelist_version" value="1" />
     <int name="block_unwanted_webpages_allowlist_major_version" value="0" />
-    <string name="last_url_in_tab_ondestroy">https://openacademicnet.tistory.com/27</string>
+    <boolean name="apply_settings" value="false" />
+    <string name="last_url_in_tab_ondestroy">https://www.google.com/search?q=%EB%B9%84%ED%8A%B8%ED%8F%AC%EB%B9%84%EC%95%84+%ED%99%8D%EB%8C%80&amp;client=ms-android-samsung-ss&amp;prmd=mniv&amp;source=lnms&amp;tbm=isch&amp;sa=X&amp;ved=2ahUKEwicheOq39fwAhUk7GEKHYlrCCcQ_AUoA3oECAIQAw&amp;biw=412&amp;bih=678&amp;dpr=2.63#imgrc=fQMNoxUW5R2BqM&amp;imgdii=oE9CdiCSvx58tM</string>
     <string name="smart_protect_allowlist">[&#10;&#9;&quot;samsung.com&quot;,&#10;        &quot;rstyle.me&quot;,&#10;        &quot;shareasale.com&quot;,&#10;        &quot;maje.com&quot;,&#10;        &quot;adbrix.io&quot;,&#10;        &quot;bestmore.net&quot;,&#10;        &quot;lase.kr&quot;,&#10;        &quot;linkmoa.kr&quot;,&#10;        &quot;linkprice.com&quot;,&#10;        &quot;lpweb.kr&quot;,&#10;        &quot;newtip.net&quot;,&#10;        &quot;homeplus.co.kr&quot;,&#10;        &quot;revato.com&quot;,&#10;        &quot;hotelscombined.co.kr&quot;,&#10;        &quot;hotelscombined.com&quot;,&#10;        &quot;hotelcdn.com&quot;,&#10;        &quot;intercontent.de&quot;,&#10;        &quot;cometium.com&quot;,&#10;        &quot;skimresources.com&quot;,&#10;        &quot;sjv.io&quot;,&#10;        &quot;qvcuk.com&quot;&#10;]&#10;    </string>
 </map>

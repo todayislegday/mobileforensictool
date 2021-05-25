@@ -58,20 +58,13 @@
 {% block javascripts %}
 <script src="/static/assets/js/jqcloud.js"></script>
 
+{{words|json_script:'dict-id'}}
 <script>
  $( document ).ready(function() {
-            var words = [
-        {text: "재훈", weight: 13},
-        {text: "Ipsum", weight: 10.5},
-        {text: "Dolor", weight: 9.4},
-        {text: "Sit", weight: 8},
-        {text: "Amet", weight: 6.2},
-        {text: "Consectetur", weight: 5},
-        {text: "Adipiscing", weight: 5},
-        /* ... */
-        ];
-
-  $('#keyword').jQCloud(words,{
+    var profile = $("#dict-id").text();
+    var profileJson = JSON.parse(profile);
+    console.log(profileJson)
+  $('#keyword').jQCloud(profileJson,{
       width: 900,
       height: 900,
       center:{x:0.7,y:0.5},

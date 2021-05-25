@@ -51,7 +51,7 @@
     <long name="pref_global_config_AXWhiteList_version" value="1604648765000" />
     <long name="pref_global_config_GlobalConfigUpdateFeature_version" value="1519365861000" />
     <int name="pref_global_config_NavigationPage_data_refreshCycleTimeDays" value="0" />
-    <long name="pref_global_config__updated_timestamp_millis" value="1619537026441" />
+    <long name="pref_global_config__updated_timestamp_millis" value="1621493230315" />
     <long name="pref_global_config_PersonalData_version" value="1519093200000" />
     <string name="pref_global_config_SmartProtect_data_smartProtectAllowlist">https://config-api.internet.apps.samsung.com/features/43/extra/smart-protect-allowlist.json</string>
     <int name="pref_global_config_SetAsDefaultBrowser_data_maxPopupCountNoneHotseat" value="2" />
@@ -62,12 +62,12 @@
     <long name="pref_global_config_GoogleNewTab_version" value="1547189957000" />
     <int name="pref_global_config_UserCenter_data_dailyTaskMaxCount" value="10" />
     <long name="pref_global_config_WebApk_version" value="1610093499000" />
-    <long name="pref_global_config__last_success_timestamp_millis" value="1619537026441" />
+    <long name="pref_global_config__last_success_timestamp_millis" value="1621493230315" />
     <string name="pref_global_config__updated_device_manufacturer">samsung</string>
     <string name="pref_global_config_UserCenter_data_userCenterURL">https://usercenter.internet.apps.samsung.com/#/user</string>
     <string name="pref_global_config_SIX_data_sixSuggestedlistData">https://config-api.internet.apps.samsung.com/features/38/extra/SuggestedListData_glo_2_trans.json</string>
     <string name="pref_global_config_WebApk_data_prd_api_url">https://webapk-api.internet.apps.samsung.com</string>
-    <string name="pref_global_config_SIX_data_sixBlacklistData">https://config-api.internet.apps.samsung.com/features/38/extra/BlacklistData.json</string>
+    <string name="pref_global_config_SIX_data_sixBlacklistData">https://config-api.internet.apps.samsung.com/features/38/extra/BlocklistData_2_yab_blocked.json</string>
     <int name="pref_global_config_WebApk_data_shell_apk_version" value="4" />
     <boolean name="pref_global_config_ContentsPush2_support" value="false" />
     <string name="pref_global_config_SIX_etag_sixSuggestedlistData">&quot;feecd9b31cd79c6de05cce16195e9404&quot;</string>
@@ -78,11 +78,11 @@
     <int name="pref_global_config_SmartProtect_data_suspiciousRedirectionRedirectionBoundary" value="10" />
     <long name="pref_global_config_CIDFeatureConfig_version" value="1609218633000" />
     <string name="pref_global_config_PersonalData_data_privacyPolicyUrl">https://account.samsung.com/membership/pp</string>
-    <long name="pref_global_config_SIX_version" value="1614826238000" />
+    <long name="pref_global_config_SIX_version" value="1621310627000" />
     <string name="pref_global_config_DirectSearch_data_DOWNLOAD_URL">http://zhujiahua.sparta.html5.qq.com/samsung_d</string>
     <long name="pref_global_config_UserCenter_version" value="1599565200000" />
     <string name="pref_global_config_PublicThings_data_privacyPolicy">https://www.internet.apps.samsung.com/pt/index.html?type=pp</string>
-    <long name="pref_global_config_BFCache_version" value="1619414541000" />
+    <long name="pref_global_config_BFCache_version" value="1620882627000" />
     <boolean name="pref_global_config_Rewards_support" value="false" />
     <int name="pref_global_config_PersonalizedPromotion_data_initThreshold" value="0" />
     <string name="pref_global_config_BFCache_data_BFCacheBlockedUrl">https://config-api.internet.apps.samsung.com/features/47/extra/BFCacheBlockedUrl.json</string>
@@ -91,7 +91,7 @@
     <long name="pref_global_config_CommonLogging_version" value="1542269350000" />
     <string name="pref_global_config__updated_internet_release">stable</string>
     <long name="pref_global_config_NavigationPage_version" value="1517992563000" />
-    <long name="pref_global_config__updated_timestamp_millis__launch" value="1619537026441" />
+    <long name="pref_global_config__updated_timestamp_millis__launch" value="1621493230315" />
     <boolean name="pref_global_config_BFCache_support" value="true" />
     <boolean name="pref_global_config_SmartProtect_support" value="true" />
     <int name="pref_global_config_SetAsDefaultBrowser_data_durationDaysNoneHotseat" value="30" />
@@ -124,7 +124,7 @@
     <string name="pref_global_config__updated_client_type">ms-android-samsung-ss</string>
     <long name="pref_global_config_SamsungAccountConfig_version" value="1565331556000" />
     <string name="pref_global_config_SIX_etag_six2ndPartyListData">&quot;d41d8cd98f00b204e9800998ecf8427e&quot;</string>
-    <string name="pref_global_config_SIX_etag_sixBlacklistData">&quot;d41d8cd98f00b204e9800998ecf8427e&quot;</string>
+    <string name="pref_global_config_SIX_etag_sixBlacklistData">&quot;e891854579ecb5303b4e053614c9ae3e&quot;</string>
     <long name="pref_global_config_AntiTracking_version" value="1618929751000" />
     <int name="pref_global_config_PersonalizedPromotion_data_repeatThreshold" value="0" />
     <boolean name="pref_global_config_UnifiedHomePage_data_newsFeedEnabledByDefault" value="false" />
@@ -143,7 +143,7 @@
     <string name="pref_global_config_WebApk_data_stg_api_url">http://webapk-api-stg.internet.apps.samsung.com</string>
     <string name="pref_global_config_ContentsPush2_data_landing_page_url">not_supported</string>
     <boolean name="pref_global_config_UnifiedHomePage_support" value="false" />
-    <string name="pref_global_config_etag">&quot;406e29974b8ebc79b1e2efd942acc352&quot;</string>
+    <string name="pref_global_config_etag">&quot;b2c2f8f1308f4b475e99d24b0aafaec4&quot;</string>
     <string name="pref_global_config_UserCenter_data_serverProfile">PRD</string>
     <string name="pref_global_config_DirectSearch_data_INSTALLATION_URL">https://zhujiahua.html5.qq.com/samsung_i</string>
     <string name="pref_global_config_AXWhiteList_data_AXWhiteList">com.android.talkback;com.google.android.accessibility.selecttospeak;com.samsung.android.app.talkback;com.samsung.accessibility;com.samsung.android.accessibility.talkback;com.google.android.marvin.talkback;com.lastpass.lpandroid;com.agilebits.onepassword;com.dashlane;kr.co.vp.loginsafe;com.x8bit.bitwarden;com.safeincloud.free;com.safeincloud;com.callpod.android_apps.keeper;com.siber.roboform;com.symantec.mobile.idsafe;com.nordpass.android.app.password.manager;com.nordpass.android.app.password.manager.debug;com.yeeseong.input;com.azure.authenticator</string>
