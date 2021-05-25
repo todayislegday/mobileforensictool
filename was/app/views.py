@@ -211,7 +211,7 @@ def pages(request):
             context['media']=media
         
         
-        elif context['url']=="keyword-search.html":
+        elif context['url']=="keyword-view.html":
             text=message1_model.objects.values('text')
 
             ###############################
