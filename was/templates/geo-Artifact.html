@@ -34,10 +34,17 @@
                     <div class="card-header">
                         <h5>위치 정보 시각화</h5>
                         <span class="d-block m-t-5">시간 순서에 따른 위치 표시</span>
+                        <form id="duration" style="text-align: center;">
+                            <input id="datetimepicker1" type="text">
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input id="datetimepicker2" type="text">
+                            &nbsp;&nbsp;&nbsp;
+                            <input id="sendbutton" type="button" value="입력" onclick="checkTime()">
+                        </form>
                     </div>
                     <div class="card-block">
                         <form method="post" id="geocoding_form6">
-                            <div id="map" class="set-map" style="height:600px;"></div>
+                            <div id="map" class="set-map" style="height:650px;"></div>
                             
                         </form>
                     </div>
@@ -53,81 +60,99 @@
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
 
-<script
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDkfnk4My0Tttw-jj8wa01Ii2PcepoiYLc&callback=initMap&libraries=&v=weekly"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDkfnk4My0Tttw-jj8wa01Ii2PcepoiYLc&callback=initMap&libraries=&v=weekly"></script>
 <script src="https://unpkg.com/@googlemaps/markerclustererplus/dist/index.min.js"></script>
 <script src="/static/assets/plugins/google-maps/js/gmaps.js"></script>
+<script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/static/assets/css/jquery.datetimepicker.css"></link>
+<script src="/static/assets/js/jquery.datetimepicker.full.min.js"></script>
 
-"{{geo|json_script:'dict-id'}}"
+"{{geo|json_script:'dict-id'}}
 <script type="text/javascript">
 
     var profile = document.getElementById("dict-id").textContent;
     var profileJson = JSON.parse(profile);
-    var markers = [];
+    var markers = []; // 마커리스트
     var size = "{{geo|length}}"; // 마커 개수
 
     var map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 13,
+        zoom: 8,
         center: {
-            lat: profileJson[1][1], // 첫 마커를 중심으로
-            lng: profileJson[1][2]
+            // lat: profileJson[1][1], // 첫 마커를 중심으로
+            // lng: profileJson[1][2]
+            lat: 36.769982,
+            lng: 127.81598
         },
         mapTypeId: google.maps.MapTypeId.ROADMAP
     });
 
+    var geocoder = new google.maps.Geocoder();
     var infowindow = new google.maps.InfoWindow();
 
     for (var i = 1; i <= size; i++) {
         var marker = new google.maps.Marker({
             id: profileJson[i][0],     // id
             position: { lat: profileJson[i][1], lng: profileJson[i][2] },
-            map: map
+            map: map,
+            labelContent : String(profileJson[i][3]) //나중에 정렬할 일 생기려나
         });
     
         google.maps.event.addListener(marker, 'click', (function (marker, i) { // 마커 클릭 이벤트
             return function () {
-                $.ajax({
-                    url: '/geo-Artifact.html',
-                    data: { id: marker.id },        // 마커 id 값으로 data 불러오고
-                    success: function (data) {      // data엔 id로 검색한 필요한 좌표에 대한 부가적인 정보를 서버에서 전달하여 담겨있다.
-                        dataJson = JSON.parse(data) // JSON으로 파싱
-                        console.log(data)
+                let address;
+                geocoder.geocode({ location: marker['position'] }, (results, status) => {
+                    if (status === "OK") {
 
-                        video_type = ['.mp4']; // 여기에 영상 확장자 다 넣어
-                        var path = dataJson[0]['fields']['data']; // 경로를 넣어, 나중에 확장자 구하려고
+                        if (results[1]) {
+                            address = results[1]['formatted_address'];
+                            
+                            $.ajax({
+                                url: '/geo-Artifact.html',
+                                data: { id: marker.id },        // 마커 id 값으로 data 불러오고
+                                success: function (data) {      // data엔 id로 검색한 필요한 좌표에 대한 부가적인 정보를 서버에서 전달하여 담겨있다.
+                                    dataJson = JSON.parse(data) // JSON으로 파싱
+                                    video_type = ['.mp4']; // 여기에 영상 확장자 다 넣어
+                                    var path = dataJson[0]['fields']['data']; // 경로를 넣어, 나중에 확장자 구하려고
 
-                        var contentString = '<div class="iw-content">' + 
-                                                '<div class="iw-subTitle">' + 
-                                                    '<div class= "iw-image"> ' +
-                                                        '<img id="info-img" src="' + dataJson[0]['fields']['data'] + '"style="max-width:100%"></img>' +
-                                                        // '<video id="info-video" controls src="' + dataJson[0]['fields']['data'] + '" style="max-width:100%"></video>' +
-                                                    '</div>' + 
-                                                    '<ul id = "iw-info-list" class="info-list">' +
-                                                        '<li id="info-Name">파일명 : ' + dataJson[0]['fields']['displayname'] + '</li>' +
-                                                        '<li id="info-Date">찍은 날짜 : ' + dataJson[0]['fields']['datetaken'] + '</li>' +
-                                                        // 경로는 tar 파일 전체 압축해제가 아니라서 보여줄 필요 X 삭제하자
-                                                    '</ul>' +
-                                                '</div>' +
-                                            '</div>';
-                        
-                        for(var i=0; i<video_type.length; i++) {
-                            if(path.substr(-4) == video_type[i]) {      // 경로 뒤 4개(확장자)를 잘라서 영상 확장자와 비교
-                                contentString= contentString.replace('<img id="info-img', '<video controls id="info-video"');
-                                contentString = contentString.replace('</img>', '</vedio>');
-                            }
-                        } 
-
-                        infowindow.setContent(contentString);
-                        infowindow.open(map, marker);
-                        map.setZoom(15);
-                        map.panTo(marker.getPosition()); // 마커로 부드러운 이동
+                                    var contentString = '<div class="iw-content" id = "info-content">' +
+                                        '<div class= "iw-image"> ' +
+                                        '<img id="info-img" src="' + dataJson[0]['fields']['data'] + '"style="max-width:100%"></img>' +
+                                        // '<video id="info-video" controls src="' + dataJson[0]['fields']['data'] + '" style="max-width:100%"></video>' +
+                                        '</div>' +
+                                        '<div class= "iw-body"> ' +
+                                        '<ul id = "iw-info-list" class="info-list">' +
+                                        '<li id="info-Name">파일 명 : ' + dataJson[0]['fields']['displayname'] + '</li>' +
+                                        '<li id="info-Date">촬영 시각 : ' + dataJson[0]['fields']['datetaken'] + '</li>' +
+                                        '<li id="info-Add">상세 주소 : ' + address + '</li>' +
+                                        // 경로는 tar 파일 전체 압축해제가 아니라서 보여줄 필요 X 삭제하자
+                                        '</ul>' +
+                                        '</div>' +
+                                        '</div>';
+                                    for (var i = 0; i < video_type.length; i++) {
+                                        if (path.substr(-4) == video_type[i]) {      // 경로 뒤 4개(확장자)를 잘라서 영상 확장자와 비교
+                                            contentString = contentString.replace('<img id="info-img', '<video controls id="info-video"');
+                                            contentString = contentString.replace('</img>', '</vedio>');
+                                        }
+                                    }
+                                    infowindow.setContent(contentString);
+                                    infowindow.open(map, marker);
+                                    // map.setZoom(15);
+                                    map.panTo(marker.getPosition()); // 마커로 부드러운 이동
+                                }
+                            });
+                        } else {
+                            window.alert("No results found");
+                        }
+                    } else {
+                        window.alert("Geocoder failed due to: " + status);
                     }
                 });
             }
         })(marker, i));
 
         markers.push(marker);
-    }
+    }   
+
 
     google.maps.event.addListener(map, 'idle', function() { // 맵 로딩이 완료 후 함수 실행
         updateMarkers(map, markers);
@@ -139,15 +164,16 @@
         var startLo = mapBounds.getSouthWest();
         var endLo = mapBounds.getNorthEast();      
         var marker, position;
-
+    
         for (var i = 0; i < markers.length; i++) {
-            marker = markers[i] 
+            marker = markers[i];
+            marker.setLabel(String(i+1)); // 이렇게 하면 전체 사진을 시간 순으로 라벨링
             position = marker.getPosition(); // 마커 하나의 위치
 
+            
             if (position.lat() >= startLo.lat() && position.lat() <= endLo.lat() &&
             position.lng() >= startLo.lng() && position.lng() <= endLo.lng()) { // 마커가 현재 화면에 있는지 체크
                 showMarker(map, marker);
-                
             } else {
                 hideMarker(map, marker);
             }
@@ -177,6 +203,44 @@
     google.maps.event.addListener(map, 'click', function() {
         infowindow.close();
     });
+
+</script>
+
+<script>
+
+    const dateMin = new Date(profileJson[1][3]); // 첫 마커의 dateTaken
+    const dateMax =  new Date(profileJson[size][3]); // 마지막 마커의 dateTaken
+
+    $('#datetimepicker1').datetimepicker({ // 달력 초기  셋팅
+        format: 'Y-m-d H:i',
+        minDate: dateMin.getFullYear() + '/' + (dateMin.getMonth() + 1) + '/' + dateMin.getDate(),
+        maxDate: dateMax.getFullYear() + '/' + (dateMax.getMonth() + 1) + '/' + dateMax.getDate()
+    });
+
+    $('#datetimepicker2').datetimepicker({
+        format: 'Y-m-d H:i',
+        minDate: dateMin.getFullYear() + '/' + (dateMin.getMonth() + 1) + '/' + dateMin.getDate(),
+        maxDate: dateMax.getFullYear() + '/' + (dateMax.getMonth() + 1) + '/' + dateMax.getDate()       
+    });
+
+    function checkTime(markerTime) {
+        var startDate = new Date(document.getElementById("datetimepicker1").value);
+        var endDate = new Date(document.getElementById("datetimepicker2").value);
+
+        if(startDate != "Invalid Date" && endDate != "Invalid Date") { // 시작, 종료 날짜가 입력되었는지 체크
+            if(startDate <= endDate) { // 시작이 종료보다 빠르면 에러
+                if(markerTime >= startDate.getTime() && markerTime <= endDate.getTime()) {
+                    window.alert("Yes");
+                }
+
+                else {window.alert("NO");}
+            }
+
+            else {window.alert("비정상 시간 입력");}
+        }
+
+        else { window.alert("없어");}
+    }
 
 </script>
 {% endblock javascripts %}
