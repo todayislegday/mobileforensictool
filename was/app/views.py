@@ -219,7 +219,6 @@ def pages(request):
             for a in text:#쿼리셋->list
                 c.append(a['text'])
             litost=" ".join(map(str,c)) #list를 전체 문자열로 만든다.
-            print(litost)
             
             c=litost.split()#중복이 있는 list
             list1=set(c)
@@ -231,7 +230,7 @@ def pages(request):
                 list2.append({"text":text})
             for text in list1:
                 list3.append({"text":text})
-            
+            a=1
 
             for a in list2:
                 find =a['text']
@@ -239,6 +238,9 @@ def pages(request):
                     if find==e['text']:
                         try:e['weight']=e['weight']+1
                         except:e['weight']=1
+            for e in list3:
+                e['html']={"title":f"빈도수:{e['weight']}"}  
+
             context['words']=list3
  ###########################################################  
 

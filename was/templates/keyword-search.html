@@ -37,7 +37,8 @@
                         <div class="col-sm-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h5>Hello card</h5>
+                                    <input id='input' type="number" placeholder="보고 싶은 개수"></input>
+                                    <button id="btn">button</button>
                                 </div>
                                 <div class="card-block">
                                     <div id='keyword'>
@@ -64,12 +65,33 @@
     var profile = $("#dict-id").text();
     var profileJson = JSON.parse(profile);
     console.log(profileJson)
+  
+
   $('#keyword').jQCloud(profileJson,{
       width: 900,
       height: 900,
       center:{x:0.7,y:0.5},
       fontSize:{from:0.1,to:0.02}
-  });
+  }); 
+
+  $("#btn").click(function(){//버튼 눌러서 개수 받아옴
+      var n=$("#input").val()
+      if(n=='')n={{words|length}}
+      console.log(n)
+      for(var i=0;i<n;i++){
+      $('#keyword').find("span").eq(i).css('display','')
+      }
+      for(var i=n;i<profileJson.length;i++){
+      $('#keyword').find("span").eq(i).css('display','none')
+      }
+  })
+
+ 
  });
+$(document).on('mouseenter','span',function(){//동적으로 생선된 span태그의 이벤트 감지를 위해
+		$('span').tooltip()
+	}) 
+
+
 </script>
 {% endblock javascripts %}
