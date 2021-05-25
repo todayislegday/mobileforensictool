@@ -208,6 +208,10 @@ def pages(request):
             context['webext']=webext
             context['appinslog']=appinslog
             context['media']=media
+        
+        
+        elif context['url']=="keyword-search.html":#용하
+            pass
  ###########################################################  
 
 
