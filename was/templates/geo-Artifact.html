@@ -39,7 +39,7 @@
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             <input id="datetimepicker2" type="text">
                             &nbsp;&nbsp;&nbsp;
-                            <input id="sendbutton" type="button" value="입력" onclick="checkTime()">
+                            <input id="sendbutton" type="button" value="입력" onclick="updateMarkers()">
                         </form>
                     </div>
                     <div class="card-block">
@@ -63,6 +63,7 @@
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDkfnk4My0Tttw-jj8wa01Ii2PcepoiYLc&callback=initMap&libraries=&v=weekly"></script>
 <script src="https://unpkg.com/@googlemaps/markerclustererplus/dist/index.min.js"></script>
 <script src="/static/assets/plugins/google-maps/js/gmaps.js"></script>
+<script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
 <link rel="stylesheet" type="text/css" href="/static/assets/css/jquery.datetimepicker.css"></link>
 <script src="/static/assets/js/jquery.datetimepicker.full.min.js"></script>
 
@@ -73,6 +74,27 @@
     var profileJson = JSON.parse(profile);
     var markers = []; // 마커리스트
     var size = "{{geo|length}}"; // 마커 개수
+
+    /*======= datepicker 초기 설정 =======*/
+    let firstDate = new Date(profileJson[1][3]); // 첫 마커의 dateTaken
+    let lastDate =  new Date(profileJson[size][3]); // 마지막 마커의 dateTaken
+
+    let tmpFormat = firstDate.getFullYear() + '-' + (firstDate.getMonth() + 1) + '-' + firstDate.getDate() + ' ' + firstDate.getHours() + ':' + firstDate.getMinutes();
+    $('#datetimepicker1').val(tmpFormat);
+    $('#datetimepicker1').datetimepicker({ // 달력 초기  셋팅
+        format: 'Y-m-d H:i',
+        minDate: firstDate.getFullYear() + '/' + (firstDate.getMonth() + 1) + '/' + firstDate.getDate(),
+        maxDate: lastDate.getFullYear() + '/' + (lastDate.getMonth() + 1) + '/' + lastDate.getDate()
+    });
+
+    tmpFormat = lastDate.getFullYear() + '-' + (lastDate.getMonth() + 1) + '-' + lastDate.getDate() + ' ' + lastDate.getHours() + ':' + lastDate.getMinutes();
+    $('#datetimepicker2').val(tmpFormat);
+    $('#datetimepicker2').datetimepicker({
+        format: 'Y-m-d H:i',
+        minDate: firstDate.getFullYear() + '/' + (firstDate.getMonth() + 1) + '/' + firstDate.getDate(),
+        maxDate: lastDate.getFullYear() + '/' + (lastDate.getMonth() + 1) + '/' + lastDate.getDate()  
+    });
+    /*======= datepicker 초기 설정 =======*/
 
     var map = new google.maps.Map(document.getElementById('map'), {
         zoom: 8,
@@ -93,7 +115,7 @@
             id: profileJson[i][0],     // id
             position: { lat: profileJson[i][1], lng: profileJson[i][2] },
             map: map,
-            labelContent : String(profileJson[i][3]) //나중에 정렬할 일 생기려나
+            labelContent : String(profileJson[i][3])
         });
     
         google.maps.event.addListener(marker, 'click', (function (marker, i) { // 마커 클릭 이벤트
@@ -127,8 +149,8 @@
                                         '</ul>' +
                                         '</div>' +
                                         '</div>';
-                                    for (var i = 0; i < video_type.length; i++) {
-                                        if (path.substr(-4) == video_type[i]) {      // 경로 뒤 4개(확장자)를 잘라서 영상 확장자와 비교
+                                    for (var j = 0; j < video_type.length; j++) {
+                                        if (path.substr(-4) == video_type[j]) {      // 경로 뒤 4개(확장자)를 잘라서 영상 확장자와 비교
                                             contentString = contentString.replace('<img id="info-img', '<video controls id="info-video"');
                                             contentString = contentString.replace('</img>', '</vedio>');
                                         }
@@ -154,37 +176,66 @@
 
 
     google.maps.event.addListener(map, 'idle', function() { // 맵 로딩이 완료 후 함수 실행
-        updateMarkers(map, markers);
+        updateMarkers();
     });
 
-    function updateMarkers(map, markers) {
+    function updateMarkers() {
 
         var mapBounds = map.getBounds(); // 좌표경계 얻어서  
         var startLo = mapBounds.getSouthWest();
         var endLo = mapBounds.getNorthEast();      
         var marker, position;
-    
-        for (var i = 0; i < markers.length; i++) {
+        let count = 1;
+
+        var startDate = new Date(document.getElementById("datetimepicker1").value);
+        var endDate = new Date(document.getElementById("datetimepicker2").value);
+
+        if(startDate == "Invalid Date" || endDate == "Invalid Date" || startDate > endDate) { // 시작, 종료 날짜가 입력되었는지 체크
+            window.alert("비정상 시간 입력");
+            return -1;
+        }
+
+        endDate.setMinutes(endDate.getMinutes() + 1); // 시간이 분단위로 끊기니까 마지막 시간 + 1분으로 계산
+
+        for (var i = 0; i < size; i++) {
             marker = markers[i];
-            marker.setLabel(String(i+1)); // 이렇게 하면 전체 사진을 시간 순으로 라벨링
+            
+            if(marker['labelContent'] > endDate) {
+                hideMarker(marker);
+                continue;
+            }
+            
             position = marker.getPosition(); // 마커 하나의 위치
 
-            
-            if (position.lat() >= startLo.lat() && position.lat() <= endLo.lat() &&
-            position.lng() >= startLo.lng() && position.lng() <= endLo.lng()) { // 마커가 현재 화면에 있는지 체크
-                showMarker(map, marker);
-            } else {
-                hideMarker(map, marker);
+            if(marker['labelContent'] >= startDate && marker['labelContent'] <= endDate) {
+
+                marker.setLabel(String(count)); // 이렇게 하면 전체 사진을 시간 순으로 라벨링
+
+                if (position.lat() >= startLo.lat() && position.lat() <= endLo.lat() &&
+                    position.lng() >= startLo.lng() && position.lng() <= endLo.lng()) { // 마커가 현재 화면에 있는지 체크                       
+                        showMarker(marker);
+                } 
+
+                else {
+                    hideMarker(marker);
+                }
+                count++;
             }
+            else {
+                hideMarker(marker);
+            }
+        
         }
+
+        console.log(count-1 + " 개가 검색되었습니다."); // 추후 html에 띄우고
     }
 
-    function showMarker(map, marker) {
+    function showMarker(marker) {
         if (marker.getMap()) return;
         marker.setMap(map);
     }
 
-    function hideMarker(map, marker) {
+    function hideMarker(marker) {
         if (!marker.getMap()) return;
         marker.setMap(null);
     }
@@ -197,49 +248,11 @@
             var iwmain = iwBackground.children(':nth-child(2)');
             iwBackground.children(':nth-child(4)').css({'display' : 'none'});
             var iwCloseBtn = iwOuter.next();
-        });
+    });
 
     google.maps.event.addListener(map, 'click', function() {
         infowindow.close();
     });
-
-</script>
-
-<script>
-
-    const dateMin = new Date(profileJson[1][3]); // 첫 마커의 dateTaken
-    const dateMax =  new Date(profileJson[size][3]); // 마지막 마커의 dateTaken
-
-    $('#datetimepicker1').datetimepicker({ // 달력 초기  셋팅
-        format: 'Y-m-d H:i',
-        minDate: dateMin.getFullYear() + '/' + (dateMin.getMonth() + 1) + '/' + dateMin.getDate(),
-        maxDate: dateMax.getFullYear() + '/' + (dateMax.getMonth() + 1) + '/' + dateMax.getDate()
-    });
-
-    $('#datetimepicker2').datetimepicker({
-        format: 'Y-m-d H:i',
-        minDate: dateMin.getFullYear() + '/' + (dateMin.getMonth() + 1) + '/' + dateMin.getDate(),
-        maxDate: dateMax.getFullYear() + '/' + (dateMax.getMonth() + 1) + '/' + dateMax.getDate()       
-    });
-
-    function checkTime(markerTime) {
-        var startDate = new Date(document.getElementById("datetimepicker1").value);
-        var endDate = new Date(document.getElementById("datetimepicker2").value);
-
-        if(startDate != "Invalid Date" && endDate != "Invalid Date") { // 시작, 종료 날짜가 입력되었는지 체크
-            if(startDate <= endDate) { // 시작이 종료보다 빠르면 에러
-                if(markerTime >= startDate.getTime() && markerTime <= endDate.getTime()) {
-                    window.alert("Yes");
-                }
-
-                else {window.alert("NO");}
-            }
-
-            else {window.alert("비정상 시간 입력");}
-        }
-
-        else { window.alert("없어");}
-    }
 
 </script>
 {% endblock javascripts %}
