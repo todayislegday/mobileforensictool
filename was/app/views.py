@@ -194,9 +194,22 @@ def pages(request):
                 i+=1
             ###################################
             print(mms_dict)  
+            
+            call_dict = {}
+            i = 0
+            for c in calllog:
+                call_dict[str(i)] = list()
+                call_dict[str(i)].append(c.id)
+                call_dict[str(i)].append(c.number)
+                call_dict[str(i)].append(c.date)
+                call_dict[str(i)].append(c.duration)
+                call_dict[str(i)].append(c.type)
+                i += 1
+            print(call_dict)
+            context['calllog'] = call_dict
 
             context['mms']=mms_dict
-            context['calllog']=calllog
+            # context['calllog']=calllog
             context['chromekeyword']=chromekeyword
             context['chromeurlhistory']=chromeurlhistory
             context['chromedown']=chromedown
