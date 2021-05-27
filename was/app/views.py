@@ -41,7 +41,7 @@ def index(request):
 
 
     context['recentcall']=calllog_model.objects.raw('select _id,name,number,DATETIME(ROUND(date/ 1000), "unixepoch","localtime") AS date from calls order by date desc')[:5]
-    #print(calendar_model.objects.all().values())
+    print(calendar_model.objects.all().values())
 
 
 
@@ -226,7 +226,6 @@ def pages(request):
                 mms_dict[i].append(m.date)
                 i+=1
             ###################################
-            print(mms_dict)  
 
             call_dict = {}
             i = 0
@@ -238,12 +237,10 @@ def pages(request):
                 call_dict[str(i)].append(c.duration)
                 call_dict[str(i)].append(c.type)
                 i += 1
-            print(call_dict)
-            context['calllog'] = call_dict
 
 
             context['mms']=mms_dict
-            context['calllog']=calllog
+            context['calllog'] = call_dict
             context['chromekeyword']=chromekeyword
             context['chromeurlhistory']=chromeurlhistory
             context['chromedown']=chromedown
@@ -256,7 +253,7 @@ def pages(request):
             context['webext']=webext
             context['appinslog']=appinslog
             context['media']=media
-        
+            print(context['calllog'])
         
         elif context['url']=="keyword-view.html":
             text=message1_model.objects.values('text')
@@ -292,7 +289,7 @@ def pages(request):
  ###########################################################  
 
 
-        print(context)
+        #print(context)
         return render(request,context['url'],context)
     
     except template.TemplateDoesNotExist:

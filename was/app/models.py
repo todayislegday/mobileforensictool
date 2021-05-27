@@ -26,7 +26,7 @@ class calllog_model(models.Model): #용하
     date = models.TextField(blank=True,null=True)
     duration = models.TextField(blank=True,null=True)
     name=models.TextField(blank=True,null=True)
-    
+    type=models.TextField(blank=True,null=True)
 class message1_model(models.Model): #어진
    
     class Meta: 

@@ -142,7 +142,20 @@ $( document ).ready(function() {
 
 }
 
-$("#contact").tablesorter();
+$("#contact").tablesorter({//세번째 컬럼만 정렬 기능 활성
+    headers: {
+0: {
+sorter: false
+},
+1: {
+sorter: false
+},
+2: {
+sorter: false
+}
+}
+
+});
 var flags=false
 
 $('tr').click(function(){//연락처에서 선택시 전화기록에 해당 연락처 관련 기록만 보여준다.
@@ -175,18 +188,14 @@ if($(this).attr('style')==undefined||$(this).attr('style')==''){ //연락처에�
  }
  }
 
- 
-
 
 
 }
 
 })
 
-
-
-
-
+$("th").trigger("click")//강제로 두번 눌르게 발생시켜서 정렬
+$("th").trigger("click")
 
 });
 
