@@ -271,6 +271,14 @@ p.text-muted {
 .card .card-body {
   padding: 30px 25px;
 }
+.card .card-block2,
+.card .card-body {
+  padding: 10px;
+}
+#chartdiv {
+  width: 100%;
+  height: 500px;
+}
 .card.card-load {
   position: relative;
   overflow: hidden;
