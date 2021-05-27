@@ -2,8 +2,6 @@
 
 {% block title %} Timeline {% endblock %} 
 
-
-
 {% block content %}
 
 <div class="pcoded-content">
@@ -29,21 +27,6 @@
             <div class="page-wrapper">
                 <!-- [ Main Content ] start -->
                 <div class="row">
-                    <div class="col-sm-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h5>Duration</h5>
-                                <form id="duration" style="text-align: center;">
-                                    <input id="datetimepicker1" type="text">
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <input id="datetimepicker2" type="text">
-                                    &nbsp;&nbsp;&nbsp;
-                                    <input id="sendbutton" type="button" value="입력" onclick="send()">
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-
                     <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
                     <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
                     <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
@@ -51,56 +34,133 @@
                     <link rel="stylesheet" type="text/css" href="/static/assets/css/jquery.datetimepicker.css"/ >
                     <script src="/static/assets/js/jquery.datetimepicker.full.min.js"></script>
 
-                    {{mms|json_script:'dict-id'}}
+                    {{mms|json_script:'dict-id-m'}}
+                    {{calllog|json_script:'dict-id-c'}}
                     <script type="text/javascript">
-
                         // Themes begin
                         am4core.useTheme(am4themes_animated);
                         // Themes end
 
                         var chart = am4core.create("chartdiv", am4charts.XYChart);
 
+                        var mprofile = document.getElementById("dict-id-m").textContent
+                        var mprofileJson = JSON.parse(mprofile)
+
+                        var cprofile = document.getElementById("dict-id-c").textContent
+                        var cprofileJson = JSON.parse(cprofile)
+
+                        var mSize = "{{mms|length}}" // 마커 개수
+                        var cSize = "{{calllog|length}}"
+
+                        var startDate = 0
+                        var endDate = 0
+
+                        for (var i = 0; i < mSize; i++) {
+                            mDate = new Date(mprofileJson[i][3])
+
+                            if (i == 0) {
+                                startDate = mDate
+                            }
+
+                            if (i == mSize - 1) {
+                                endDate = mDate
+                            }
+                        }
+
+                        for (var i = 0; i < cSize; i++) {
+                            cDate = new Date(mprofileJson[i][3])
+
+                            if (cDate < startDate) {
+                                startDate = cDate
+                            }
+
+                            if (cDate > endDate) {
+                                endDate = cDate
+                            }
+                        }
+
                         var data = [];
-                        var cars = 50;
-                        var motorcycles = 50;
+                        var messages = 50;
+                        var calls = 50;
+                        var internet = 50;
+                        var downloads = 50;
+                        var media = 50;
+
                         var bicycles = 50;
-                        for (let i = -1400; i < 0; i++) {
-                        let date = new Date();
-                        date.setHours(0, 0, 0, 0);
-                        date.setDate(i);
-                        cars -= Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 10);
-                        motorcycles -= Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 10);
-                        bicycles -= Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 10);
-                        if (cars < 0) {
-                            cars = Math.round(Math.random() * 10);
-                        }
-                        if (motorcycles < 0) {
-                            motorcycles = Math.round(Math.random() * 10);
-                        }
-                        if (bicycles < 0) {
-                            bicycles = Math.round(Math.random() * 10);
-                        }
-                        data.push({ date: date, cars: cars, motorcycles: motorcycles, bicycles: bicycles });
+
+                        var mDate = 0
+                        var cDate = 0
+
+                        var mCount = 50
+                        var cCount = 50
+
+                        var imsi = startDate
+                        imsi.setHours(imsi.getHours() - 1)
+                        //endDate = new Date(2024, 4, 4)
+
+                        for (let i = 0; ; i++) {
+                            imsi.setHours(imsi.getHours() + 1)
+
+                            if (imsi.getHours() > endDate.getHours() && imsi.getDate() > endDate.getMonth() && imsi.getMonth() > endDate.getMonth() && imsi.getFullYear() >= endDate.getFullYear()) {
+                                break;
+                            }
+                            
+                            mCount = 0
+                            for (var m = 0; m < mSize; m++) {
+                                mDate = new Date(mprofileJson[m][3])
+                                if (mDate.getHours() == imsi.getHours() && mDate.getDate() == imsi.getDate() && mDate.getMonth() == imsi.getMonth() && mDate.getFullYear() == imsi.getFullYear()) {
+                                    mCount += 1;
+                                }
+                            }
+                            messages = mCount;
+
+                            cCount = 0
+                            for (var c = 0; c < cSize; c++) {
+                                cDate = new Date(cprofileJson[c][2])
+                                if (cDate.getHours() == imsi.getHours() && cDate.getDate() == imsi.getDate() && cDate.getMonth() == imsi.getMonth() && cDate.getFullYear() == imsi.getFullYear()) {
+                                    if (cprofileJson[c][3] != 0) {
+                                        cCount += 1;
+                                    }
+                                }
+                            }
+                            calls = cCount
+
+                            /*mCount -= Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 10);
+                            cCount -= Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 10);
+
+                            if (mCount < 0) {
+                            mCount = Math.round(Math.random() * 10);
+                            }
+                            if (cCount < 0) {
+                                cCount = Math.round(Math.random() * 10);
+                            }
+
+                            messages = mCount
+                            calls = cCount*/
+                            
+                            data.push({ hour: new Date(imsi.getFullYear(), imsi.getMonth(), imsi.getDate(), imsi.getHours()), messages: messages, calls: calls});
                         }
 
                         chart.data = data;
 
-                        // Create axes
+                        chart.dateFormatter.inputDateFormat = "HH";
                         var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
-                        dateAxis.renderer.minGridDistance = 10;
-                        dateAxis.renderer.labels.template.rotation = 90;
-                        dateAxis.renderer.labels.template.horizontalCenter = "left";
-                        dateAxis.renderer.labels.template.verticalCenter = "middle";
-                        dateAxis.groupData = true;
+                        dateAxis.renderer.minGridDistance = 100;
+                        dateAxis.startLocation = 0.5;
+                        dateAxis.endLocation = 0.5;
+                        dateAxis.baseInterval = {
+                        timeUnit: "hour",
+                        count: 1
+                        }
 
                         var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-                        //valueAxis.tooltip.disabled = true;
+                        valueAxis.tooltip.disabled = true;
 
                         // Create series
                         var series = chart.series.push(new am4charts.LineSeries());
-                        series.dataFields.dateX = "date";
-                        series.name = "cars";
-                        series.dataFields.valueY = "cars";
+                        series.dataFields.dateX = "hour";
+                        series.name = "messages";
+                        series.dataFields.valueY = "messages";
                         series.tooltipHTML = "<img src='https://www.amcharts.com/lib/3/images/car.png' style='vertical-align:bottom; margin-right: 10px; width:28px; height:21px;'><span style='font-size:14px; color:#000000;'><b>{valueY.value}</b></span>";
                         series.tooltipText = "[#000]{valueY.value}[/]";
                         series.tooltip.background.fill = am4core.color("#FFF");
@@ -111,12 +171,12 @@
                         series.strokeWidth = 2;
                         series.stacked = true;
 
-                        series.tooltip.pointerOrientation = "vertical";
+                        //series.tooltip.pointerOrientation = "vertical";
 
                         var series2 = chart.series.push(new am4charts.LineSeries());
-                        series2.dataFields.dateX = "date";
-                        series2.name = "motorcycles";
-                        series2.dataFields.valueY = "motorcycles";
+                        series2.dataFields.dateX = "hour";
+                        series2.name = "calls";
+                        series2.dataFields.valueY = "calls";
                         series2.tooltipHTML = "<img src='https://www.amcharts.com/lib/3/images/motorcycle.png' style='vertical-align:bottom; margin-right: 10px; width:28px; height:21px;'><span style='font-size:14px; color:#000000;'><b>{valueY.value}</b></span>";
                         series2.tooltipText = "[#000]{valueY.value}[/]";
                         series2.tooltip.background.fill = am4core.color("#FFF");
@@ -128,11 +188,11 @@
                         series2.strokeWidth = 2;
                         series2.stacked = true;
 
-                        series2.tooltip.pointerOrientation = "vertical";
+                        //series2.tooltip.pointerOrientation = "vertical";
 
-                        var series3 = chart.series.push(new am4charts.LineSeries());
+                        /*var series3 = chart.series.push(new am4charts.LineSeries());
                         series3.name = "bicycles";
-                        series3.dataFields.dateX = "date";
+                        series3.dataFields.dateX = "hour";
                         series3.dataFields.valueY = "bicycles";
                         series3.tooltipHTML = "<img src='https://www.amcharts.com/lib/3/images/bicycle.png' style='vertical-align:bottom; margin-right: 10px; width:28px; height:21px;'><span style='font-size:14px; color:#000000;'><b>{valueY.value}</b></span>";
                         series3.tooltipText = "[#000]{valueY.value}[/]";
@@ -144,61 +204,18 @@
                         series3.fillOpacity = 0.6;
                         series3.strokeWidth = 2;
                         series3.stacked = true;
-                        series3.defaultState.transitionDuration = 1000;
+                        series3.defaultState.transitionDuration = 1000;*/
 
-                        series3.tooltip.pointerOrientation = "vertical";
+                        //series3.tooltip.pointerOrientation = "vertical";
 
                         chart.cursor = new am4charts.XYCursor();
                         chart.cursor.xAxis = dateAxis;
 
                         chart.scrollbarX = new am4core.Scrollbar();
 
-                        // Set up drill-down
-                        dateAxis.renderer.labels.template.events.on("hit", function(ev) {
-                        var start = ev.target.dataItem.date;
-                        var end = new Date(start);
-                        end.setMonth(end.getMonth() + 1);
-                        dateAxis.zoomToDates(start, end);
-                        })
-
                         // Add a legend
                         chart.legend = new am4charts.Legend();
                         chart.legend.position = "top";
-
-                        function send()
-                        {
-                            const startDate = new Date(document.getElementById("datetimepicker1").value)
-                            const endDate = new Date(document.getElementById("datetimepicker2").value)
-
-                            var profile = document.getElementById("dict-id").textContent
-                            var profileJson = JSON.parse(profile)
-
-                            var mSize = "{{mms|length}}" // 마커 개수
-                            var mDate
-                            var mcount = 0
-                            for (var i = 0; i < mSize; i++) {
-                                mDate = new Date(profileJson[i][3])
-                                console.log(mDate)
-                                if (startDate <= mDate && mDate <= endDate) {
-                                    mcount = mcount + 1
-                                }
-                            }
-                            console.log(mcount)
-                            console.log(startDate.getFullYear())
-                            console.log(endDate.getFullYear())
-                            chart.data = [{
-                            "year": startDate.getFullYear().toString(),
-                            "cars": mcount,
-                            "motorcycles": mcount,
-                            "bicycles": mcount
-                            }, {
-                            "year": endDate.getFullYear().toString(),
-                            "cars": mcount,
-                            "motorcycles": mcount,
-                            "bicycles": mcount 
-                            }];
-                        }
-
                     </script>
                     
                     <div class="col-sm-12">
@@ -218,39 +235,36 @@
                                         <div id="chartdiv"></div>
                                         <!-- Chart code -->
                                     </div>
-                                    <script>
-                                        $('#datetimepicker1').datetimepicker();
-                                        $('#datetimepicker2').datetimepicker();
-                                    </script>
                                 </div>
                                 <!-- [ Stacked Chart ] end -->
                             </div>
                             <div class="tab-pane fade" id="result" role="tabpanel" aria-labelledby="result-tab">
-                                <!-- [ basic-table ] start -->
-                    <div class="col-xl-12">
-                        <div class="card">
-                            <div class="card-block table-border-style">
-                                <div class="table-responsive">
+                                <div class="col-sm-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5>Duration</h5>
+                                            <form id="duration" style="text-align: center;">
+                                                <input id="datetimepicker1" type="text">
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                <input id="datetimepicker2" type="text">
+                                                &nbsp;&nbsp;&nbsp;
+                                                <input id="sendbutton" type="button" value="입력" onclick="send()">
+                                            </form>
+                                            <script>
+                                                $('#datetimepicker1').datetimepicker();
+                                                $('#datetimepicker2').datetimepicker();
+                                            </script>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
+                                <!-- [ basic-table ] start -->
+
                         </div>
+                        <!-- [ Main Content ] end -->
                     </div>
                 </div>
-                <!-- [ Main Content ] end -->
             </div>
         </div>
-    </div>
-
-    
-</div>
-
-
-
 
 {% endblock content %}
-
-
-
-
-
-
