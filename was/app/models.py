@@ -233,3 +233,14 @@ class Media_model(models.Model): #용하
     title=models.FloatField(blank=True,null=True)
     
     
+class calendar_model(models.Model): #어진
+   
+    class Meta: 
+        managed = False 
+        app_label = "Calendar" 
+        db_table = 'Events'
+
+    id = models.AutoField(db_column='_id',primary_key=True)
+    title = models.TextField(blank=True,null=True)
+    dtstart = models.FloatField(blank=True,null=True)
+    dtend = models.FloatField(blank=True,null=True)

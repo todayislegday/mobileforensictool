@@ -4,7 +4,7 @@ from django import template
 from django.template import loader
 from django.http import HttpResponse,JsonResponse
 from django.db.models import Value,TextField
-from .models import contacts_model,message1_model,message2_model,map_model,calllog_model,mms_model,chrome2_model,chrome3_model,chrome4_model,chrome5_model,chrome6_model,Sam1_model, Sam2_model,Sam3_model,Sam4_model,Sam5_model,webdowndata_model,webext_model,Appinslog_model,Media_model
+from .models import contacts_model,message1_model,message2_model,map_model,calllog_model,mms_model,chrome2_model,chrome3_model,chrome4_model,chrome5_model,chrome6_model,Sam1_model, Sam2_model,Sam3_model,Sam4_model,Sam5_model,webdowndata_model,webext_model,Appinslog_model,Media_model,calendar_model
 from django.core.paginator import Paginator
 from django.views.decorators.csrf import csrf_exempt
 from django.core import serializers
@@ -41,6 +41,9 @@ def index(request):
 
 
     context['recentcall']=calllog_model.objects.raw('select _id,name,number,DATETIME(ROUND(date/ 1000), "unixepoch","localtime") AS date from calls order by date desc')[:5]
+    #print(calendar_model.objects.all().values())
+
+
 
     return render(request,'Dashboard.html',context)
  
@@ -80,6 +83,37 @@ def pages(request):
 
             context['page']=page_obj
             context['msg']=m
+            
+            text=message1_model.objects.values('text')
+
+            ###############################
+            c=list()
+            for a in text:#쿼리셋->list
+                c.append(a['text'])
+            litost=" ".join(map(str,c)) #list를 전체 문자열로 만든다.
+            
+            c=litost.split()#중복이 있는 list
+            list1=set(c)
+            list1=list(list1)#중복이 제거된 list
+            
+            list2=list()
+            list3=list()
+            for text in c:
+                list2.append({"text":text})
+            for text in list1:
+                list3.append({"text":text})
+            a=1
+
+            for a in list2:
+                find =a['text']
+                for e in list3:
+                    if find==e['text']:
+                        try:e['weight']=e['weight']+1
+                        except:e['weight']=1
+            for e in list3:
+                e['html']={"title":f"빈도수:{e['weight']}"}  
+
+            context['words']=list3
 
         elif context['url']=="wifi.html": ##귀수
             path=os.path.dirname(os.path.abspath(__file__))
@@ -111,7 +145,6 @@ def pages(request):
                     map_dict[str(i)].append(m.lat)
                     map_dict[str(i)].append(m.longt)
                     map_dict[str(i)].append(m.datetaken)
-                    map_dict[str(i)].append("안녕")
                     i+=1
             print(map_dict)  
             context['geo']=map_dict
@@ -194,7 +227,7 @@ def pages(request):
                 i+=1
             ###################################
             print(mms_dict)  
-            
+
             call_dict = {}
             i = 0
             for c in calllog:
@@ -208,8 +241,9 @@ def pages(request):
             print(call_dict)
             context['calllog'] = call_dict
 
+
             context['mms']=mms_dict
-            # context['calllog']=calllog
+            context['calllog']=calllog
             context['chromekeyword']=chromekeyword
             context['chromeurlhistory']=chromeurlhistory
             context['chromedown']=chromedown

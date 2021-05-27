@@ -3,10 +3,14 @@
 {% block title %} Ui Buttons {% endblock %} 
 
 <!-- Specific CSS goes HERE -->
-{% block stylesheets %} <link rel="stylesheet" href="/static/assets/css/right_box.css">{% endblock stylesheets %}
+{% block stylesheets %}
+<link rel="stylesheet" href="/static/assets/css/jqcloud.min.css">
+ <link rel="stylesheet" href="/static/assets/css/right_box.css">{% endblock stylesheets %}
 
 {% block content %}
-
+<div id="keywordbox" style="float:left; z-index:1" >
+                            
+                            </div>
 <div class="pcoded-content">
     <div class="pcoded-inner-content">
         <!-- [ breadcrumb ] start -->
@@ -15,12 +19,12 @@
                 <div class="row align-items-center">
                     <div class="col-md-12">
                         <div class="page-header-title">
-                            <h5 class="m-b-10">Bootstrap Basic Tables</h5>
+                            <h5 class="m-b-10">Message Tables</h5>
                         </div>
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a href="index.html"><i class="feather icon-home"></i></a></li>
                             <li class="breadcrumb-item"><a href="#!">Tables</a></li>
-                            <li class="breadcrumb-item"><a href="javascript:">Basic Tables</a></li>
+                            <li class="breadcrumb-item"><a href="javascript:">Message Tables</a></li>
                         </ul>
                     </div>
                 </div>
@@ -35,8 +39,9 @@
                     <div class="col-xl-12">
                         <div class="card">
                             <div class="card-header">
-                                <h5>Basic Table</h5>
-                                    <div class="d-block m-t-5">use class <code>table</code> inside table element</div>
+                            <div style="float:left " >
+                            
+                            </div>
                                         <div class="right-box">
                                             <label> Search:<input onkeyup="filter()" type="search" id="keyword" class="form-control form-control-sm" placeholder="" aria-controls="dtBasicExample">
                                             </label>
@@ -107,8 +112,6 @@
 
                                     </ul>
                                     <!-- 페이징처리 끝 -->
-
-
                                     <!-- 페이징처리끝-->
                                 </div>
                             </div>
@@ -125,6 +128,33 @@
 
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
+
+<script src="/static/assets/js/jqcloud.js"></script>
+{{words|json_script:'dict-id'}}
+
+<script>
+ $( document ).ready(function() {
+  
+var profile = $("#dict-id").text();
+    var profileJson = JSON.parse(profile);
+  
+
+  $('#keywordbox').jQCloud(profileJson,{
+      width: 400,
+      height: 400,
+      center:{x:0.5,y:0.5},
+      fontSize:{from:0.1,to:0.02}
+  }); 
+ 
+ });
+
+$(document).on('mouseenter','span',function(){//동적으로 생선된 span태그의 이벤트 감지를 위해
+        $('span').tooltip()
+	}) 
+
+
+</script>
+
 <script>
 function nana(){
     //alert(aa)

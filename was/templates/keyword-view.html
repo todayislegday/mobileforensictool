@@ -64,7 +64,6 @@
  $( document ).ready(function() {
     var profile = $("#dict-id").text();
     var profileJson = JSON.parse(profile);
-    console.log(profileJson)
   
 
   $('#keyword').jQCloud(profileJson,{
@@ -77,7 +76,6 @@
   $("#btn").click(function(){//버튼 눌러서 개수 받아옴
       var n=$("#input").val()
       if(n=='')n={{words|length}}
-      console.log(n)
       for(var i=0;i<n;i++){
       $('#keyword').find("span").eq(i).css('display','')
       }
