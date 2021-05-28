@@ -80,7 +80,7 @@
                                             <button class="page-link"  id = "pre">이전</button>
                                         </li>
                                         {% else %}
-                                        <li class="page-item disabled">
+                                        <li class="page-item ">
                                             <button class="page-link"  id = "pre">이전</button>
                                         </li>
                                         {% endif %}
@@ -222,57 +222,11 @@ if(x[i].id!=y){
 } //for문 끝
 ///////////////////////////////////////////////////// 이전, 다음 버튼
 $("#pre").click(function() { //이전 버튼 클릭 시
-    var regex = /[^0-9]/g
-    var num = aa.replace(regex, "")
-   
-
-
-$(aa).parent().attr('class', 'page-item')
-
-aa = "#pb" + num-1
-if(num > 0){
-    $(aa).parent().attr('class', 'page-item active')//ㄴㄴ
-}
-//$(aa).parent().attr('class', 'page-item active')
-
-var x = document.getElementsByClassName("list_data");
-var y= num-1 ////3번째 id 값을 가져옴
-
-for(var i=0;i<a;i++){
-if(x[i].id!=y){
-   $(x[i]).css("display", "none");
-}else{
-   $(x[i]).css("display", "");
-}
-}
-
+        $(`#pb${$('.active').parent()[1].id-1}`).trigger('click')
 });
 
 $("#next").click(function() { //다음 버튼 클릭 시
-    var regex = /[^0-9]/g
-    var num = aa.replace(regex, "")
-   
-var x = document.getElementsByClassName("list_data");
-var y= num ////3번째 id 값을 가져옴
-
-var num1 = aa.replace(regex, "")
-num1 -=1
-var aa1 = "#pb" + num1
-
-$(aa1).parent().attr('class', 'page-item')
-aa = "#pb" + num
-if(num <= max_length){
-    $(aa).parent().attr('class', 'page-item active')
-}
-
-for(var i=0;i<a;i++){
-if(x[i].id!=y){
-   $(x[i]).css("display", "none");
-}else{
-   $(x[i]).css("display", "");
-}
-}
-
+    $(`#pb${parseInt($('.active').eq(1).parent()[0].id)+1}`).trigger('click')
 });
 
 });
@@ -297,6 +251,8 @@ $( document ).ready(function() {
 }
     });
 });
+
+
 
 </script> 
 <script src="/static/assets/js/filter.js">
