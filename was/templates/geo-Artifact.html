@@ -73,6 +73,8 @@
     var profileJson = JSON.parse(profile);
     var markers = []; // 마커리스트
     var size = "{{geo|length}}"; // 마커 개수
+    var click_id = -1;
+    var click_flag = 0;
 
     /*======= datepicker 초기 설정 =======*/
     let firstDate = new Date(profileJson[1][3]); // 첫 마커의 dateTaken
@@ -94,26 +96,49 @@
         maxDate: lastDate.getFullYear() + '/' + (lastDate.getMonth() + 1) + '/' + lastDate.getDate()  
     });
     /*======= datepicker 초기 설정 =======*/
-
+ 
     var map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 8,
-        center: {
-            // lat: profileJson[1][1], // 첫 마커를 중심으로
-            // lng: profileJson[1][2]
-            lat: 36.769982,
-            lng: 127.81598
-        },
-        mapTypeId: google.maps.MapTypeId.ROADMAP
+    zoom: 20,//7,
+    center: {
+        lat: profileJson[71][1], // 첫 마커를 중심으로
+        lng: profileJson[71][2]
+        // lat: 36.769982,
+        // lng: 127.81598
+    },
+    mapTypeId: google.maps.MapTypeId.ROADMAP
     });
 
     var geocoder = new google.maps.Geocoder();
     var infowindow = new google.maps.InfoWindow();
+    var icon = {
+        path : 'M172.268 501.67C26.97 291.031 0 269.413 0 192 0 85.961 85.961 0 192 0s192 85.961 192 192c0 77.413-26.97 99.031-172.268 309.67-9.535 13.774-29.93 13.773-39.464 0z',
+        //url : '/static/assest/images/map-marker2.svg',
+        fillColor: 'white',
+        fillOpacity: 1,
+        anchor: new google.maps.Point(14,20),
+        strokeWeight: 2,
+        strokeColor : '#3f4d67',
+        labelOrigin: {x:200, y: 200},
+        scale: 0.07,
+    }
+
+    var click_icon = {
+        path : 'M172.268 501.67C26.97 291.031 0 269.413 0 192 0 85.961 85.961 0 192 0s192 85.961 192 192c0 77.413-26.97 99.031-172.268 309.67-9.535 13.774-29.93 13.773-39.464 0z',
+        fillColor: '#3f4d67',
+        fillOpacity: 0.6,
+        anchor: new google.maps.Point(14,20),
+        strokeWeight: 2,
+        strokeColor : '#3f4d67',
+        labelOrigin: {x:200, y: 200},
+        scale: 0.07
+    }
 
     for (var i = 1; i <= size; i++) {
         var marker = new google.maps.Marker({
             id: profileJson[i][0],     // id
             position: { lat: profileJson[i][1], lng: profileJson[i][2] },
             map: map,
+            icon: icon,
             labelContent : String(profileJson[i][3])
         });
     
@@ -133,6 +158,8 @@
                                     dataJson = JSON.parse(data) // JSON으로 파싱
                                     video_type = ['.mp4']; // 여기에 영상 확장자 다 넣어
                                     var path = dataJson[0]['fields']['data']; // 경로를 넣어, 나중에 확장자 구하려고
+
+                                    console.log(marker.id);
 
                                     var contentString = '<div class="iw-content" id = "info-content">' +
                                         '<div class= "iw-image"> ' +
@@ -154,6 +181,10 @@
                                             contentString = contentString.replace('</img>', '</vedio>');
                                         }
                                     }
+                                    click_flag = 1;
+                                    marker.setIcon(click_icon);
+                                    console.log(click_flag);
+
                                     infowindow.setContent(contentString);
                                     infowindow.open(map, marker);
                                     // map.setZoom(15);
@@ -207,8 +238,22 @@
             position = marker.getPosition(); // 마커 하나의 위치
 
             if(marker['labelContent'] >= startDate && marker['labelContent'] <= endDate) {
+               
+                console.log(click_flag);
 
-                marker.setLabel(String(count)); // 이렇게 하면 전체 사진을 시간 순으로 라벨링
+                if(click_flag == 0) {
+                    marker.setLabel({text:String(count),
+                                    color: '#3f4d67',
+                                    fontWeight: 'bold',
+                                    fontSize:"15px"}); // 이렇게 하면 전체 사진을 시간 순으로 라벨링
+                }
+
+                else {
+                    marker.setLabel({text:String(count),
+                                    color: '#ffffff',
+                                    fontWeight: 'bold',
+                                    fontSize:"15px"});
+                }
 
                 if (position.lat() >= startLo.lat() && position.lat() <= endLo.lat() &&
                     position.lng() >= startLo.lng() && position.lng() <= endLo.lng()) { // 마커가 현재 화면에 있는지 체크                       
@@ -250,6 +295,9 @@
     });
 
     google.maps.event.addListener(map, 'click', function() {
+        click_flag = 0;
+        marker.setIcon(icon);
+        updateMarkers();
         infowindow.close();
     });
 
