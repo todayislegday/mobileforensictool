@@ -128,6 +128,10 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME':f'{OUTPATH}/data/com.samsung.android.providers.media/databases/media.db',
     },
+    'Calendar': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME':f'{OUTPATH}/data/com.android.providers.calendar/databases/calendar.db',
+    }
 
    
 }

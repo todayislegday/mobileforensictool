@@ -7418,12 +7418,18 @@ select.form-control-lg:not([size]):not([multiple]) {
 /**  =====================
       Data Tables css start
 ==========================  **/
-.table td,
+
 .table th {
   border-top: 1px solid #eaeaea;
   white-space: nowrap;
   padding: 1.05rem 0.75rem;
 }
+.table td{
+  border-top: 1px solid #eaeaea;
+  white-space: pre-line;
+  padding: 1.05rem 0.75rem;
+}
+
 .table thead th {
   border-bottom: 1px solid #eaeaea;
 }
@@ -7876,8 +7882,8 @@ a.btn-theme.active {
 /* Alternate buttons */
 .btn-primary {
   color: #fff;
-  background-color: #04a9f5;
-  border-color: #04a9f5;
+  background-color: #3f4d67;
+  border-color: #3f4d67;
 }
 .btn-primary:hover {
   color: #fff;

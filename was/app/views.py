@@ -5,6 +5,8 @@ from django.template import loader
 from django.http import HttpResponse,JsonResponse
 from django.db.models import Value,TextField
 from .models import contacts_model,message1_model,message2_model,map_model,calllog_model,mms_model,chrome2_model,chrome3_model,chrome4_model,chrome5_model,chrome6_model,Sam1_model, Sam2_model,Sam3_model,Sam4_model,Sam5_model,webdowndata_model,webext_model,Appinslog_model,Media_model,calendar_model
+from .countkeyword import count
+from .crawling import image1
 from django.core.paginator import Paginator
 from django.views.decorators.csrf import csrf_exempt
 from django.core import serializers
@@ -15,7 +17,6 @@ import os,mmap
 def index(request):
  try:
     context={}
-    from .crawling import image1
     path=os.path.dirname(os.path.abspath(__file__))
     f = open(f"{path}/build.prop", 'r')#경로 추후 
            
@@ -41,8 +42,17 @@ def index(request):
 
 
     context['recentcall']=calllog_model.objects.raw('select _id,name,number,DATETIME(ROUND(date/ 1000), "unixepoch","localtime") AS date from calls order by date desc')[:5]
-    print(calendar_model.objects.all().values())
-
+   
+    calendar=calendar_model.objects.raw('select _id,title ,DATETIME(ROUND(dtstart / 1000), "unixepoch","localtime")  as start,DATETIME(ROUND(dtend / 1000), "unixepoch","localtime")  as end from Events')
+    
+    calendar_list = []
+    i = 0
+    for c in calendar:
+       dic={"id":c.id,"title":c.title,"start":c.start,"end":c.end}
+       calendar_list.append(dic)
+    
+    context['calendar']=calendar_list
+    print(context['calendar'])
 
 
     return render(request,'Dashboard.html',context)
@@ -86,34 +96,7 @@ def pages(request):
             
             text=message1_model.objects.values('text')
 
-            ###############################
-            c=list()
-            for a in text:#쿼리셋->list
-                c.append(a['text'])
-            litost=" ".join(map(str,c)) #list를 전체 문자열로 만든다.
-            
-            c=litost.split()#중복이 있는 list
-            list1=set(c)
-            list1=list(list1)#중복이 제거된 list
-            
-            list2=list()
-            list3=list()
-            for text in c:
-                list2.append({"text":text})
-            for text in list1:
-                list3.append({"text":text})
-            a=1
-
-            for a in list2:
-                find =a['text']
-                for e in list3:
-                    if find==e['text']:
-                        try:e['weight']=e['weight']+1
-                        except:e['weight']=1
-            for e in list3:
-                e['html']={"title":f"빈도수:{e['weight']}"}  
-
-            context['words']=list3
+            context['words']=count(text,'text')
 
         elif context['url']=="wifi.html": ##귀수
             path=os.path.dirname(os.path.abspath(__file__))
@@ -169,9 +152,11 @@ def pages(request):
             page = request.GET.get('page', '1')
 
             c=chrome2_model.objects.raw("SELECT keyword_id,term,normalized_term FROM keyword_search_terms")
+            text=chrome2_model.objects.values('term')
             paginator = Paginator(c, 10) 
             page_obj = paginator.get_page(page)
 
+            context['words']=count(text,'term')
             context['page']=page_obj
 
         elif context['url']=="sam-history.html":#지호
@@ -196,12 +181,14 @@ def pages(request):
             c=Sam1_model.objects.raw("SELECT keyword_id,term,normalized_term FROM keyword_search_terms")
             paginator = Paginator(c, 10) 
             page_obj = paginator.get_page(page)
-
+            
+            text=Sam1_model.objects.values('term')
+            context['words']=count(text,'term')
             context['page']=page_obj
         
         elif context['url']=="time-line.html":#용하
             mms=mms_model.objects.raw("SELECT _id,address,content,datetime((date / 1000), 'unixepoch','localtime') AS date FROM messages ORDER BY date ASC")
-            calllog=calllog_model.objects.raw("SELECT _id,datetime((date / 1000), 'unixepoch','localtime') FROM calls ORDER BY date ASC")
+            calllog=calllog_model.objects.raw("SELECT _id,datetime((date / 1000), 'unixepoch','localtime') AS date  FROM calls ORDER BY date ASC")
             chromekeyword=chrome2_model.objects.all()
             chromeurlhistory=chrome3_model.objects.raw("SELECT urls.id, urls.url, urls.title, datetime(visits.visit_time/1000000 + (strftime('%%s','1601-01-01')),'unixepoch','localtime') AS visit_time FROM urls, visits WHERE urls.id=visits.url ORDER BY visits.visit_time ASC")
             chromedown=chrome5_model.objects.all()

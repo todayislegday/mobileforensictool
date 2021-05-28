@@ -8,9 +8,12 @@
  <link rel="stylesheet" href="/static/assets/css/right_box.css">{% endblock stylesheets %}
 
 {% block content %}
-<div id="keywordbox" style="float:left; z-index:1" >
+<button type="button" class="btn btn-primary"  style="margin:50px 10px 10px 30px">키워드 추천</button>
+<div class="btn btn-primary" style="display:none"><i class="fas fa-times" style="margin-right:1px"></i></div>
+
+ <div id="keywordbox" style="float:left; z-index:1 ;display:none" > </div> 
                             
-                            </div>
+                           
 <div class="pcoded-content">
     <div class="pcoded-inner-content">
         <!-- [ breadcrumb ] start -->
@@ -39,9 +42,7 @@
                     <div class="col-xl-12">
                         <div class="card">
                             <div class="card-header">
-                            <div style="float:left " >
                             
-                            </div>
                                         <div class="right-box">
                                             <label> Search:<input onkeyup="filter()" type="search" id="keyword" class="form-control form-control-sm" placeholder="" aria-controls="dtBasicExample">
                                             </label>
@@ -145,7 +146,14 @@ var profile = $("#dict-id").text();
       center:{x:0.5,y:0.5},
       fontSize:{from:0.1,to:0.02}
   }); 
- 
+
+
+
+
+$('.btn').click(function(){
+    $('.btn').toggle();
+    $('#keywordbox').toggle();
+})
  });
 
 $(document).on('mouseenter','span',function(){//동적으로 생선된 span태그의 이벤트 감지를 위해
