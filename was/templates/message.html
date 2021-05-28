@@ -5,7 +5,8 @@
 <!-- Specific CSS goes HERE -->
 {% block stylesheets %}
 <link rel="stylesheet" href="/static/assets/css/jqcloud.min.css">
- <link rel="stylesheet" href="/static/assets/css/right_box.css">{% endblock stylesheets %}
+<link rel="stylesheet" href="/static/assets/css/right_box.css">
+{% endblock stylesheets %}
 
 {% block content %}
 <button type="button" class="btn btn-primary"  style="margin:50px 10px 10px 30px">키워드 추천</button>
@@ -136,7 +137,7 @@
 <script>
  $( document ).ready(function() {
   
-var profile = $("#dict-id").text();
+    var profile = $("#dict-id").text();
     var profileJson = JSON.parse(profile);
   
 
@@ -144,7 +145,10 @@ var profile = $("#dict-id").text();
       width: 400,
       height: 400,
       center:{x:0.5,y:0.5},
-      fontSize:{from:0.1,to:0.02}
+      fontSize:{from:0.1,to:0.02},
+      delay: 1,
+      
+
   }); 
 
 
@@ -161,9 +165,6 @@ $(document).on('mouseenter','span',function(){//동적으로 생선된 span태�
 	}) 
 
 
-</script>
-
-<script>
 function nana(){
     //alert(aa)
     var regex = /[^0-9]/g
@@ -198,7 +199,6 @@ if(x[i].id!=1){
 
     $(aa).click(function() {//클릭시
 
-    console.log( $(this).parents()[0])
         for(var x=0; x<=pagesu+2; x++){
 
             var aaa= "#pb" + x
@@ -281,33 +281,25 @@ if(x[i].id!=y){
 //id부여
 a="{{msg|length}}"
 max_length=a/10
-console.log(max_length)
 
 var x = document.getElementsByClassName("list_data");
 for(var j=0,i=0;i<a;i++){
 if(i%10==0)j++
 x[i].id=j.toString();
-console.log(x[i]);
 }
 
-
-
-
-</script> 
-<script src="/static/assets/js/filter.js">
-</script>
-<script>
 $( document ).ready(function() {
-    console.log( "ready!" );
     $("#keyword").keyup(function(e) {
         if($(this).val()==''){
-console.log(1)
-console.log( $("#buttonset").find('li[class="page-item active"]').children("button").attr("id") );
      var id=$("#buttonset").find('li[class="page-item active"]').children("button").attr("id")
      id=id.substring(2,3)
     $(`.list_data[id!=${id}]`).css("display","none")
 }
     });
 });
+
+</script> 
+<script src="/static/assets/js/filter.js">
 </script>
+
 {% endblock javascripts %}
