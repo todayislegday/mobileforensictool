@@ -34,12 +34,16 @@
                     <div class="card-header">
                         <h5>위치 정보 시각화</h5>
                         <span class="d-block m-t-5">시간 순서에 따른 위치 표시</span>
-                        <form id="duration" style="text-align: center;">
-                            <input id="datetimepicker1" type="text">
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <input id="datetimepicker2" type="text">
-                            &nbsp;&nbsp;&nbsp;
-                            <input id="sendbutton" type="button" value="입력" onclick="updateMarkers()">
+                        <form id="geo-duration" style="text-align: right;">
+                            <!-- 중요! End-Date가 위에 있음 오른쪽 정렬로 하기 때문에 -->
+                            <!-- 추후 입력버튼 삭제하고 input 값이 변경되면 자동으로 마커 업데이트 할 예정 -->
+                            <!-- style 부분도 css로 빼기 -->
+                            <input id="end-date" type="text" class="form-control form-control-sm" style="width: 170px; float:right; text-align: center;">
+                            <div style="width: fit-content; height: 43px; float:right; padding-top: 10px; margin-left: 20px; margin-right: 20px;">~</div>
+                            <input id="start-date" type="text" class="form-control form-control-sm" style="width: 170px; float:right; text-align: center;">
+                            <div style="float: right; padding-top: 7px; margin-right: 20px;"><i class="far fa-calendar-alt fa-2x"></i></div>
+                                                        
+                            <!-- <input id="sendbutton" type="button" value="입력" onclick="updateMarkers()"> -->
                         </form>
                     </div>
                     <div class="card-block">
@@ -81,16 +85,16 @@
     let lastDate =  new Date(profileJson[size][3]); // 마지막 마커의 dateTaken
 
     let tmpFormat = firstDate.getFullYear() + '-' + (firstDate.getMonth() + 1) + '-' + firstDate.getDate() + ' ' + firstDate.getHours() + ':' + firstDate.getMinutes();
-    $('#datetimepicker1').val(tmpFormat);
-    $('#datetimepicker1').datetimepicker({ // 달력 초기  셋팅
+    $('#start-date').val(tmpFormat);
+    $('#start-date').datetimepicker({ // 달력 초기  셋팅
         format: 'Y-m-d H:i',
         minDate: firstDate.getFullYear() + '/' + (firstDate.getMonth() + 1) + '/' + firstDate.getDate(),
         maxDate: lastDate.getFullYear() + '/' + (lastDate.getMonth() + 1) + '/' + lastDate.getDate()
     });
 
     tmpFormat = lastDate.getFullYear() + '-' + (lastDate.getMonth() + 1) + '-' + lastDate.getDate() + ' ' + lastDate.getHours() + ':' + lastDate.getMinutes();
-    $('#datetimepicker2').val(tmpFormat);
-    $('#datetimepicker2').datetimepicker({
+    $('#end-date').val(tmpFormat);
+    $('#end-date').datetimepicker({
         format: 'Y-m-d H:i',
         minDate: firstDate.getFullYear() + '/' + (firstDate.getMonth() + 1) + '/' + firstDate.getDate(),
         maxDate: lastDate.getFullYear() + '/' + (lastDate.getMonth() + 1) + '/' + lastDate.getDate()  
@@ -98,35 +102,36 @@
     /*======= datepicker 초기 설정 =======*/
  
     var map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 20,//7,
+    zoom: 8, //20,
     center: {
-        lat: profileJson[71][1], // 첫 마커를 중심으로
-        lng: profileJson[71][2]
-        // lat: 36.769982,
-        // lng: 127.81598
+        //lat: profileJson[71][1], // 첫 마커를 중심으로
+        //lng: profileJson[71][2]
+        lat: 36.769982, // 원래는 첫 마커로 하려 했는데 첫 마커가 혼자 떨어져 있을 경우
+        lng: 127.81598  // 한 눈에 보기 힘들기 때문에 전체 지도를 첫 화면으로 띄움
     },
-    mapTypeId: google.maps.MapTypeId.ROADMAP
+    mapTypeId: google.maps.MapTypeId.ROADMAP,
+    streetViewControl : false // 스크릿뷰 컨트롤은 필요없음
     });
 
     var geocoder = new google.maps.Geocoder();
     var infowindow = new google.maps.InfoWindow();
-    var icon = {
+
+    var icon = { // 기본형 커스텀 마커
         path : 'M172.268 501.67C26.97 291.031 0 269.413 0 192 0 85.961 85.961 0 192 0s192 85.961 192 192c0 77.413-26.97 99.031-172.268 309.67-9.535 13.774-29.93 13.773-39.464 0z',
-        //url : '/static/assest/images/map-marker2.svg',
         fillColor: 'white',
         fillOpacity: 1,
-        anchor: new google.maps.Point(14,20),
+        anchor: new google.maps.Point(250,520),
         strokeWeight: 2,
         strokeColor : '#3f4d67',
         labelOrigin: {x:200, y: 200},
         scale: 0.07,
     }
 
-    var click_icon = {
+    var click_icon = { // 클릭시 커스텀 마커
         path : 'M172.268 501.67C26.97 291.031 0 269.413 0 192 0 85.961 85.961 0 192 0s192 85.961 192 192c0 77.413-26.97 99.031-172.268 309.67-9.535 13.774-29.93 13.773-39.464 0z',
         fillColor: '#3f4d67',
         fillOpacity: 0.6,
-        anchor: new google.maps.Point(14,20),
+        anchor: new google.maps.Point(250,520),
         strokeWeight: 2,
         strokeColor : '#3f4d67',
         labelOrigin: {x:200, y: 200},
@@ -138,7 +143,6 @@
             id: profileJson[i][0],     // id
             position: { lat: profileJson[i][1], lng: profileJson[i][2] },
             map: map,
-            icon: icon,
             labelContent : String(profileJson[i][3])
         });
     
@@ -158,8 +162,8 @@
                                     dataJson = JSON.parse(data) // JSON으로 파싱
                                     video_type = ['.mp4']; // 여기에 영상 확장자 다 넣어
                                     var path = dataJson[0]['fields']['data']; // 경로를 넣어, 나중에 확장자 구하려고
-
-                                    console.log(marker.id);
+                                    
+                                    click_id = marker.id; // 클릭한 마커 id를 전역으로 전달
 
                                     var contentString = '<div class="iw-content" id = "info-content">' +
                                         '<div class= "iw-image"> ' +
@@ -181,14 +185,11 @@
                                             contentString = contentString.replace('</img>', '</vedio>');
                                         }
                                     }
-                                    click_flag = 1;
-                                    marker.setIcon(click_icon);
-                                    console.log(click_flag);
 
                                     infowindow.setContent(contentString);
                                     infowindow.open(map, marker);
-                                    // map.setZoom(15);
-                                    map.panTo(marker.getPosition()); // 마커로 부드러운 이동
+
+                                    updateMarkers(); // 줌과 이동 옵션을 지우고 클릭시 업데이트를 새로 하는 걸로
                                 }
                             });
                         } else {
@@ -217,8 +218,8 @@
         var marker, position;
         let count = 1;
 
-        var startDate = new Date(document.getElementById("datetimepicker1").value);
-        var endDate = new Date(document.getElementById("datetimepicker2").value);
+        var startDate = new Date(document.getElementById("start-date").value);
+        var endDate = new Date(document.getElementById("end-date").value);
 
         if(startDate == "Invalid Date" || endDate == "Invalid Date" || startDate > endDate) { // 시작, 종료 날짜가 입력되었는지 체크
             window.alert("비정상 시간 입력");
@@ -238,18 +239,20 @@
             position = marker.getPosition(); // 마커 하나의 위치
 
             if(marker['labelContent'] >= startDate && marker['labelContent'] <= endDate) {
-               
-                console.log(click_flag);
 
-                if(click_flag == 0) {
-                    marker.setLabel({text:String(count),
+
+                if(click_id != marker['id']) { //기본형 마커
+                    marker.setIcon(icon);
+                    marker.setLabel({text:String(count),  // 이렇게 하면 전체 사진을 시간 순으로 라벨링
                                     color: '#3f4d67',
                                     fontWeight: 'bold',
-                                    fontSize:"15px"}); // 이렇게 하면 전체 사진을 시간 순으로 라벨링
+                                    fontSize:"15px"});
                 }
 
-                else {
-                    marker.setLabel({text:String(count),
+                // 마커 id를 여기서 받아서 해당 마커 id만 클릭 커스텀 마커로 셋팅
+                else {  // 클릭형 마커
+                    marker.setIcon(click_icon); 
+                    marker.setLabel({text:String(count), // 여기서 셋팅을 하는 이유는 setLabel에서 text가 필수로 들어가야 하기 때문
                                     color: '#ffffff',
                                     fontWeight: 'bold',
                                     fontSize:"15px"});
@@ -295,9 +298,8 @@
     });
 
     google.maps.event.addListener(map, 'click', function() {
-        click_flag = 0;
-        marker.setIcon(icon);
-        updateMarkers();
+        click_id = -1; // 클릭이 끝나면 마커 id를 다시 -1로
+        updateMarkers(); // 업데이트 한번 더
         infowindow.close();
     });
 
