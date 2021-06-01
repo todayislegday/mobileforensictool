@@ -47,7 +47,7 @@ class QtGUI(QWidget):
 				f.write(data)
 				f.close()
 
-				shutil.copy(f"{self.buildfilepath}", f"{self.outputpath}/was/app/")#build.prop 파일 복사
+				shutil.copy(f"{self.buildfilepath}", f"{path}/../was/app/")#build.prop 파일 복사
 
 				
 				self.label1.setText("127.0.0.1:8000 으로 접속중입니다...기달려 주세요")

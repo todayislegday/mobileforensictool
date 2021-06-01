@@ -43,15 +43,23 @@ def index(request):
 
     context['recentcall']=calllog_model.objects.raw('select _id,name,number,DATETIME(ROUND(date/ 1000), "unixepoch","localtime") AS date from calls order by date desc')[:5]
    
-    calendar=calendar_model.objects.raw('select _id,title ,DATETIME(ROUND(dtstart / 1000), "unixepoch","localtime")  as start,DATETIME(ROUND(dtend / 1000), "unixepoch","localtime")  as end from Events')
+    calendar1=calendar_model.objects.raw('select _id,title ,DATETIME(ROUND(dtstart / 1000), "unixepoch","localtime")  as start,DATETIME(ROUND(dtend / 1000), "unixepoch","localtime")  as end from Events where eventTimezone="Asia/Seoul"')
+    calendar2=calendar_model.objects.raw('select _id,title ,DATETIME(ROUND(dtstart / 1000), "unixepoch")  as start,DATETIME(ROUND(dtend / 1000), "unixepoch")  as end from Events where eventTimezone="UTC"')
+    
+    print(calendar1)
+    print(calendar2)
     
     calendar_list = []
     i = 0
-    for c in calendar:
-       dic={"id":c.id,"title":c.title,"start":c.start,"end":c.end}
-       calendar_list.append(dic)
-    
+    for c in calendar1:
+        dic={"id":c.id,"title":c.title,"start":c.start,"end":c.end}
+        calendar_list.append(dic)
+
+    for c in calendar2:
+        dic={"id":c.id,"title":c.title,"start":c.start,"end":c.end}
+        calendar_list.append(dic)
     context['calendar']=calendar_list
+    
     print(context['calendar'])
 
 
@@ -80,7 +88,7 @@ def pages(request):
             paginator = Paginator(c, 10) 
             page_obj = paginator.get_page(page)
             
-            context['calllog']=calllog_model.objects.raw("SELECT _id,datetime((date / 1000), 'unixepoch','localtime') AS date FROM calls ORDER BY date ASC")
+            context['calllog']=calllog_model.objects.raw("SELECT _id,datetime((date / 1000), 'unixepoch','localtime') AS date FROM calls where m_content IS NULL ORDER BY date ASC ") #메시지 아닌것만
             context['contact']=c
             context['page']=page_obj
             
@@ -188,7 +196,7 @@ def pages(request):
         
         elif context['url']=="time-line.html":#용하
             mms=mms_model.objects.raw("SELECT _id,address,content,datetime((date / 1000), 'unixepoch','localtime') AS date FROM messages ORDER BY date ASC")
-            calllog=calllog_model.objects.raw("SELECT _id,datetime((date / 1000), 'unixepoch','localtime') AS date  FROM calls ORDER BY date ASC")
+            calllog=calllog_model.objects.raw("SELECT _id,datetime((date / 1000), 'unixepoch','localtime') AS date  FROM calls  where m_content IS NULL  ORDER BY date ASC")
             chromekeyword=chrome2_model.objects.all()
             chromeurlhistory=chrome3_model.objects.raw("SELECT urls.id, urls.url, urls.title, datetime(visits.visit_time/1000000 + (strftime('%%s','1601-01-01')),'unixepoch','localtime') AS visit_time FROM urls, visits WHERE urls.id=visits.url ORDER BY visits.visit_time ASC")
             chromedown=chrome5_model.objects.all()

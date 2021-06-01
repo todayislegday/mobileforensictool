@@ -63,12 +63,7 @@
                                                 <td></td>                           
                                             </tr>
                                             {% endfor %}
-                                            {% comment %} <tr class='list_data' id=2>
-                                                <td>2</td>
-                                                <td>이재훈</td>
-                                                <td>01084824720</td>
-                                                <td></td>                           
-                                            </tr>  {% endcomment %}
+                                           
                                         </tbody>
                                     </table>
                                       
@@ -86,29 +81,21 @@
                                                 <th>이름</th>
                                                 <th>연락처</th>
                                                 <th>날짜</th>
+                                                <th>전화 시간</th>
                                             </tr>
                                         </thead>
                                         <tbody id="calllog">
+                                        {% load mathfilters %}
                                             {% for c in calllog %}
                                             <tr  number={{c.number}}>
                                                 <td>{{c.id}}</td>
                                                 <td>{{c.name}}</td>
                                                 <td>{{c.number}}</td>
                                                 <td>{{c.date}}</td>
+                                                <td>{{c.duration|div:60|floatformat:"0"}}분{{c.duration|mod:60}}초</td>
                                             </tr>
                                             {% endfor %}
-                                             {% comment %} <tr class='list_data' number=01084824720>
-                                                <td>8</td>
-                                                <td>이재훈</td>
-                                                <td >01084824720</td>
-                                                <td>123123123</td>
-                                            </tr>
-                                             <tr class='list_data' number=01084824720>
-                                                <td>9</td>
-                                                <td>이재훈</td>
-                                                <td >01084824720</td>
-                                                <td>123123123</td>
-                                            </tr>  {% endcomment %}
+                                            
                                         </tbody>
                                     </table>
                                
