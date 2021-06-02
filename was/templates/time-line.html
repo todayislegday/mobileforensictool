@@ -68,7 +68,7 @@
                         }
 
                         for (var i = 0; i < cSize; i++) {
-                            cDate = new Date(cprofileJson[i][2])
+                            cDate = new Date(mprofileJson[i][3])
 
                             if (cDate < startDate) {
                                 startDate = cDate
@@ -96,7 +96,7 @@
 
                         var imsi = startDate
                         imsi.setHours(imsi.getHours() - 1)
-                        //endDate = new Date(2024, 4, 4)
+                        /*endDate = new Date(2023, 4, 4)*/
 
                         for (let i = 0; ; i++) {
                             imsi.setHours(imsi.getHours() + 1)
@@ -161,8 +161,12 @@
                         series.dataFields.dateX = "hour";
                         series.name = "messages";
                         series.dataFields.valueY = "messages";
-                        series.tooltipHTML = "<img src='https://www.amcharts.com/lib/3/images/car.png' style='vertical-align:bottom; margin-right: 10px; width:28px; height:21px;'><span style='font-size:14px; color:#000000;'><b>{valueY.value}</b></span>";
+                        series.tooltipHTML = "<i class='fas fa-envelope'></i></img><span style='font-size:14px; color:#000000;'><b>{valueY.value}</b></span>";
+                        //"<img src='https://www.amcharts.com/lib/3/images/car.png' style='vertical-align:bottom; margin-right: 10px; width:28px; height:21px;'><span style='font-size:14px; color:#000000;'><b>{valueY.value}</b></span>";
                         series.tooltipText = "[#000]{valueY.value}[/]";
+                        
+                        //"<i class='fas fa-envelope'; style='vertical-align:bottom; margin-right: 10px; width:28px; height:21px;'></i><span style='font-size:14px; color:#000000;'><b>{valueY.value}</b></span>";
+                                            
                         series.tooltip.background.fill = am4core.color("#FFF");
                         series.tooltip.getStrokeFromObject = true;
                         series.tooltip.background.strokeWidth = 3;
@@ -231,15 +235,16 @@
                             <div class="tab-pane fade show active" id="timeline" role="tabpanel" aria-labelledby="timeline-tab">
                                 <!-- [ Stacked Chart ] start -->
                                 <div class="card">
-                                    <div class="card-block">
+                                    <div class="card-block2">
                                         <div id="chartdiv"></div>
+                                        <i class='fas fa-envelope'></i>
                                         <!-- Chart code -->
                                     </div>
                                 </div>
                                 <!-- [ Stacked Chart ] end -->
                             </div>
                             <div class="tab-pane fade" id="result" role="tabpanel" aria-labelledby="result-tab">
-                                <div class="col-sm-12">
+                                <div class="col-xl-12">
                                     <div class="card">
                                         <div class="card-header">
                                             <h5>Duration</h5>
@@ -250,10 +255,109 @@
                                                 &nbsp;&nbsp;&nbsp;
                                                 <input id="sendbutton" type="button" value="입력" onclick="send()">
                                             </form>
-                                            <script>
-                                                $('#datetimepicker1').datetimepicker();
-                                                $('#datetimepicker2').datetimepicker();
+                                        </div>
+                                        <div class="card-block table-border-style">
+                                            <div style="text-align: right; padding: 0px 0px 30px 0px;">
+                                                <select id="contents" onchange="cont(this.value)">
+                                                    <option value="all" selected="selected">전체
+                                                    <option value="msg">메시지
+                                                    <option value="call">통화
+                                                    <option value="internet">인터넷
+                                                    <option value="download">다운로드
+                                                    <option value="media">미디어
+                                                </select>
+                                            </div>
+                                            <script>                                                
+                                                var startpicker = $('#datetimepicker1').datetimepicker();
+                                                var endpicker = $('#datetimepicker2').datetimepicker();
+
+                                                function cont(str){
+                                                    if (str == 'all'){
+                                                        console.log(str)
+                                                    }
+                                                    if (str == 'msg'){
+                                                        console.log(str)
+                                                    }
+                                                    if (str == 'call'){
+                                                        console.log(str)
+                                                    }
+                                                    if (str == 'internet'){
+                                                        console.log(str)
+                                                    }
+                                                    if (str == 'download'){
+                                                        console.log(str)
+                                                    }
+                                                    if (str == 'media'){
+                                                        console.log(str)
+                                                    }
+                                                }
                                             </script>
+                                            <div class="table-responsive">
+                                                <table class="table table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>ID</th>
+                                                            <th>수신자</th>
+                                                            <th>내용</th>
+                                                            <th><i class='fas fa-envelope'></i></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {% for p in msg%}
+                                                        <tr class='list_data'>
+                                                            <td>{{p.id}}</td>
+                                                            <td>{{p.recipients}}</td>
+                                                            <td>{{p.text}}</td>
+                                                            <td>{{p.created_timestamp}}</td>
+                                                        </tr>
+                                                        {% endfor %}
+                                                    </tbody>
+                                                </table>
+
+                                                <!-- 페이징처리시작-->
+                                                <ul class="pagination justify-content-center " id="buttonset">
+                                                    <!-- 이전페이지 -->
+                                                    {% if page.has_previous %}
+                                                    <li class="page-item">
+                                                        <button class="page-link"  id = "pre">이전</button>
+                                                    </li>
+                                                    {% else %}
+                                                    <li class="page-item ">
+                                                        <button class="page-link"  id = "pre">이전</button>
+                                                    </li>
+                                                    {% endif %}
+                                                <!-- 페이지리스트 -->
+                                                    <!-- 다음페이지 -->
+                                                    
+                                                    <!-- 페이지리스트 -->
+                                                    {% for page_number in page.paginator.page_range %}
+                                                        {% if page_number == page.number %}
+                                                    <div id = {{page_number}} class = now_page > 
+                                                        <li class="page-item active" aria-current="page">
+                                                            <button class="page-link" id='pb{{page_number}}'>{{page_number}}</button>
+                                                        </li>
+                                                    </div>
+                                                    {% else %}
+                                                    <!-- 페이지가 더 많아지면 id=3, id=4 될듯-->
+                                                    <div id = {{page_number}}>
+                                                        <li class="page-item">
+                                                            <button class="page-link" id='pb{{page_number}}'>{{page_number}}</button>
+                                                        </li>
+                                                    </div>
+                                                    {% endif %}
+                                                    {% endfor %}
+                                                    
+                                                    <!-- 다음페이지 --> 
+                                                
+                                                    <li class="page-item">
+                                                        <button class="page-link" id="next">다음</button>
+                                                        
+                                                    </li>
+
+                                                </ul>
+                                                <!-- 페이징처리 끝 -->
+                                                <!-- 페이징처리끝-->
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -268,3 +372,9 @@
         </div>
 
 {% endblock content %}
+
+
+
+
+
+
