@@ -22,7 +22,7 @@
                     <div class="row">
                        
                         <!--[ Recent Users ] start-->
-                        <div class="col-xl-8 col-md-6">
+                        <div class="col-sm-6">
                             <div class="card Recent-Users">
                                 <div class="card-header">
                                     <h5>최근 전화</h5>
@@ -39,9 +39,8 @@
                                                         <p class="m-0">{{p.number}}</p>
                                                     </td>
                                                     <td>
-                                                        <h6 class="text-muted"><i class="fas fa-circle text-c-green f-10 m-r-15"></i>{{p.date}}</h6>
+                                                        <h6 class="text-muted" style="text-align: center;"><i class="fas fa-circle text-c-green f-10 m-r-15"></i>{{p.date}}</h6>
                                                     </td>
-                                                    <td><a href="#!" class="label theme-bg2 text-white f-12">Reject</a><a href="#!" class="label theme-bg text-white f-12">Approve</a></td>
                                                 </tr>
                                                {% endfor %}
                                             </tbody>
@@ -68,10 +67,7 @@
                                     <!-- 여기에 이미지-->
                                     <img src="{{imgpath}}" style="margin-left:10px" >
                                 </div>
-                                        <tr>
-                                            <th>안드로이드 버전: </th>
-                                            <td>{{osversion}}</td>
-                                        </tr>
+                                       
                                         <tr>
                                             <th>제조사: </th>
                                             <td>{{manufacturer}}</td>

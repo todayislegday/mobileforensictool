@@ -45,10 +45,9 @@
                                     <h5>연락처</h5>
                                 </div>
                                
-                                         <table class="table table-hover tablesorter" id="contact">
+                                         <table class="table table-hover tablesorter" id="contact" style="border-collapse:collapse; table-layout:auto" >
                                         <thead>
                                             <tr>
-                                                <th>ID</th>
                                                 <th>이름</th>
                                                 <th>연락처</th>
                                                 <th>전화 횟수<i class="fas fa-sort" style="margin-left:5px "></i></th> 
@@ -56,8 +55,7 @@
                                         </thead>
                                         <tbody >
                                             {% for c in contact %}
-                                            <tr class='list_data' id={{c.id}}>
-                                                <td>{{c.id}}</td>
+                                            <tr class='list_data' id={{c.id}} flags="false">
                                                 <td>{{c.name}}</td>
                                                 <td>{{c.number | slice:":11"}}</td>
                                                 <td></td>                           
@@ -74,10 +72,9 @@
                                 <div class="card-header">
                                     <h5>전화기록</h5>
                                 </div>
-                                         <table class="table table-hover">
+                                         <table class="table table-hover" style="border-collapse:collapse;">
                                         <thead>
                                             <tr>
-                                                <th>ID</th>
                                                 <th>이름</th>
                                                 <th>연락처</th>
                                                 <th>날짜</th>
@@ -87,12 +84,15 @@
                                         <tbody id="calllog">
                                         {% load mathfilters %}
                                             {% for c in calllog %}
-                                            <tr  number={{c.number}}>
-                                                <td>{{c.id}}</td>
+                                            <tr  number={{c.number}} flags="false">
                                                 <td>{{c.name}}</td>
                                                 <td>{{c.number}}</td>
                                                 <td>{{c.date}}</td>
+                                                     {% if c.duration %}  
                                                 <td>{{c.duration|div:60|floatformat:"0"}}분{{c.duration|mod:60}}초</td>
+                                                     {% else %}
+                                                 <td>부재중 통화</td>
+                                                 {% endif %}
                                             </tr>
                                             {% endfor %}
                                             
@@ -121,11 +121,11 @@ var cll="{{calllog|length}}" //전화기록 행길이
 
 $( document ).ready(function() {
 
-
+console.log(ctl)
     for(var i=1;i<=ctl;i++){//연락처의 전화횟수 알아내는 소스
-    var findnumber=$(`#${i}`).find("td").eq(2).html()
+    var findnumber=$(`#${i}`).find("td").eq(1).html()
     var count=$('#calllog').find(`tr[number=${findnumber}]`).length
-    $(`#${i}`).find("td").eq(3).text(count)
+    $(`#${i}`).find("td").eq(2).text(count)
 
 }
 
@@ -137,49 +137,45 @@ sorter: false
 1: {
 sorter: false
 },
-2: {
-sorter: false
-}
+
 }
 
 });
-var flags=false
+
 
 $('tr').click(function(){//연락처에서 선택시 전화기록에 해당 연락처 관련 기록만 보여준다.
-if(this.id!=''&&(flags==false||this.id==flags)){         //toggle 방식이있는데 직관적인 if문으로 그냥 했다.
- flags=this.id
- console.log(flags)
+if(this.id!=''){         //toggle 방식이있는데 직관적인 if문으로 그냥 했다.
+ $(this).attr("flags","true")
+
 if($(this).attr('style')==undefined||$(this).attr('style')==''){ //연락처에서 선택한 줄 색칠하기
      $(this).css("background-color", "#b2ddef")
-     
  }else{
      $(this).css("background-color", "")
-    flags=false
+     $(this).attr("flags","false")
  }
 
 
- var findnumber=$(`#${this.id}`).find("td").eq(2).html()
+ var findnumber=$(`#${this.id}`).find("td").eq(1).html()
+ 
+if($(this).attr("flags")=='true'){
+$("#calllog").find(`tr[number=${findnumber}]`).attr("flags","true")
+}else{
+$("#calllog").find(`tr[number=${findnumber}]`).attr("flags","false")
+}
 
- for(var i=0;i<cll;i++){
-    if(findnumber==$(`#calllog`).find("tr").eq(i).attr('number'))
- {
-     
-        $(`#calllog`).find("tr").eq(i).css("display","")
 
- }else{
-     if($(`#calllog`).find("tr").eq(i).attr('style')=="display: none;"){
-          findnumber==$(`#calllog`).find("tr").eq(i).css("display","")
-     }else{
-          findnumber==$(`#calllog`).find("tr").eq(i).css("display","none")
-     }
- }
- }
+$("#calllog").find(`tr[flags=false]`).hide()
+$("#calllog").find(`tr[flags=true]`).show()
+
+if($("#contact").find(`tr[flags=true]`).length==0)//아무것도 선택한게 없을때 다시 초기 전화기록
+$("#calllog").find(`tr`).show()
 
 
 
 }
 
-})
+}) 
+
 
 $("th").trigger("click")//강제로 두번 눌르게 발생시켜서 정렬
 $("th").trigger("click")

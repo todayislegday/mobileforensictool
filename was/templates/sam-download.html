@@ -47,7 +47,6 @@
                                     <table class="table table-hover">
                                         <thead>
                                             <tr>
-                                                <th>ID</th>
                                                 <th>현재 위치</th>
                                                 <th>목표 위치</th>
                                                 <th>시작 시간</th>
@@ -61,7 +60,6 @@
                                         <tbody>
                                             {% for p in page %}
                                             <tr class='list_data'>
-                                                <td>{{p.id}}</td>
                                                 <td>{{p.current_path}}</td>
                                                 <td>{{p.target_path}}</td>
                                                 <td>{{p.start_time}}</td>

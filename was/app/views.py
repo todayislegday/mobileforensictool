@@ -95,7 +95,7 @@ def pages(request):
         elif context['url']=="message.html": ##어진
             page = request.GET.get('page', '1')
 
-            m=message1_model.objects.raw('SELECT parts._id,parts.text,messages._id,DATETIME(ROUND(messages.created_timestamp / 1000), "unixepoch","localtime") AS created_timestamp,messages.recipients FROM parts,messages where parts._id==messages._id')#raw queryset으로 할수없이 만들었다 ...삽질 ..
+            m=message1_model.objects.raw('SELECT parts._id,parts.text,messages._id,DATETIME(ROUND(messages.created_timestamp / 1000), "unixepoch","localtime") AS created_timestamp,messages.recipients FROM parts,messages where parts._id==messages._id  ORDER BY created_timestamp ASC ')#raw queryset으로 할수없이 만들었다 ...삽질 ..
             paginator = Paginator(m, 10) 
             page_obj = paginator.get_page(page)
 

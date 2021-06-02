@@ -7431,6 +7431,9 @@ select.form-control-lg:not([size]):not([multiple]) {
 }
 
 .table thead th {
+  background-color: white;
+  top: 0px;
+  position: sticky;
   border-bottom: 1px solid #eaeaea;
 }
 .table tbody + tbody {

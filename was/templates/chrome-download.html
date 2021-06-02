@@ -47,11 +47,10 @@
                                     <table class="table table-hover">
                                         <thead>
                                             <tr>
-                                                <th>ID</th>
-                                                <th>현재 위치</th>
-                                                <th>목표 위치</th>
                                                 <th>시작 시간</th>
                                                 <th>종료 시간</th>
+                                                <th>현재 위치</th>
+                                                <th>목표 위치</th>
                                                 <th>URL</th>
                                                 <th>original_mime_type</th>
                                                 <th>received_bytes</th>
@@ -61,11 +60,10 @@
                                         <tbody>
                                             {% for p in page %}
                                             <tr class='list_data'>
-                                                <td>{{p.id}}</td>
-                                                <td>{{p.current_path}}</td>
-                                                <td>{{p.target_path}}</td>
                                                 <td>{{p.start_time}}</td>
                                                 <td>{{p.end_time}}</td>
+                                                <td>{{p.current_path}}</td>
+                                                <td>{{p.target_path}}</td>
                                                 <td>{{p.tab_url}}</td>
                                                 <td>{{p.original_mime_type}}</td>
                                                 <td>{{p.received_bytes}}</td>
@@ -124,6 +122,7 @@
         </div>
     </div>
 </div>
+
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->
@@ -131,4 +130,9 @@
 
 
 <script src="/static/assets/js/filter.js">
-</script>{% endblock javascripts %}
+</script>
+
+
+
+
+{% endblock javascripts %}

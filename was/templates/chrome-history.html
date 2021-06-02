@@ -47,20 +47,18 @@
                                     <table class="table table-hover">
                                         <thead>
                                             <tr>
-                                                <th>ID</th>
-                                                <th>URL</th>
-                                                <th>TITLE</th>
                                                 <th>마지막 방문 시간</th>
+                                                <th>TITLE</th>
+                                                <th>URL</th>
                                                 <th>방문 횟수</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             {% for p in page %}
                                             <tr class='list_data'>
-                                                <td>{{p.id}}</td>
-                                                <td>{{p.url}}</td>
-                                                <td>{{p.title}}</td>
                                                 <td>{{p.last_visit_time}}</td>
+                                                <td>{{p.title}}</td>
+                                                <td>{{p.url}}</td>
                                                 <td>{{p.visit_count}}</td>
                                             </tr>
                                             {% endfor %}
