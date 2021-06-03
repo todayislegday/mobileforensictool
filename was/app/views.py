@@ -41,7 +41,7 @@ def index(request):
             context['imgpath']=image1(context['model'])#크롤링 함수,pip install bs4,lxml
 
 
-    context['recentcall']=calllog_model.objects.raw('select _id,name,number,DATETIME(ROUND(date/ 1000), "unixepoch","localtime") AS date from calls order by date desc')[:5]
+    context['recentcall']=calllog_model.objects.raw('select _id,name,number,DATETIME(ROUND(date/ 1000), "unixepoch","localtime") AS date from calls where m_content IS NULL order by date desc')[:5]
    
     calendar1=calendar_model.objects.raw('select _id,title ,DATETIME(ROUND(dtstart / 1000), "unixepoch","localtime")  as start,DATETIME(ROUND(dtend / 1000), "unixepoch","localtime")  as end from Events where eventTimezone="Asia/Seoul"')
     calendar2=calendar_model.objects.raw('select _id,title ,DATETIME(ROUND(dtstart / 1000), "unixepoch")  as start,DATETIME(ROUND(dtend / 1000), "unixepoch")  as end from Events where eventTimezone="UTC"')
@@ -195,33 +195,40 @@ def pages(request):
             context['words']=count(text,'term')
             context['page']=page_obj
         
-        elif context['url']=="time-line.html":#용하
-            mms=mms_model.objects.raw("SELECT _id,address,content,datetime((date / 1000), 'unixepoch','localtime') AS date FROM messages ORDER BY date ASC")
-            calllog=calllog_model.objects.raw("SELECT _id,datetime((date / 1000), 'unixepoch','localtime') AS date  FROM calls  where m_content IS NULL  ORDER BY date ASC")
-            chromekeyword=chrome2_model.objects.all()
-            chromeurlhistory=chrome3_model.objects.raw("SELECT urls.id, urls.url, urls.title, datetime(visits.visit_time/1000000 + (strftime('%%s','1601-01-01')),'unixepoch','localtime') AS visit_time FROM urls, visits WHERE urls.id=visits.url ORDER BY visits.visit_time ASC")
-            chromedown=chrome5_model.objects.all()
-            chromedownurl=chrome6_model.objects.all()
-            Samkeyword=Sam1_model.objects.all()
-            Samurlhistory=Sam3_model.objects.raw("SELECT urls.id, urls.url, urls.title, datetime(visits.visit_time/1000000 + (strftime('%%s', '1601-01-01')), 'unixepoch','localtime') FROM urls, visits WHERE urls.id=visits.url ORDER BY visits.visit_time ASC")
-            Samdown=Sam4_model.objects.all()
-            Samdownurl=Sam5_model.objects.all()
-            webdowndata=webdowndata_model.objects.all();
-            webext=webext_model.objects.raw("select datetime(date_added, 'unixepoch','localtime') from downloads")       
-            appinslog=Appinslog_model.objects.raw("select datetime(first_download_ms/1000, 'unixepoch','localtime'),datetime(delivery_data_timestamp_ms/1000, 'unixepoch','localtime'),datetime(last_update_timestamp_ms/1000, 'unixepoch','localtime'),datetime(install_request_timestamp_ms/1000, 'unixepoch','localtime') from appstate")
-            media=Media_model.objects.all()
-            
+        elif context['url'] == "time-line.html":  # 용하
+            mms = mms_model.objects.raw(
+                "SELECT _id,address,content,datetime((date / 1000), 'unixepoch','localtime') AS date FROM messages ORDER BY date ASC")
+            calllog = calllog_model.objects.raw(
+                "SELECT _id,datetime((date / 1000), 'unixepoch','localtime') AS date  FROM calls  where m_content IS NULL  ORDER BY date ASC")
+            chromekeyword = chrome2_model.objects.all()
+            chromeurlhistory = chrome3_model.objects.raw(
+                "SELECT urls.id, urls.url, urls.title, datetime(visits.visit_time/1000000 + (strftime('%%s','1601-01-01')),'unixepoch','localtime') AS visit_time FROM urls, visits WHERE urls.id=visits.url ORDER BY visits.visit_time ASC")
+            chromedown = chrome5_model.objects.all()
+            chromedownurl = chrome6_model.objects.all()
+            Samkeyword = Sam1_model.objects.all()
+            Samurlhistory = Sam3_model.objects.raw(
+                "SELECT urls.id, urls.url, urls.title, datetime(visits.visit_time/1000000 + (strftime('%%s', '1601-01-01')), 'unixepoch','localtime') AS visit_time FROM urls, visits WHERE urls.id=visits.url ORDER BY visits.visit_time ASC")
+            Samdown = Sam4_model.objects.all()
+            Samdownurl = Sam5_model.objects.all()
+            webdowndata = webdowndata_model.objects.all()
+            webext = webext_model.objects.raw(
+                "SELECT _id, datetime(date_added, 'unixepoch', 'localtime') AS date_added FROM downloads ORDER BY date_added ASC")
+            appinslog = Appinslog_model.objects.raw(
+                "select datetime(first_download_ms/1000, 'unixepoch','localtime'),datetime(delivery_data_timestamp_ms/1000, 'unixepoch','localtime'),datetime(last_update_timestamp_ms/1000, 'unixepoch','localtime'),datetime(install_request_timestamp_ms/1000, 'unixepoch','localtime') from appstate")
+            media = Media_model.objects.raw(
+                "SELECT _id, datetime(date_added, 'unixepoch', 'localtime') AS date_added FROM files ORDER BY date_added ASC")
+
             ###함수로 빼기#################
-            mms_dict={}
-            i=0
-            for m in mms:#queryset->dict(list[])
-                mms_dict[i]=list()
+            mms_dict = {}
+            i = 0
+            for m in mms:  # queryset->dict(list[])
+                mms_dict[i] = list()
                 mms_dict[i].append(m.id)
                 mms_dict[i].append(m.address)
                 mms_dict[i].append(m.content)
                 mms_dict[i].append(m.date)
                 mms_dict[i].append(m.box_type)
-                i+=1
+                i += 1
             ###################################
 
             call_dict = {}
@@ -235,22 +242,69 @@ def pages(request):
                 call_dict[str(i)].append(c.type)
                 i += 1
 
+            ####################################
 
-            context['mms']=mms_dict
+            chrome_dict = {}
+            i = 0
+            for ch in chromeurlhistory:
+                chrome_dict[str(i)] = list()
+                chrome_dict[str(i)].append(ch.id)
+                chrome_dict[str(i)].append(ch.url)
+                chrome_dict[str(i)].append(ch.title)
+                chrome_dict[str(i)].append(ch.visit_time)
+                i += 1
+
+            sam_dict = {}
+            i = 0
+            for s in Samurlhistory:
+                sam_dict[str(i)] = list()
+                sam_dict[str(i)].append(s.id)
+                sam_dict[str(i)].append(s.url)
+                sam_dict[str(i)].append(s.title)
+                sam_dict[str(i)].append(s.visit_time)
+                i += 1
+
+            #####################################
+
+            download_dict = {}
+            i = 0
+            for d in webext:
+                download_dict[str(i)] = list()
+                download_dict[str(i)].append(d.id)
+                download_dict[str(i)].append(d.date_added)
+                download_dict[str(i)].append(d.owner_package_name)
+                download_dict[str(i)].append(d.download_uri)
+                download_dict[str(i)].append(d._data)
+                i += 1
+
+            ######################################
+
+            media_dict = {}
+            i = 0
+            for md in media:
+                media_dict[str(i)] = list()
+                media_dict[str(i)].append(md.id)
+                media_dict[str(i)].append(md.date_added)
+                media_dict[str(i)].append(md.bucket_display_name)
+                media_dict[str(i)].append(md.owner_package_name)
+                media_dict[str(i)].append(md._data)
+                i += 1
+
+            context['mms'] = mms_dict
             context['calllog'] = call_dict
-            context['chromekeyword']=chromekeyword
-            context['chromeurlhistory']=chromeurlhistory
-            context['chromedown']=chromedown
-            context['chromedownurl']=chromedownurl
-            context['Samkeyword']=Samkeyword
-            context['Samurlhistory']=Samurlhistory
-            context['Samdown']=Samdown
-            context['Samdownurl']=Samdownurl
-            context['webdowndata']=webdowndata
-            context['webext']=webext
-            context['appinslog']=appinslog
-            context['media']=media
-            print(context['calllog'])
+            context['chromekeyword'] = chromekeyword
+            context['chromeurlhistory'] = chrome_dict
+            context['chromedown'] = chromedown
+            context['chromedownurl'] = chromedownurl
+            context['Samkeyword'] = Samkeyword
+            context['Samurlhistory'] = sam_dict
+            context['Samdown'] = Samdown
+            context['Samdownurl'] = Samdownurl
+            context['webdowndata'] = webdowndata
+            context['webext'] = download_dict
+            context['appinslog'] = appinslog
+            context['media'] = media_dict
+
         
         elif context['url']=="keyword-view.html":
             text=message1_model.objects.values('text')

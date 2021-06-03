@@ -27,6 +27,7 @@ class calllog_model(models.Model): #용하
     duration = models.TextField(blank=True,null=True)
     name=models.TextField(blank=True,null=True)
     type=models.TextField(blank=True,null=True)
+
 class message1_model(models.Model): #어진
    
     class Meta: 
@@ -60,6 +61,7 @@ class mms_model(models.Model): #용하
     content = models.TextField(blank=True,null=True)
     date = models.TextField(blank=True,null=True)
     box_type= models.TextField(blank=True,null=True)
+    
 class map_model(models.Model): #재식
 
     class Meta: 
@@ -206,6 +208,8 @@ class webext_model(models.Model): #용하
     _display_name=models.FloatField(blank=True,null=True)
     date_added=models.FloatField(blank=True,null=True)
     download_uri=models.FloatField(blank=True,null=True)
+    owner_package_name = models.TextField(blank=True, null=True)
+    _data = models.TextField(blank=True, null=True)
 
 class Appinslog_model(models.Model): #용하
 
@@ -231,9 +235,12 @@ class Media_model(models.Model): #용하
     id= models.AutoField(db_column='_id',primary_key=True)
     date_added=models.FloatField(blank=True,null=True)
     title=models.FloatField(blank=True,null=True)
+    bucket_display_name = models.TextField(blank=True, null=True)
+    owner_package_name = models.TextField(blank=True, null=True)
+    _data = models.TextField(blank=True, null=True)
+
     
-    
-class calendar_model(models.Model): #어진
+class calendar_model(models.Model): #귀수
    
     class Meta: 
         managed = False 
