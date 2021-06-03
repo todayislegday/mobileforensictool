@@ -10752,7 +10752,9 @@ div.code-toolbar > .toolbar span:hover {
 	}
 }
 
-/* ==================== geo marker infowindow ====================== */
+/* ==================== geo-Artifact start ====================== */
+
+/* marker infowindow start */
 
 /* 제일 바깥 블럭 : .gm-style */
 .gm-style .gm-style-iw { 
@@ -10798,4 +10800,11 @@ div.code-toolbar > .toolbar span:hover {
   height: auto;
   margin-bottom: 5px;
   max-height: 340px !important;
+}
+
+/* geo-datepicker start */
+#geo-duration #start-date, #end-date {
+  width: 170px; 
+  float:right; 
+  text-align: center;
 }
