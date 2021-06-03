@@ -38,9 +38,9 @@
                             <!-- 중요! End-Date가 위에 있음 오른쪽 정렬로 하기 때문에 -->
                             <!-- 추후 입력버튼 삭제하고 input 값이 변경되면 자동으로 마커 업데이트 할 예정 -->
                             <!-- style 부분도 css로 빼기 -->
-                            <input id="end-date" type="text" class="form-control form-control-sm" style="width: 170px; float:right; text-align: center;">
+                            <input id="end-date" type="text" class="form-control form-control-sm" onchange="updateMarkers()">
                             <div style="width: fit-content; height: 43px; float:right; padding-top: 10px; margin-left: 20px; margin-right: 20px;">~</div>
-                            <input id="start-date" type="text" class="form-control form-control-sm" style="width: 170px; float:right; text-align: center;">
+                            <input id="start-date" type="text" class="form-control form-control-sm" onchange="updateMarkers()" >
                             <div style="float: right; padding-top: 7px; margin-right: 20px;"><i class="far fa-calendar-alt fa-2x"></i></div>
                                                         
                             <!-- <input id="sendbutton" type="button" value="입력" onclick="updateMarkers()"> -->
@@ -64,7 +64,9 @@
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDkfnk4My0Tttw-jj8wa01Ii2PcepoiYLc&callback=initMap&libraries=&v=weekly"></script>
+AIzaSyDkfnk4My0Tttw-jj8wa01Ii2PcepoiYLc
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDkfnk4My0Tttw-jj8wa01Ii2PcepoiYLc&libraries=&v=weekly"></script>
 <script src="https://unpkg.com/@googlemaps/markerclustererplus/dist/index.min.js"></script>
 <script src="/static/assets/plugins/google-maps/js/gmaps.js"></script>
 <link rel="stylesheet" type="text/css" href="/static/assets/css/jquery.datetimepicker.css"></link>
@@ -78,7 +80,6 @@
     var markers = []; // 마커리스트
     var size = "{{geo|length}}"; // 마커 개수
     var click_id = -1;
-    var click_flag = 0;
 
     /*======= datepicker 초기 설정 =======*/
     let firstDate = new Date(profileJson[1][3]); // 첫 마커의 dateTaken
@@ -102,10 +103,8 @@
     /*======= datepicker 초기 설정 =======*/
  
     var map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 8, //20,
+    zoom: 8,
     center: {
-        //lat: profileJson[71][1], // 첫 마커를 중심으로
-        //lng: profileJson[71][2]
         lat: 36.769982, // 원래는 첫 마커로 하려 했는데 첫 마커가 혼자 떨어져 있을 경우
         lng: 127.81598  // 한 눈에 보기 힘들기 때문에 전체 지도를 첫 화면으로 띄움
     },
@@ -175,7 +174,6 @@
                                         '<li id="info-Name">파일 명 : ' + dataJson[0]['fields']['displayname'] + '</li>' +
                                         '<li id="info-Date">촬영 시각 : ' + dataJson[0]['fields']['datetaken'] + '</li>' +
                                         '<li id="info-Add">상세 주소 : ' + address + '</li>' +
-                                        // 경로는 tar 파일 전체 압축해제가 아니라서 보여줄 필요 X 삭제하자
                                         '</ul>' +
                                         '</div>' +
                                         '</div>';
