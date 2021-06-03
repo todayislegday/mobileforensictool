@@ -54,18 +54,19 @@
                                     <table class="table table-hover">
                                         <thead>
                                             <tr>
-                                                 <th>시간</th>
+                                                <th>ID</th>
+                                                <th>수신자</th>
                                                 <th>내용</th>
-                                              <th>수신자</th>
-
+                                                <th>시간</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             {% for p in msg%}
                                             <tr class='list_data'>
-                                            <td>{{p.created_timestamp}}</td>
-                                            <td>{{p.text}}</td>
-                                            <td>{{p.recipients}}</td>
+                                                <td>{{p.id}}</td>
+                                                <td>{{p.recipients}}</td>
+                                                <td>{{p.text}}</td>
+                                                <td>{{p.created_timestamp}}</td>
                                             </tr>
                                             {% endfor %}
                                         </tbody>
@@ -88,6 +89,7 @@
                                         
                                         <!-- 페이지리스트 -->
                                         {% for page_number in page.paginator.page_range %}
+                                       
                                             {% if page_number == page.number %}
                                         <div id = {{page_number}} class = now_page > 
                                             <li class="page-item active" aria-current="page">
@@ -102,6 +104,7 @@
                                             </li>
                                         </div>
                                         {% endif %}
+                                   
                                         {% endfor %}
                                         
                                         <!-- 다음페이지 --> 
@@ -163,21 +166,8 @@ $(document).on('mouseenter','span',function(){//동적으로 생선된 span태�
         $('span').tooltip()
 	}) 
 
-
-function nana(){
-    //alert(aa)
-    var regex = /[^0-9]/g
-    var num = aa.replace(regex, "")
-    num -= 1
-    //alert(num)
-    num = "#pb"+num
-
-    $("#pri").children().attr('id', num)
-
-}
+    ////////////////
 var class_value = 'page-item';
-
-//var class_id = $('.now_page').attr('id'); 
 a="{{msg|length}}"
 max_length=a/10
 
@@ -186,17 +176,62 @@ var pagesu = max_length //"총 페이지 갯수"
 
 $(document).ready(function() { //시작
 
-for(var i=0;i<a;i++){ //첫화면 1부터 10까지 출력
+///*****첫 화면 부분*****///    
+for(var i=0;i<a;i++){ 
 if(x[i].id!=1){
    $(x[i]).css("display", "none");
 }else{
    $(x[i]).css("display", "");
 }
 }
+
+for(var i = 6; i< pagesu+1; i++){ // 6p 부터 끝까지 숨김
+    number = "#pb" + i
+    $(number).css("display","none");
+}
+
+
+///*****첫 화면 부분 끝*****/// 
+
  for(var i = 0; i < pagesu+1; i++ )   {
     aa = "#pb" + i   
 
-    $(aa).click(function() {//클릭시
+/////////////////////////////////////////&&&& 번호 클릭했을 때 &&&&//////////////////////////////////////////
+    $(aa).click(function() {
+
+
+
+///*****한 화면에 보여지는 페이지 수(하단) 지정하는 부분*****///         
+var eng = $(this).attr('id')
+console.log(eng)
+
+var no=eng.replace(/[^0-9]/g,'');
+
+//console.log(no+2)
+noo = parseInt(no)
+//console.log(noo+2)
+
+for(var i = 0; i< no-5; i++){ //현재 페이지 -5까지 숨김
+
+    number = "#pb" + i
+
+   // console.log(number)
+    $(number).css("display","none");
+}
+
+for(var i1 = noo+5; i1 < pagesu+1; i1++ ){  //숨김
+
+    number = "#pb" + i1
+    console.log("number:",number)
+    $(number).css("display","none");
+}
+
+for(var i2 = no-5; i2<=noo+5; i2++){ //현재페이지 -5부터 +5까지 나타냄
+
+    number = "#pb" + i2
+    $(number).css("display","");
+}
+///*****한 화면에 보여지는 페이지 수(하단) 지정하는 부분 끝*****///  
 
         for(var x=0; x<=pagesu+2; x++){
 
@@ -207,7 +242,7 @@ if(x[i].id!=1){
 $(this).parent().addClass('page-item active')
 
 var x = document.getElementsByClassName("list_data");
-var y=this.id.substring(2,3) ////3번째 id 값을 가져옴
+var y=this.id.substring(2,3)
 
 for(var i=0;i<a;i++){
 if(x[i].id!=y){
@@ -219,16 +254,22 @@ if(x[i].id!=y){
 });
 
 } //for문 끝
-///////////////////////////////////////////////////// 이전, 다음 버튼
-$("#pre").click(function() { //이전 버튼 클릭 시
+
+/////////////////////////////////////////&&&& 번호 클릭했을 때 끝&&&&//////////////////////////////////////////
+
+
+////#### 이전, 다음 버튼####////
+$("#pre").click(function() {
         $(`#pb${$('.active').parent()[1].id-1}`).trigger('click')
 });
 
-$("#next").click(function() { //다음 버튼 클릭 시
+$("#next").click(function() {
     $(`#pb${parseInt($('.active').eq(1).parent()[0].id)+1}`).trigger('click')
 });
+////#### 이전, 다음 버튼 끝####////
 
-});
+
+}); //document 끝
 
 
 //id부여
