@@ -54,19 +54,17 @@
                                     <table class="table table-hover">
                                         <thead>
                                             <tr>
-                                                <th>ID</th>
+                                                 <th>시간</th>
                                                 <th>수신자</th>
                                                 <th>내용</th>
-                                                <th>시간</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             {% for p in msg%}
                                             <tr class='list_data'>
-                                                <td>{{p.id}}</td>
+                                                <td>{{p.created_timestamp}}</td>
                                                 <td>{{p.recipients}}</td>
                                                 <td>{{p.text}}</td>
-                                                <td>{{p.created_timestamp}}</td>
                                             </tr>
                                             {% endfor %}
                                         </tbody>

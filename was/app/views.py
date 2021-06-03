@@ -148,6 +148,7 @@ def pages(request):
             page_obj = paginator.get_page(page)
 
             context['page']=page_obj
+            context['history']=c
         elif context['url']=="chrome-download.html":#지호
             page = request.GET.get('page', '1')
 

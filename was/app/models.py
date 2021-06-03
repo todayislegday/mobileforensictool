@@ -59,7 +59,7 @@ class mms_model(models.Model): #용하
     address= models.TextField(blank=True,null=True)
     content = models.TextField(blank=True,null=True)
     date = models.TextField(blank=True,null=True)
-
+    box_type= models.TextField(blank=True,null=True)
 class map_model(models.Model): #재식
 
     class Meta: 
