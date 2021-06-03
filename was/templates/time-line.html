@@ -410,7 +410,10 @@
                                                     mprofileJson[i].splice(0, 0, 'm')
                                                     var temp = mprofileJson[i][1];
                                                     mprofileJson[i][1] = new Date(mprofileJson[i][4]);
-                                                    mprofileJson[i][4] = temp;                  
+                                                    mprofileJson[i][4] = temp;      
+                                                    if (mprofileJson[i][3] == null){
+                                                        mprofileJson[i][3] = ''
+                                                    }            
                                                     arr.push(mprofileJson[i]);
                                                 }                         
                                                 for (var i=0; i<cSize; i++){
@@ -441,6 +444,12 @@
                                                     var temp = dprofileJson[i][1];
                                                     dprofileJson[i][1] = new Date(dprofileJson[i][2]);
                                                     dprofileJson[i][2] = temp; 
+                                                    if (dprofileJson[i][3] == null){
+                                                        dprofileJson[i][3] = ''
+                                                    }
+                                                    if (dprofileJson[i][4] == null){
+                                                        dprofileJson[i][4] = ''
+                                                    }
                                                     arr.push(dprofileJson[i]);
                                                 }
                                                 for (var i=0; i<mdSize; i++){
@@ -503,11 +512,11 @@
                                                                         state = '수신'
                                                                     }
                                                                     tb.append('<tbody><tr>' + 
-                                                                    '<td>' + '<i class="fas fa-envelope"></i>' + '</td>' + 
-                                                                    '<td>' + arr[i][1].getFullYear() + '/' + leadingZeros(arr[i][1].getMonth() + 1, 2) + '/' + leadingZeros(arr[i][1].getDate(), 2) + ' ' + leadingZeros(arr[i][1].getHours(), 2) + ':' + leadingZeros(arr[i][1].getMinutes(), 2) + ':' + leadingZeros(arr[i][1].getSeconds(), 2) + '</td>' +
-                                                                    '<td>' + state + '</td>' +
-                                                                    '<td>' + arr[i][2] + '</td>' +
-                                                                    '<td>' + arr[i][3] + '</td>' +
+                                                                    '<td style="width: 10%;">' + '<i class="fas fa-envelope"></i>' + '</td>' + 
+                                                                    '<td style="width: 22.5%;">' + arr[i][1].getFullYear() + '/' + leadingZeros(arr[i][1].getMonth() + 1, 2) + '/' + leadingZeros(arr[i][1].getDate(), 2) + ' ' + leadingZeros(arr[i][1].getHours(), 2) + ':' + leadingZeros(arr[i][1].getMinutes(), 2) + ':' + leadingZeros(arr[i][1].getSeconds(), 2) + '</td>' +
+                                                                    '<td style="width: 22.5%;"><p style="font-weight: bold;">상태</p>' + state + '</td>' +
+                                                                    '<td style="width: 22.5%;"><p style="font-weight: bold;">번호</p>' + arr[i][2] + '</td>' +
+                                                                    '<td style="width: 22.5%;"><p style="font-weight: bold;">내용</p>' + arr[i][3] + '</td>' +
                                                                     '</tr></tbody>'); 
                                                                 }
                                                             }
@@ -521,11 +530,11 @@
                                                                         state = '부재중'
                                                                     }
                                                                     tb.append('<tbody><tr>' + 
-                                                                    '<td>' + '<i class="fas fa-phone"></i>' + '</td>' + 
-                                                                    '<td>' + arr[i][1].getFullYear() + '/' + leadingZeros(arr[i][1].getMonth() + 1, 2) + '/' + leadingZeros(arr[i][1].getDate(), 2) + ' ' + leadingZeros(arr[i][1].getHours(), 2) + ':' + leadingZeros(arr[i][1].getMinutes(), 2) + ':' + leadingZeros(arr[i][1].getSeconds(), 2) + '</td>' +
-                                                                    '<td>' + state + '</td>' +
-                                                                    '<td>' + arr[i][2] + '</td>' +
-                                                                    '<td>' + arr[i][4] + '</td>' +
+                                                                    '<td style="width: 10%;">' + '<i class="fas fa-phone"></i>' + '</td>' + 
+                                                                    '<td style="width: 22.5%;">' + arr[i][1].getFullYear() + '/' + leadingZeros(arr[i][1].getMonth() + 1, 2) + '/' + leadingZeros(arr[i][1].getDate(), 2) + ' ' + leadingZeros(arr[i][1].getHours(), 2) + ':' + leadingZeros(arr[i][1].getMinutes(), 2) + ':' + leadingZeros(arr[i][1].getSeconds(), 2) + '</td>' +
+                                                                    '<td style="width: 22.5%;"><p style="font-weight: bold;">상태</p>' + state + '</td>' +
+                                                                    '<td style="width: 22.5%;"><p style="font-weight: bold;">번호</p>' + arr[i][2] + '</td>' +
+                                                                    '<td style="width: 22.5%;"><p style="font-weight: bold;">통화 시간</p>' + arr[i][4] + '</td>' +
                                                                     '</tr></tbody>'); 
                                                                 }
                                                             }
@@ -537,22 +546,22 @@
                                                                         browser = 'Samsung Internet'
                                                                     }
                                                                     tb.append('<tbody><tr>' + 
-                                                                    '<td>' + '<i class="fas fa-globe"></i>' + '</td>' + 
-                                                                    '<td>' + arr[i][1].getFullYear() + '/' + leadingZeros(arr[i][1].getMonth() + 1, 2) + '/' + leadingZeros(arr[i][1].getDate(), 2) + ' ' + leadingZeros(arr[i][1].getHours(), 2) + ':' + leadingZeros(arr[i][1].getMinutes(), 2) + ':' + leadingZeros(arr[i][1].getSeconds(), 2) + '</td>' +
-                                                                    '<td>' + browser + '</td>' +
-                                                                    '<td>' + arr[i][2] + '</td>' +
-                                                                    '<td>' + arr[i][3] + '</td>' +
+                                                                    '<td style="width: 10%;">' + '<i class="fas fa-globe"></i>' + '</td>' + 
+                                                                    '<td style="width: 22.5%;">' + arr[i][1].getFullYear() + '/' + leadingZeros(arr[i][1].getMonth() + 1, 2) + '/' + leadingZeros(arr[i][1].getDate(), 2) + ' ' + leadingZeros(arr[i][1].getHours(), 2) + ':' + leadingZeros(arr[i][1].getMinutes(), 2) + ':' + leadingZeros(arr[i][1].getSeconds(), 2) + '</td>' +
+                                                                    '<td style="width: 22.5%;"><p style="font-weight: bold;">브라우저</p>' + browser + '</td>' +
+                                                                    '<td style="width: 22.5%;"><p style="font-weight: bold;">URL</p>' + arr[i][2] + '</td>' +
+                                                                    '<td style="width: 22.5%;"><p style="font-weight: bold;">Title</p>' + arr[i][3] + '</td>' +
                                                                     '</tr></tbody>'); 
                                                                 }
                                                             }
                                                             if (arr[i][0] == 'd'){
                                                                 if (arr[i][1] >= startDate && arr[i][1] <= endDate){
                                                                     tb.append('<tbody><tr>' + 
-                                                                    '<td>' + '<i class="fas fa-download"></i>' + '</td>' + 
-                                                                    '<td>' + arr[i][1].getFullYear() + '/' + leadingZeros(arr[i][1].getMonth() + 1, 2) + '/' + leadingZeros(arr[i][1].getDate(), 2) + ' ' + leadingZeros(arr[i][1].getHours(), 2) + ':' + leadingZeros(arr[i][1].getMinutes(), 2) + ':' + leadingZeros(arr[i][1].getSeconds(), 2) + '</td>' +
-                                                                    '<td>' + arr[i][3] + '</td>' +
-                                                                    '<td>' + arr[i][4] + '</td>' +
-                                                                    '<td>' + arr[i][5] + '</td>' +
+                                                                    '<td style="width: 10%;">' + '<i class="fas fa-download"></i>' + '</td>' + 
+                                                                    '<td style="width: 22.5%;">' + arr[i][1].getFullYear() + '/' + leadingZeros(arr[i][1].getMonth() + 1, 2) + '/' + leadingZeros(arr[i][1].getDate(), 2) + ' ' + leadingZeros(arr[i][1].getHours(), 2) + ':' + leadingZeros(arr[i][1].getMinutes(), 2) + ':' + leadingZeros(arr[i][1].getSeconds(), 2) + '</td>' +
+                                                                    '<td style="width: 22.5%;"><p style="font-weight: bold;">다운로드 도구</p>' + arr[i][3] + '</td>' +
+                                                                    '<td style="width: 22.5%;"><p style="font-weight: bold;">URI</p>' + arr[i][4] + '</td>' +
+                                                                    '<td style="width: 22.5%;"><p style="font-weight: bold;">다운로드 위치</p>' + arr[i][5] + '</td>' +
                                                                     '</tr></tbody>'); 
                                                                 }
                                                             }
@@ -566,10 +575,11 @@
                                                                         browser = arr[i][3]
                                                                     }
                                                                     tb.append('<tbody><tr>' + 
-                                                                    '<td>' + '<i class="fas fa-image"></i>' + '</td>' + 
-                                                                    '<td>' + arr[i][1].getFullYear() + '/' + leadingZeros(arr[i][1].getMonth() + 1, 2) + '/' + leadingZeros(arr[i][1].getDate(), 2) + ' ' + leadingZeros(arr[i][1].getHours(), 2) + ':' + leadingZeros(arr[i][1].getMinutes(), 2) + ':' + leadingZeros(arr[i][1].getSeconds(), 2) + '</td>' +
-                                                                    '<td>' + browser + '</td>' +
-                                                                    '<td>' + arr[i][5] + '</td>' +
+                                                                    '<td style="width: 10;">' + '<i class="fas fa-image"></i>' + '</td>' + 
+                                                                    '<td style="width: 22.5%;">' + arr[i][1].getFullYear() + '/' + leadingZeros(arr[i][1].getMonth() + 1, 2) + '/' + leadingZeros(arr[i][1].getDate(), 2) + ' ' + leadingZeros(arr[i][1].getHours(), 2) + ':' + leadingZeros(arr[i][1].getMinutes(), 2) + ':' + leadingZeros(arr[i][1].getSeconds(), 2) + '</td>' +
+                                                                    '<td style="width: 22.5%;"><p style="font-weight: bold;">생성 도구</p>' + browser + '</td>' +
+                                                                    '<td style="width: 22.5%;"><p style="font-weight: bold;">저장 위치</p>' + arr[i][5] + '</td>' +
+                                                                    '<td style="width: 22.5%;"></td>' +
                                                                     '</tr></tbody>'); 
                                                                 }
                                                             }
@@ -579,11 +589,11 @@
                                                         tb.empty();
 
                                                         tb.append('<thead><tr>' +
-                                                        '<th>' + '</th>' +
-                                                        '<th>' + '날짜 및 시간 (UTC+9)' + '</th>' + 
-                                                        '<th>' + '상태' + '</th>' + 
-                                                        '<th>' + '번호' + '</th>' +
-                                                        '<th>' + '내용' + '</th>' +
+                                                        '<th style="width: 10%;">' + '</th>' +
+                                                        '<th style="width: 22.5%;">' + '날짜 및 시간 (UTC+9)' + '</th>' + 
+                                                        '<th style="width: 22.5%;">' + '상태' + '</th>' + 
+                                                        '<th style="width: 22.5%;">' + '번호' + '</th>' +
+                                                        '<th style="width: 22.5%;">' + '내용' + '</th>' +
                                                         '</tr></thead>');
 
                                                         for (var i=0; i<arr.length; i++){
@@ -609,11 +619,11 @@
                                                         tb.empty();
 
                                                         tb.append('<thead><tr>' +
-                                                        '<th>' + '</th>' +
-                                                        '<th>' + '날짜 및 시간 (UTC+9)' + '</th>' + 
-                                                        '<th>' + '상태' + '</th>' + 
-                                                        '<th>' + '번호' + '</th>' +
-                                                        '<th>' + '통화 시간 (초)' + '</th>' +
+                                                        '<th style="width: 10%;">' + '</th>' +
+                                                        '<th style="width: 22.5%;">' + '날짜 및 시간 (UTC+9)' + '</th>' + 
+                                                        '<th style="width: 22.5%;">' + '상태' + '</th>' + 
+                                                        '<th style="width: 22.5%;">' + '번호' + '</th>' +
+                                                        '<th style="width: 22.5%;">' + '통화 시간 (초)' + '</th>' +
                                                         '</tr></thead>');
 
                                                         for (var i=0; i<arr.length; i++){
@@ -641,11 +651,11 @@
                                                         tb.empty();
 
                                                         tb.append('<thead><tr>' +
-                                                        '<th>' + '</th>' +
-                                                        '<th>' + '날짜 및 시간 (UTC+9)' + '</th>' + 
-                                                        '<th>' + '브라우저' + '</th>' + 
-                                                        '<th>' + 'URL' + '</th>' +
-                                                        '<th>' + 'Title' + '</th>' +
+                                                        '<th style="width: 10%;">' + '</th>' +
+                                                        '<th style="width: 22.5%;">' + '날짜 및 시간 (UTC+9)' + '</th>' + 
+                                                        '<th style="width: 22.5%;">' + '브라우저' + '</th>' + 
+                                                        '<th style="width: 22.5%;">' + 'URL' + '</th>' +
+                                                        '<th style="width: 22.5%;">' + 'Title' + '</th>' +
                                                         '</tr></thead>');
 
                                                         for (var i=0; i<arr.length; i++){
@@ -671,11 +681,11 @@
                                                         tb.empty();
 
                                                         tb.append('<thead><tr>' +
-                                                        '<th>' + '</th>' +
-                                                        '<th>' + '날짜 및 시간 (UTC+9)' + '</th>' + 
-                                                        '<th>' + '다운로드 도구' + '</th>' + 
-                                                        '<th>' + 'URI' + '</th>' +
-                                                        '<th>' + '저장 위치' + '</th>' +
+                                                        '<th style="width: 10;">' + '</th>' +
+                                                        '<th style="width: 22.5%;">' + '날짜 및 시간 (UTC+9)' + '</th>' + 
+                                                        '<th style="width: 22.5%;">' + '다운로드 도구' + '</th>' + 
+                                                        '<th style="width: 22.5%;">' + 'URI' + '</th>' +
+                                                        '<th style="width: 22.5%;">' + '저장 위치' + '</th>' +
                                                         '</tr></thead>');
 
                                                         for (var i=0; i<arr.length; i++){
@@ -696,10 +706,10 @@
                                                         tb.empty();
 
                                                         tb.append('<thead><tr>' +
-                                                        '<th>' + '</th>' +
-                                                        '<th>' + '날짜 및 시간 (UTC+9)' + '</th>' + 
-                                                        '<th>' + '생성 도구' + '</th>' + 
-                                                        '<th>' + '저장 위치' + '</th>' +
+                                                        '<th style="width: 10%;">' + '</th>' +
+                                                        '<th style="width: 33.3%;">' + '날짜 및 시간 (UTC+9)' + '</th>' + 
+                                                        '<th style="width: 33.3%;">' + '생성 도구' + '</th>' + 
+                                                        '<th style="width: 33.3%;">' + '저장 위치' + '</th>' +
                                                         '</tr></thead>');
 
                                                         for (var i=0; i<arr.length; i++){
