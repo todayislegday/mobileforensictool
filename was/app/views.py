@@ -220,6 +220,7 @@ def pages(request):
                 mms_dict[i].append(m.address)
                 mms_dict[i].append(m.content)
                 mms_dict[i].append(m.date)
+                mms_dict[i].append(m.box_type)
                 i+=1
             ###################################
 
