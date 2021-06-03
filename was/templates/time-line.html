@@ -2,6 +2,11 @@
 
 {% block title %} Timeline {% endblock %} 
 
+{% block stylesheets %}
+<link rel="stylesheet" href="/static/assets/css/jqcloud.min.css">
+<link rel="stylesheet" href="/static/assets/css/right_box.css">
+{% endblock stylesheets %}
+
 {% block content %}
 
 <div class="pcoded-content">
@@ -36,6 +41,10 @@
 
                     {{mms|json_script:'dict-id-m'}}
                     {{calllog|json_script:'dict-id-c'}}
+                    {{chromeurlhistory|json_script:'dict-id-ch'}}
+                    {{Samurlhistory|json_script:'dict-id-s'}}
+                    {{webext|json_script:'dict-id-d'}}
+                    {{media|json_script:'dict-id-md'}}
                     <script type="text/javascript">
                         // Themes begin
                         am4core.useTheme(am4themes_animated);
@@ -49,11 +58,34 @@
                         var cprofile = document.getElementById("dict-id-c").textContent
                         var cprofileJson = JSON.parse(cprofile)
 
+                        var chprofile = document.getElementById("dict-id-ch").textContent
+                        var chprofileJson = JSON.parse(chprofile)
+
+                        var sprofile = document.getElementById("dict-id-s").textContent
+                        var sprofileJson = JSON.parse(sprofile)
+
+                        var dprofile = document.getElementById("dict-id-d").textContent
+                        var dprofileJson = JSON.parse(dprofile)
+
+                        var mdprofile = document.getElementById("dict-id-md").textContent
+                        var mdprofileJson = JSON.parse(mdprofile)
+
                         var mSize = "{{mms|length}}" // 마커 개수
                         var cSize = "{{calllog|length}}"
+                        var chSize = "{{chromeurlhistory|length}}"
+                        var sSize = "{{Samurlhistory|length}}"
+                        var dSize = "{{webext|length}}"
+                        var mdSize = "{{media|length}}"
 
                         var startDate = 0
                         var endDate = 0
+
+                        var mDate = 0
+                        var cDate = 0
+                        var chDate = 0
+                        var sDate = 0
+                        var dDate = 0
+                        var mdDate = 0
 
                         for (var i = 0; i < mSize; i++) {
                             mDate = new Date(mprofileJson[i][3])
@@ -79,24 +111,70 @@
                             }
                         }
 
+                        for (var i = 0; i < chSize; i++) {
+                            chDate = new Date(chprofileJson[i][3])
+
+                            if (chDate < startDate) {
+                                startDate = chDate
+                            }
+
+                            if (chDate > endDate) {
+                                endDate = chDate
+                            }
+                        }
+
+                        for (var i = 0; i < sSize; i++) {
+                            sDate = new Date(sprofileJson[i][3])
+
+                            if (sDate < startDate) {
+                                startDate = sDate
+                            }
+
+                            if (sDate > endDate) {
+                                endDate = sDate
+                            }
+                        }
+                        
+                        for (var i = 0; i < dSize; i++) {
+                            dDate = new Date(dprofileJson[i][1])
+                            
+                            if (dDate < startDate) {
+                                startDate = dDate
+                            }
+
+                            if (dDate > endDate) {
+                                endDate = dDate
+                            }
+                        }
+
+                        for (var i = 0; i < mdSize; i++) {
+                            mdDate = new Date(mdprofileJson[i][1])
+                            
+                            if (mdDate < startDate) {
+                                startDate = mdDate
+                            }
+
+                            if (mdDate > endDate) {
+                                endDate = mdDate
+                            }
+                        }
+
                         var data = [];
-                        var messages = 50;
-                        var calls = 50;
-                        var internet = 50;
-                        var downloads = 50;
-                        var media = 50;
 
-                        var bicycles = 50;
+                        var messages = 0;
+                        var calls = 0;
+                        var internet = 0;
+                        var downloads = 0;
+                        var media = 0;
 
-                        var mDate = 0
-                        var cDate = 0
-
-                        var mCount = 50
-                        var cCount = 50
+                        var mCount = 0;
+                        var cCount = 0;
+                        var iCount = 0;
+                        var dCount = 0;
+                        var mdCount = 0;
 
                         var imsi = startDate
                         imsi.setHours(imsi.getHours() - 1)
-                        /*endDate = new Date(2023, 4, 4)*/
 
                         for (let i = 0; ; i++) {
                             imsi.setHours(imsi.getHours() + 1)
@@ -123,6 +201,39 @@
                             }
                             calls = cCount
 
+                            iCount = 0
+                            for (var ch = 0; ch < chSize; ch++){
+                                chDate = new Date(chprofileJson[ch][3])
+                                if (chDate.getHours() == imsi.getHours() && chDate.getDate() == imsi.getDate() && chDate.getMonth() == imsi.getMonth() && chDate.getFullYear() == imsi.getFullYear()) {
+                                    iCount += 1;
+                                }
+                            }
+                            for(var s = 0; s < sSize; s++){
+                                sDate = new Date(sprofileJson[s][3])
+                                if (sDate.getHours() == imsi.getHours() && sDate.getDate() == imsi.getDate() && sDate.getMonth() == imsi.getMonth() && sDate.getFullYear() == imsi.getFullYear()) {
+                                    iCount += 1;
+                                }
+                            }
+                            internet = iCount
+
+                            dCount = 0
+                            for(var d = 0; d < dSize; d++){
+                                dDate = new Date(dprofileJson[d][1])
+                                if (dDate.getHours() == imsi.getHours() && dDate.getDate() == imsi.getDate() && dDate.getMonth() == imsi.getMonth() && dDate.getFullYear() == imsi.getFullYear()) {
+                                    dCount += 1;
+                                }
+                            }
+                            downloads = dCount
+
+                            mdCount = 0
+                            for(var md = 0; md < mdSize; md++){
+                                mdDate = new Date(mdprofileJson[md][1])
+                                if (mdDate.getHours() == imsi.getHours() && mdDate.getDate() == imsi.getDate() && mdDate.getMonth() == imsi.getMonth() && mdDate.getFullYear() == imsi.getFullYear()) {
+                                    mdCount += 1;
+                                }
+                            }
+                            media = mdCount
+
                             /*mCount -= Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 10);
                             cCount -= Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 10);
 
@@ -136,7 +247,7 @@
                             messages = mCount
                             calls = cCount*/
                             
-                            data.push({ hour: new Date(imsi.getFullYear(), imsi.getMonth(), imsi.getDate(), imsi.getHours()), messages: messages, calls: calls});
+                            data.push({ hour: new Date(imsi.getFullYear(), imsi.getMonth(), imsi.getDate(), imsi.getHours()), messages: messages, calls: calls, internet: internet, downloads: downloads, media: media});
                         }
 
                         chart.data = data;
@@ -154,20 +265,12 @@
                         var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
                         valueAxis.tooltip.disabled = true;
 
-                        //var tooltipHTML = "<table><tr><th><span style='font-size:14px; color:#000000;'><i class='fas fa-envelope' style='vertical-align:center; width:28px; height:21px;'></i></span></th><td><span style='font-size:14px; color:#000000;'>{messages}</span></td></tr><tr><th><span style='font-size:14px; color:#000000;'><i class='fas fa-phone' style='vertical-align:center; width:28px; height:21px;'></i></span></th><td><span style='font-size:14px; color:#000000;'><b>{calls}</b></span></td></table>";
-
-                        //"<table><tr><span style='font-size:14px; color:#000000;'><i class='fas fa-envelope' style='vertical-align:center; width:28px; height:21px;'></i><b>{valueY.value}</b></span></tr><tr><span style='font-size:14px; color:#000000;'><i class='fas fa-phone' style='vertical-align:center; width:28px; height:21px;'></i><b>{valueY.value}</b></span></tr></table>";
-
                         // Create series
                         var series = chart.series.push(new am4charts.LineSeries());
                         series.dataFields.dateX = "hour";
-                        series.name = "messages";
+                        series.name = "메시지";
                         series.dataFields.valueY = "messages";
-                        //series.tooltipHTML = tooltipHTML;
                         series.tooltipHTML = "<span style='font-size:14px; color:#000000;'><i class='fas fa-envelope' style='vertical-align:center; width:28px; height:21px;'></i><b>{valueY.value}</b></span>";
-                        //series.tooltipHTML = "<img src='https://www.amcharts.com/lib/3/images/car.png' style='vertical-align:bottom; margin-right: 10px; width:28px; height:21px;'><span style='font-size:14px; color:#000000;'><b>{valueY.value}</b></span>";
-                        //series.tooltipText = "[#000]{valueY.value}[/]";
-                        
                                             
                         series.tooltip.background.fill = am4core.color("#FFF");
                         series.tooltip.getStrokeFromObject = true;
@@ -181,12 +284,9 @@
 
                         var series2 = chart.series.push(new am4charts.LineSeries());
                         series2.dataFields.dateX = "hour";
-                        series2.name = "calls";
+                        series2.name = "통화";
                         series2.dataFields.valueY = "calls";
-                        //series2.tooltipHTML = tooltipHTML;
                         series2.tooltipHTML = "<span style='font-size:14px; color:#000000;'><i class='fas fa-phone' style='vertical-align:center; width:28px; height:21px;'></i><b>{valueY.value}</b></span>";
-                        //series2.tooltipHTML = "<img src='https://www.amcharts.com/lib/3/images/motorcycle.png' style='vertical-align:bottom; margin-right: 10px; width:28px; height:21px;'><span style='font-size:14px; color:#000000;'><b>{valueY.value}</b></span>";
-                        //series2.tooltipText = "[#000]{valueY.value}[/]";
                         series2.tooltip.background.fill = am4core.color("#FFF");
                         series2.tooltip.getFillFromObject = false;
                         series2.tooltip.getStrokeFromObject = true;
@@ -198,12 +298,11 @@
 
                         series2.tooltip.pointerOrientation = "vertical";
 
-                        /*var series3 = chart.series.push(new am4charts.LineSeries());
-                        series3.name = "bicycles";
+                        var series3 = chart.series.push(new am4charts.LineSeries());
                         series3.dataFields.dateX = "hour";
-                        series3.dataFields.valueY = "bicycles";
-                        series3.tooltipHTML = "<img src='https://www.amcharts.com/lib/3/images/bicycle.png' style='vertical-align:bottom; margin-right: 10px; width:28px; height:21px;'><span style='font-size:14px; color:#000000;'><b>{valueY.value}</b></span>";
-                        series3.tooltipText = "[#000]{valueY.value}[/]";
+                        series3.name = "인터넷";
+                        series3.dataFields.valueY = "internet";
+                        series3.tooltipHTML = "<span style='font-size:14px; color:#000000;'><i class='fas fa-globe' style='vertical-align:center; width:28px; height:21px;'></i><b>{valueY.value}</b></span>";
                         series3.tooltip.background.fill = am4core.color("#FFF");
                         series3.tooltip.getFillFromObject = false;
                         series3.tooltip.getStrokeFromObject = true;
@@ -212,9 +311,40 @@
                         series3.fillOpacity = 0.6;
                         series3.strokeWidth = 2;
                         series3.stacked = true;
-                        series3.defaultState.transitionDuration = 1000;*/
 
-                        //series3.tooltip.pointerOrientation = "vertical";
+                        series3.tooltip.pointerOrientation = "vertical";
+
+                        var series4 = chart.series.push(new am4charts.LineSeries());
+                        series4.dataFields.dateX = "hour";
+                        series4.name = "다운로드";
+                        series4.dataFields.valueY = "downloads";
+                        series4.tooltipHTML = "<span style='font-size:14px; color:#000000;'><i class='fas fa-download' style='vertical-align:center; width:28px; height:21px;'></i><b>{valueY.value}</b></span>";
+                        series4.tooltip.background.fill = am4core.color("#FFF");
+                        series4.tooltip.getFillFromObject = false;
+                        series4.tooltip.getStrokeFromObject = true;
+                        series4.tooltip.background.strokeWidth = 3;
+                        series4.sequencedInterpolation = true;
+                        series4.fillOpacity = 0.6;
+                        series4.strokeWidth = 2;
+                        series4.stacked = true;
+
+                        series4.tooltip.pointerOrientation = "vertical";
+
+                        var series4 = chart.series.push(new am4charts.LineSeries());
+                        series4.dataFields.dateX = "hour";
+                        series4.name = "미디어";
+                        series4.dataFields.valueY = "media";
+                        series4.tooltipHTML = "<span style='font-size:14px; color:#000000;'><i class='fas fa-image' style='vertical-align:center; width:28px; height:21px;'></i><b>{valueY.value}</b></span>";
+                        series4.tooltip.background.fill = am4core.color("#FFF");
+                        series4.tooltip.getFillFromObject = false;
+                        series4.tooltip.getStrokeFromObject = true;
+                        series4.tooltip.background.strokeWidth = 3;
+                        series4.sequencedInterpolation = true;
+                        series4.fillOpacity = 0.6;
+                        series4.strokeWidth = 2;
+                        series4.stacked = true;
+
+                        series4.tooltip.pointerOrientation = "vertical";
 
                         chart.cursor = new am4charts.XYCursor();
                         chart.cursor.xAxis = dateAxis;
@@ -241,7 +371,6 @@
                                 <div class="card">
                                     <div class="card-block2">
                                         <div id="chartdiv"></div>
-                                        <i class="fas fa-phone"></i>
                                         <!-- Chart code -->
                                     </div>
                                 </div>
@@ -249,20 +378,24 @@
                             </div>
                             <div class="tab-pane fade" id="result" role="tabpanel" aria-labelledby="result-tab">
                                 <div class="col-xl-12">
-                                    <div class="card">
+                                    <div class="card" style="margin-bottom: 15px;">
                                         <div class="card-header">
                                             <h5>Duration</h5>
                                             <form id="duration" style="text-align: center;">
-                                                <input id="datetimepicker1" type="text">
+                                                <input id="datetimepicker1" type="text" onchange="send1(this.value)" style="text-align: center;">
                                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                <input id="datetimepicker2" type="text">
+                                                <input id="datetimepicker2" type="text" onchange="send2(this.value)" style="text-align: center;">
                                                 &nbsp;&nbsp;&nbsp;
-                                                <input id="sendbutton" type="button" value="입력" onclick="send()">
                                             </form>
+                                        </div>
+                                    </div>
+                                    <div class="card" style="margin-bottom: 15px;">
+                                        <div class="card-header">
+                                            <h5>Result</h5>
                                         </div>
                                         <div class="card-block table-border-style">
                                             <div style="text-align: right; padding: 0px 0px 30px 0px;">
-                                                <select id="contents" onchange="cont(this.value)">
+                                                <select id="contents" onchange="cont()">
                                                     <option value="all" selected="selected">전체
                                                     <option value="msg">메시지
                                                     <option value="call">통화
@@ -271,89 +404,340 @@
                                                     <option value="media">미디어
                                                 </select>
                                             </div>
-                                            <script>                                                
-                                                var startpicker = $('#datetimepicker1').datetimepicker();
-                                                var endpicker = $('#datetimepicker2').datetimepicker();
+                                            <script>
+                                                var arr = [];
+                                                for (var i=0; i<mSize; i++){
+                                                    mprofileJson[i].splice(0, 0, 'm')
+                                                    var temp = mprofileJson[i][1];
+                                                    mprofileJson[i][1] = new Date(mprofileJson[i][4]);
+                                                    mprofileJson[i][4] = temp;                  
+                                                    arr.push(mprofileJson[i]);
+                                                }                         
+                                                for (var i=0; i<cSize; i++){
+                                                    cprofileJson[i].splice(0, 0, 'c')
+                                                    var temp = cprofileJson[i][1];
+                                                    cprofileJson[i][1] = new Date(cprofileJson[i][3]);
+                                                    cprofileJson[i][3] = temp; 
+                                                    arr.push(cprofileJson[i]);
+                                                }
+                                                for (var i=0; i<chSize; i++){
+                                                    chprofileJson[i].splice(0, 0, 'i')
+                                                    chprofileJson[i].splice(5, 0, 'ch')
+                                                    var temp = chprofileJson[i][1];
+                                                    chprofileJson[i][1] = new Date(chprofileJson[i][4]);
+                                                    chprofileJson[i][4] = temp;                  
+                                                    arr.push(chprofileJson[i]);
+                                                }
+                                                for (var i=0; i<sSize; i++){
+                                                    sprofileJson[i].splice(0, 0, 'i')
+                                                    sprofileJson[i].splice(5, 0, 's')
+                                                    var temp = sprofileJson[i][1];
+                                                    sprofileJson[i][1] = new Date(sprofileJson[i][4]);
+                                                    sprofileJson[i][4] = temp;                  
+                                                    arr.push(sprofileJson[i]);
+                                                }
+                                                for (var i=0; i<dSize; i++){
+                                                    dprofileJson[i].splice(0, 0, 'd')
+                                                    var temp = dprofileJson[i][1];
+                                                    dprofileJson[i][1] = new Date(dprofileJson[i][2]);
+                                                    dprofileJson[i][2] = temp; 
+                                                    arr.push(dprofileJson[i]);
+                                                }
+                                                for (var i=0; i<mdSize; i++){
+                                                    mdprofileJson[i].splice(0, 0, 'md')
+                                                    var temp = mdprofileJson[i][1];
+                                                    mdprofileJson[i][1] = new Date(mdprofileJson[i][2]);
+                                                    mdprofileJson[i][2] = temp; 
+                                                    arr.push(mdprofileJson[i]);
+                                                }
 
-                                                function cont(str){
-                                                    if (str == 'all'){
-                                                        console.log(str)
+                                                arr.sort(function(a, b){
+                                                    return a[1] - b[1];
+                                                });
+
+                                                var startDate = arr[0][1];
+                                                var endDate = arr[arr.length - 1][1];
+
+                                                let tmpDate = startDate.getFullYear() + '/' + leadingZeros(startDate.getMonth() + 1, 2) + '/' + leadingZeros(startDate.getDate(), 2) + ' ' + leadingZeros(startDate.getHours(), 2) + ':' + '00';
+                                                $('#datetimepicker1').val(tmpDate);
+                                                $('#datetimepicker1').datetimepicker();
+                                                tmpDate = endDate.getFullYear() + '/' + leadingZeros(endDate.getMonth() + 1, 2) + '/' + leadingZeros(endDate.getDate(), 2) + ' ' + leadingZeros(endDate.getHours() + 1, 2) + ':' + '00';
+                                                $('#datetimepicker2').val(tmpDate);
+                                                $('#datetimepicker2').datetimepicker();
+
+                                                function leadingZeros(n, digits) {
+                                                    var zero = '';
+                                                    n = n.toString();
+
+                                                    if (n.length < digits) {
+                                                        for (var i = 0; i < digits - n.length; i++)
+                                                        zero += '0';
                                                     }
-                                                    if (str == 'msg'){
-                                                        var tb = $("#testtable");
-                                                        tb.append('<tr>' + 
-                                                        '<td>' + str + '</td>' + 
-                                                        '<td>' + str + '</td>' + 
-                                                        '<td>' + str + '</td>' + 
-                                                        '</tr>');
+                                                    return zero + n;
+                                                }
+
+                                                function send1(str){
+                                                    startDate = new Date(str)
+                                                    cont()
+                                                }
+
+                                                function send2(str){
+                                                    endDate = new Date(str)
+                                                    cont()
+                                                }
+
+                                                function cont(){
+                                                    var tb = $("#contenthere");
+                                                    var state;
+                                                    var browser;
+                                                    
+                                                    if (document.getElementById('contents').value == 'all'){
+                                                        tb.empty();
+
+                                                        for (var i=0; i<arr.length; i++){
+                                                            if (arr[i][0] == 'm'){
+                                                                if (arr[i][1] >= startDate && arr[i][1] <= endDate){
+                                                                    if (arr[i][5] == '2'){
+                                                                        state = '발신'
+                                                                    }else{
+                                                                        state = '수신'
+                                                                    }
+                                                                    tb.append('<tbody><tr>' + 
+                                                                    '<td>' + '<i class="fas fa-envelope"></i>' + '</td>' + 
+                                                                    '<td>' + arr[i][1].getFullYear() + '/' + leadingZeros(arr[i][1].getMonth() + 1, 2) + '/' + leadingZeros(arr[i][1].getDate(), 2) + ' ' + leadingZeros(arr[i][1].getHours(), 2) + ':' + leadingZeros(arr[i][1].getMinutes(), 2) + ':' + leadingZeros(arr[i][1].getSeconds(), 2) + '</td>' +
+                                                                    '<td>' + state + '</td>' +
+                                                                    '<td>' + arr[i][2] + '</td>' +
+                                                                    '<td>' + arr[i][3] + '</td>' +
+                                                                    '</tr></tbody>'); 
+                                                                }
+                                                            }
+                                                            if (arr[i][0] == 'c'){
+                                                                if (arr[i][1] >= startDate && arr[i][1] <= endDate){
+                                                                    if (arr[i][5] == '2'){
+                                                                        state = '발신'
+                                                                    }else if(arr[i][5] == '1'){
+                                                                        state = '수신'
+                                                                    }else{
+                                                                        state = '부재중'
+                                                                    }
+                                                                    tb.append('<tbody><tr>' + 
+                                                                    '<td>' + '<i class="fas fa-phone"></i>' + '</td>' + 
+                                                                    '<td>' + arr[i][1].getFullYear() + '/' + leadingZeros(arr[i][1].getMonth() + 1, 2) + '/' + leadingZeros(arr[i][1].getDate(), 2) + ' ' + leadingZeros(arr[i][1].getHours(), 2) + ':' + leadingZeros(arr[i][1].getMinutes(), 2) + ':' + leadingZeros(arr[i][1].getSeconds(), 2) + '</td>' +
+                                                                    '<td>' + state + '</td>' +
+                                                                    '<td>' + arr[i][2] + '</td>' +
+                                                                    '<td>' + arr[i][4] + '</td>' +
+                                                                    '</tr></tbody>'); 
+                                                                }
+                                                            }
+                                                            if (arr[i][0] == 'i'){
+                                                                if (arr[i][1] >= startDate && arr[i][1] <= endDate){
+                                                                    if (arr[i][5] == 'ch'){
+                                                                        browser = 'Chrome'
+                                                                    }else if(arr[i][5] == 's'){
+                                                                        browser = 'Samsung Internet'
+                                                                    }
+                                                                    tb.append('<tbody><tr>' + 
+                                                                    '<td>' + '<i class="fas fa-globe"></i>' + '</td>' + 
+                                                                    '<td>' + arr[i][1].getFullYear() + '/' + leadingZeros(arr[i][1].getMonth() + 1, 2) + '/' + leadingZeros(arr[i][1].getDate(), 2) + ' ' + leadingZeros(arr[i][1].getHours(), 2) + ':' + leadingZeros(arr[i][1].getMinutes(), 2) + ':' + leadingZeros(arr[i][1].getSeconds(), 2) + '</td>' +
+                                                                    '<td>' + browser + '</td>' +
+                                                                    '<td>' + arr[i][2] + '</td>' +
+                                                                    '<td>' + arr[i][3] + '</td>' +
+                                                                    '</tr></tbody>'); 
+                                                                }
+                                                            }
+                                                            if (arr[i][0] == 'd'){
+                                                                if (arr[i][1] >= startDate && arr[i][1] <= endDate){
+                                                                    tb.append('<tbody><tr>' + 
+                                                                    '<td>' + '<i class="fas fa-download"></i>' + '</td>' + 
+                                                                    '<td>' + arr[i][1].getFullYear() + '/' + leadingZeros(arr[i][1].getMonth() + 1, 2) + '/' + leadingZeros(arr[i][1].getDate(), 2) + ' ' + leadingZeros(arr[i][1].getHours(), 2) + ':' + leadingZeros(arr[i][1].getMinutes(), 2) + ':' + leadingZeros(arr[i][1].getSeconds(), 2) + '</td>' +
+                                                                    '<td>' + arr[i][3] + '</td>' +
+                                                                    '<td>' + arr[i][4] + '</td>' +
+                                                                    '<td>' + arr[i][5] + '</td>' +
+                                                                    '</tr></tbody>'); 
+                                                                }
+                                                            }
+                                                            if (arr[i][0] == 'md'){
+                                                                if (arr[i][1] >= startDate && arr[i][1] <= endDate){
+                                                                    if (arr[i][4] == 'com.android.chrome'){
+                                                                        browser = 'Download (Chrome)'
+                                                                    }else if(arr[i][4] == 'com.sec.android.app.sbrowser'){
+                                                                        browser = 'Download (Samsung Internet)'
+                                                                    }else{
+                                                                        browser = arr[i][3]
+                                                                    }
+                                                                    tb.append('<tbody><tr>' + 
+                                                                    '<td>' + '<i class="fas fa-image"></i>' + '</td>' + 
+                                                                    '<td>' + arr[i][1].getFullYear() + '/' + leadingZeros(arr[i][1].getMonth() + 1, 2) + '/' + leadingZeros(arr[i][1].getDate(), 2) + ' ' + leadingZeros(arr[i][1].getHours(), 2) + ':' + leadingZeros(arr[i][1].getMinutes(), 2) + ':' + leadingZeros(arr[i][1].getSeconds(), 2) + '</td>' +
+                                                                    '<td>' + browser + '</td>' +
+                                                                    '<td>' + arr[i][5] + '</td>' +
+                                                                    '</tr></tbody>'); 
+                                                                }
+                                                            }
+                                                        }
                                                     }
-                                                    if (str == 'call'){
-                                                        console.log(str)
+                                                    if (document.getElementById('contents').value == 'msg'){
+                                                        tb.empty();
+
+                                                        tb.append('<thead><tr>' +
+                                                        '<th>' + '</th>' +
+                                                        '<th>' + '날짜 및 시간 (UTC+9)' + '</th>' + 
+                                                        '<th>' + '상태' + '</th>' + 
+                                                        '<th>' + '번호' + '</th>' +
+                                                        '<th>' + '내용' + '</th>' +
+                                                        '</tr></thead>');
+
+                                                        for (var i=0; i<arr.length; i++){
+                                                            if (arr[i][0] == 'm'){
+                                                                if (arr[i][1] >= startDate && arr[i][1] <= endDate){
+                                                                    if (arr[i][5] == '2'){
+                                                                        state = '발신'
+                                                                    }else{
+                                                                        state = '수신'
+                                                                    }
+                                                                    tb.append('<tbody><tr>' + 
+                                                                    '<td>' + '<i class="fas fa-envelope"></i>' + '</td>' + 
+                                                                    '<td>' + arr[i][1].getFullYear() + '/' + leadingZeros(arr[i][1].getMonth() + 1, 2) + '/' + leadingZeros(arr[i][1].getDate(), 2) + ' ' + leadingZeros(arr[i][1].getHours(), 2) + ':' + leadingZeros(arr[i][1].getMinutes(), 2) + ':' + leadingZeros(arr[i][1].getSeconds(), 2) + '</td>' +
+                                                                    '<td>' + state + '</td>' +
+                                                                    '<td>' + arr[i][2] + '</td>' +
+                                                                    '<td>' + arr[i][3] + '</td>' +
+                                                                    '</tr></tbody>'); 
+                                                                }
+                                                            }
+                                                        }
                                                     }
-                                                    if (str == 'internet'){
-                                                        console.log(str)
+                                                    if (document.getElementById('contents').value == 'call'){
+                                                        tb.empty();
+
+                                                        tb.append('<thead><tr>' +
+                                                        '<th>' + '</th>' +
+                                                        '<th>' + '날짜 및 시간 (UTC+9)' + '</th>' + 
+                                                        '<th>' + '상태' + '</th>' + 
+                                                        '<th>' + '번호' + '</th>' +
+                                                        '<th>' + '통화 시간 (초)' + '</th>' +
+                                                        '</tr></thead>');
+
+                                                        for (var i=0; i<arr.length; i++){
+                                                            if (arr[i][0] == 'c'){
+                                                                if (arr[i][1] >= startDate && arr[i][1] <= endDate){
+                                                                    if (arr[i][5] == '2'){
+                                                                        state = '발신'
+                                                                    }else if(arr[i][5] == '1'){
+                                                                        state = '수신'
+                                                                    }else{
+                                                                        state = '부재중'
+                                                                    }
+                                                                    tb.append('<tbody><tr>' + 
+                                                                    '<td>' + '<i class="fas fa-phone"></i>' + '</td>' + 
+                                                                    '<td>' + arr[i][1].getFullYear() + '/' + leadingZeros(arr[i][1].getMonth() + 1, 2) + '/' + leadingZeros(arr[i][1].getDate(), 2) + ' ' + leadingZeros(arr[i][1].getHours(), 2) + ':' + leadingZeros(arr[i][1].getMinutes(), 2) + ':' + leadingZeros(arr[i][1].getSeconds(), 2) + '</td>' +
+                                                                    '<td>' + state + '</td>' +
+                                                                    '<td>' + arr[i][2] + '</td>' +
+                                                                    '<td>' + arr[i][4] + '</td>' +
+                                                                    '</tr></tbody>'); 
+                                                                }
+                                                            }
+                                                        }
                                                     }
-                                                    if (str == 'download'){
-                                                        console.log(str)
+                                                    if (document.getElementById('contents').value == 'internet'){
+                                                        tb.empty();
+
+                                                        tb.append('<thead><tr>' +
+                                                        '<th>' + '</th>' +
+                                                        '<th>' + '날짜 및 시간 (UTC+9)' + '</th>' + 
+                                                        '<th>' + '브라우저' + '</th>' + 
+                                                        '<th>' + 'URL' + '</th>' +
+                                                        '<th>' + 'Title' + '</th>' +
+                                                        '</tr></thead>');
+
+                                                        for (var i=0; i<arr.length; i++){
+                                                            if (arr[i][0] == 'i'){
+                                                                if (arr[i][1] >= startDate && arr[i][1] <= endDate){
+                                                                    if (arr[i][5] == 'ch'){
+                                                                        browser = 'Chrome'
+                                                                    }else if(arr[i][5] == 's'){
+                                                                        browser = 'Samsung Internet'
+                                                                    }
+                                                                    tb.append('<tbody><tr>' + 
+                                                                    '<td>' + '<i class="fas fa-globe"></i>' + '</td>' + 
+                                                                    '<td>' + arr[i][1].getFullYear() + '/' + leadingZeros(arr[i][1].getMonth() + 1, 2) + '/' + leadingZeros(arr[i][1].getDate(), 2) + ' ' + leadingZeros(arr[i][1].getHours(), 2) + ':' + leadingZeros(arr[i][1].getMinutes(), 2) + ':' + leadingZeros(arr[i][1].getSeconds(), 2) + '</td>' +
+                                                                    '<td>' + browser + '</td>' +
+                                                                    '<td>' + arr[i][2] + '</td>' +
+                                                                    '<td>' + arr[i][3] + '</td>' +
+                                                                    '</tr></tbody>'); 
+                                                                }
+                                                            }
+                                                        }
                                                     }
-                                                    if (str == 'media'){
-                                                        console.log(str)
+                                                    if (document.getElementById('contents').value == 'download'){
+                                                        tb.empty();
+
+                                                        tb.append('<thead><tr>' +
+                                                        '<th>' + '</th>' +
+                                                        '<th>' + '날짜 및 시간 (UTC+9)' + '</th>' + 
+                                                        '<th>' + '다운로드 도구' + '</th>' + 
+                                                        '<th>' + 'URI' + '</th>' +
+                                                        '<th>' + '저장 위치' + '</th>' +
+                                                        '</tr></thead>');
+
+                                                        for (var i=0; i<arr.length; i++){
+                                                            if (arr[i][0] == 'd'){
+                                                                if (arr[i][1] >= startDate && arr[i][1] <= endDate){
+                                                                    tb.append('<tbody><tr>' + 
+                                                                    '<td>' + '<i class="fas fa-download"></i>' + '</td>' + 
+                                                                    '<td>' + arr[i][1].getFullYear() + '/' + leadingZeros(arr[i][1].getMonth() + 1, 2) + '/' + leadingZeros(arr[i][1].getDate(), 2) + ' ' + leadingZeros(arr[i][1].getHours(), 2) + ':' + leadingZeros(arr[i][1].getMinutes(), 2) + ':' + leadingZeros(arr[i][1].getSeconds(), 2) + '</td>' +
+                                                                    '<td>' + arr[i][3] + '</td>' +
+                                                                    '<td>' + arr[i][4] + '</td>' +
+                                                                    '<td>' + arr[i][5] + '</td>' +
+                                                                    '</tr></tbody>'); 
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                    if (document.getElementById('contents').value == 'media'){
+                                                        tb.empty();
+
+                                                        tb.append('<thead><tr>' +
+                                                        '<th>' + '</th>' +
+                                                        '<th>' + '날짜 및 시간 (UTC+9)' + '</th>' + 
+                                                        '<th>' + '생성 도구' + '</th>' + 
+                                                        '<th>' + '저장 위치' + '</th>' +
+                                                        '</tr></thead>');
+
+                                                        for (var i=0; i<arr.length; i++){
+                                                            if (arr[i][0] == 'md'){
+                                                                if (arr[i][1] >= startDate && arr[i][1] <= endDate){
+                                                                    if (arr[i][4] == 'com.android.chrome'){
+                                                                        browser = 'Chrome'
+                                                                    }else if(arr[i][4] == 'com.sec.android.app.sbrowser'){
+                                                                        browser = 'Samsung Internet'
+                                                                    }else{
+                                                                        browser = arr[i][3]
+                                                                    }
+                                                                    tb.append('<tbody><tr>' + 
+                                                                    '<td>' + '<i class="fas fa-image"></i>' + '</td>' + 
+                                                                    '<td>' + arr[i][1].getFullYear() + '/' + leadingZeros(arr[i][1].getMonth() + 1, 2) + '/' + leadingZeros(arr[i][1].getDate(), 2) + ' ' + leadingZeros(arr[i][1].getHours(), 2) + ':' + leadingZeros(arr[i][1].getMinutes(), 2) + ':' + leadingZeros(arr[i][1].getSeconds(), 2) + '</td>' +
+                                                                    '<td>' + browser + '</td>' +
+                                                                    '<td>' + arr[i][5] + '</td>' +
+                                                                    '</tr></tbody>'); 
+                                                                }
+                                                            }
+                                                        }
                                                     }
                                                 }
                                             </script>
+                                            
                                             <div class="table-responsive">
-                                                <table class="table table-hover" id="testtable">
+                                                <table class="table table-hover" id="contenthere">
+                                                    <tbody>
+                                                        <script>
+                                                            cont('all');
+                                                        </script>
+                                                    </tbody>
                                                 </table>
-
-                                                <!-- 페이징처리시작-->
-                                                <ul class="pagination justify-content-center " id="buttonset">
-                                                    <!-- 이전페이지 -->
-                                                    {% if page.has_previous %}
-                                                    <li class="page-item">
-                                                        <button class="page-link"  id = "pre">이전</button>
-                                                    </li>
-                                                    {% else %}
-                                                    <li class="page-item ">
-                                                        <button class="page-link"  id = "pre">이전</button>
-                                                    </li>
-                                                    {% endif %}
-                                                <!-- 페이지리스트 -->
-                                                    <!-- 다음페이지 -->
-                                                    
-                                                    <!-- 페이지리스트 -->
-                                                    {% for page_number in page.paginator.page_range %}
-                                                        {% if page_number == page.number %}
-                                                    <div id = {{page_number}} class = now_page > 
-                                                        <li class="page-item active" aria-current="page">
-                                                            <button class="page-link" id='pb{{page_number}}'>{{page_number}}</button>
-                                                        </li>
-                                                    </div>
-                                                    {% else %}
-                                                    <!-- 페이지가 더 많아지면 id=3, id=4 될듯-->
-                                                    <div id = {{page_number}}>
-                                                        <li class="page-item">
-                                                            <button class="page-link" id='pb{{page_number}}'>{{page_number}}</button>
-                                                        </li>
-                                                    </div>
-                                                    {% endif %}
-                                                    {% endfor %}
-                                                    
-                                                    <!-- 다음페이지 --> 
-                                                
-                                                    <li class="page-item">
-                                                        <button class="page-link" id="next">다음</button>
-                                                        
-                                                    </li>
-
-                                                </ul>
-                                                <!-- 페이징처리 끝 -->
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                                <!-- [ basic-table ] start -->
-
                         </div>
                         <!-- [ Main Content ] end -->
                     </div>
@@ -362,6 +746,116 @@
         </div>
 
 {% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+{% comment %} <script>
+    var class_value = 'page-item';
+    a=arr.length
+    max_length=a/10
+
+    var aa
+    var pagesu = max_length //"총 페이지 갯수"
+
+    $(document).ready(function() { //시작
+
+        ///*****첫 화면 부분*****///    
+        for(var i=0;i<a;i++){ 
+            if(x[i].id != 1){
+                $(x[i]).css("display", "none");
+            }else{
+                $(x[i]).css("display", "");
+            }
+        }
+
+        for(var i = 6; i< pagesu+1; i++){ // 6p 부터 끝까지 숨김
+            number = "#pb" + i
+            $(number).css("display","none");
+        }
+
+        ///*****첫 화면 부분 끝*****/// 
+
+        for(var i = 0; i < pagesu+1; i++ )   {
+            aa = "#pb" + i 
+
+            /////////////////////////////////////////&&&& 번호 클릭했을 때 &&&&//////////////////////////////////////////
+            $(aa).click(function() {
+
+                ///*****한 화면에 보여지는 페이지 수(하단) 지정하는 부분*****///         
+                var eng = $(this).attr('id')
+                console.log(eng)
+
+                var no=eng.replace(/[^0-9]/g,'');
+
+                //console.log(no+2)
+                noo = parseInt(no)
+                //console.log(noo+2)
+
+                for(var i = 0; i< no-5; i++){ //현재 페이지 -5까지 숨김-
+                    number = "#pb" + i
+                    //console.log(number)
+                    $(number).css("display","none");
+                }
+
+                for(var i1 = noo+5; i1 < pagesu+1; i1++ ){  //숨김
+                    number = "#pb" + i1
+                    console.log("number:",number)
+                    $(number).css("display","none");
+                }
+
+                for(var i2 = no-5; i2<=noo+5; i2++){ //현재페이지 -5부터 +5까지 나타냄
+                    number = "#pb" + i2
+                    $(number).css("display","");
+                }
+                ///*****한 화면에 보여지는 페이지 수(하단) 지정하는 부분 끝*****///  
+
+                for(var x=0; x<=pagesu+2; x++){
+                    var aaa= "#pb" + x
+                    $(aaa).parent().attr('class', 'page-item')
+                }
+
+                $(this).parent().addClass('page-item active')
+
+                var x = document.getElementsByClassName("list_data");
+                var y=this.id.substring(2,3)
+
+                for(var i=0;i<a;i++){
+                    if(x[i].id!=y){
+                        $(x[i]).css("display", "none");
+                    }else{
+                        $(x[i]).css("display", "");
+                    }
+                }
+            });
+        } //for문 끝
+
+        /////////////////////////////////////////&&&& 번호 클릭했을 때 끝&&&&//////////////////////////////////////////
+
+        ////#### 이전, 다음 버튼####////
+        $("#pre").click(function() {
+            $(`#pb${$('.active').parent()[1].id-1}`).trigger('click')
+        });
+
+        $("#next").click(function() {
+            $(`#pb${parseInt($('.active').eq(1).parent()[0].id)+1}`).trigger('click')
+        });
+        ////#### 이전, 다음 버튼 끝####////
+
+    }); //document 끝
+
+    //id부여
+    a=arr.length
+    max_length=a/10
+
+    var x = document.getElementsByClassName("list_data");
+    for(var j=0,i=0;i<a;i++){
+        if(i%10==0)j++
+        x[i].id=j.toString();
+    }
+</script> {% endcomment %}
+
+{% endblock javascripts %}
 
 
 
