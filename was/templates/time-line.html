@@ -118,9 +118,7 @@
                             for (var c = 0; c < cSize; c++) {
                                 cDate = new Date(cprofileJson[c][2])
                                 if (cDate.getHours() == imsi.getHours() && cDate.getDate() == imsi.getDate() && cDate.getMonth() == imsi.getMonth() && cDate.getFullYear() == imsi.getFullYear()) {
-                                    if (cprofileJson[c][3] != 0) {
-                                        cCount += 1;
-                                    }
+                                    cCount += 1;
                                 }
                             }
                             calls = cCount
@@ -156,16 +154,20 @@
                         var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
                         valueAxis.tooltip.disabled = true;
 
+                        //var tooltipHTML = "<table><tr><th><span style='font-size:14px; color:#000000;'><i class='fas fa-envelope' style='vertical-align:center; width:28px; height:21px;'></i></span></th><td><span style='font-size:14px; color:#000000;'>{messages}</span></td></tr><tr><th><span style='font-size:14px; color:#000000;'><i class='fas fa-phone' style='vertical-align:center; width:28px; height:21px;'></i></span></th><td><span style='font-size:14px; color:#000000;'><b>{calls}</b></span></td></table>";
+
+                        //"<table><tr><span style='font-size:14px; color:#000000;'><i class='fas fa-envelope' style='vertical-align:center; width:28px; height:21px;'></i><b>{valueY.value}</b></span></tr><tr><span style='font-size:14px; color:#000000;'><i class='fas fa-phone' style='vertical-align:center; width:28px; height:21px;'></i><b>{valueY.value}</b></span></tr></table>";
+
                         // Create series
                         var series = chart.series.push(new am4charts.LineSeries());
                         series.dataFields.dateX = "hour";
                         series.name = "messages";
                         series.dataFields.valueY = "messages";
-                        series.tooltipHTML = "<i class='fas fa-envelope'></i></img><span style='font-size:14px; color:#000000;'><b>{valueY.value}</b></span>";
-                        //"<img src='https://www.amcharts.com/lib/3/images/car.png' style='vertical-align:bottom; margin-right: 10px; width:28px; height:21px;'><span style='font-size:14px; color:#000000;'><b>{valueY.value}</b></span>";
-                        series.tooltipText = "[#000]{valueY.value}[/]";
+                        //series.tooltipHTML = tooltipHTML;
+                        series.tooltipHTML = "<span style='font-size:14px; color:#000000;'><i class='fas fa-envelope' style='vertical-align:center; width:28px; height:21px;'></i><b>{valueY.value}</b></span>";
+                        //series.tooltipHTML = "<img src='https://www.amcharts.com/lib/3/images/car.png' style='vertical-align:bottom; margin-right: 10px; width:28px; height:21px;'><span style='font-size:14px; color:#000000;'><b>{valueY.value}</b></span>";
+                        //series.tooltipText = "[#000]{valueY.value}[/]";
                         
-                        //"<i class='fas fa-envelope'; style='vertical-align:bottom; margin-right: 10px; width:28px; height:21px;'></i><span style='font-size:14px; color:#000000;'><b>{valueY.value}</b></span>";
                                             
                         series.tooltip.background.fill = am4core.color("#FFF");
                         series.tooltip.getStrokeFromObject = true;
@@ -175,14 +177,16 @@
                         series.strokeWidth = 2;
                         series.stacked = true;
 
-                        //series.tooltip.pointerOrientation = "vertical";
+                        series.tooltip.pointerOrientation = "vertical";
 
                         var series2 = chart.series.push(new am4charts.LineSeries());
                         series2.dataFields.dateX = "hour";
                         series2.name = "calls";
                         series2.dataFields.valueY = "calls";
-                        series2.tooltipHTML = "<img src='https://www.amcharts.com/lib/3/images/motorcycle.png' style='vertical-align:bottom; margin-right: 10px; width:28px; height:21px;'><span style='font-size:14px; color:#000000;'><b>{valueY.value}</b></span>";
-                        series2.tooltipText = "[#000]{valueY.value}[/]";
+                        //series2.tooltipHTML = tooltipHTML;
+                        series2.tooltipHTML = "<span style='font-size:14px; color:#000000;'><i class='fas fa-phone' style='vertical-align:center; width:28px; height:21px;'></i><b>{valueY.value}</b></span>";
+                        //series2.tooltipHTML = "<img src='https://www.amcharts.com/lib/3/images/motorcycle.png' style='vertical-align:bottom; margin-right: 10px; width:28px; height:21px;'><span style='font-size:14px; color:#000000;'><b>{valueY.value}</b></span>";
+                        //series2.tooltipText = "[#000]{valueY.value}[/]";
                         series2.tooltip.background.fill = am4core.color("#FFF");
                         series2.tooltip.getFillFromObject = false;
                         series2.tooltip.getStrokeFromObject = true;
@@ -192,7 +196,7 @@
                         series2.strokeWidth = 2;
                         series2.stacked = true;
 
-                        //series2.tooltip.pointerOrientation = "vertical";
+                        series2.tooltip.pointerOrientation = "vertical";
 
                         /*var series3 = chart.series.push(new am4charts.LineSeries());
                         series3.name = "bicycles";
@@ -237,7 +241,7 @@
                                 <div class="card">
                                     <div class="card-block2">
                                         <div id="chartdiv"></div>
-                                        <i class='fas fa-envelope'></i>
+                                        <i class="fas fa-phone"></i>
                                         <!-- Chart code -->
                                     </div>
                                 </div>
@@ -276,7 +280,12 @@
                                                         console.log(str)
                                                     }
                                                     if (str == 'msg'){
-                                                        console.log(str)
+                                                        var tb = $("#testtable");
+                                                        tb.append('<tr>' + 
+                                                        '<td>' + str + '</td>' + 
+                                                        '<td>' + str + '</td>' + 
+                                                        '<td>' + str + '</td>' + 
+                                                        '</tr>');
                                                     }
                                                     if (str == 'call'){
                                                         console.log(str)
@@ -293,25 +302,7 @@
                                                 }
                                             </script>
                                             <div class="table-responsive">
-                                                <table class="table table-hover">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>ID</th>
-                                                            <th>수신자</th>
-                                                            <th>내용</th>
-                                                            <th><i class='fas fa-envelope'></i></th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        {% for p in msg%}
-                                                        <tr class='list_data'>
-                                                            <td>{{p.id}}</td>
-                                                            <td>{{p.recipients}}</td>
-                                                            <td>{{p.text}}</td>
-                                                            <td>{{p.created_timestamp}}</td>
-                                                        </tr>
-                                                        {% endfor %}
-                                                    </tbody>
+                                                <table class="table table-hover" id="testtable">
                                                 </table>
 
                                                 <!-- 페이징처리시작-->
@@ -356,7 +347,6 @@
 
                                                 </ul>
                                                 <!-- 페이징처리 끝 -->
-                                                <!-- 페이징처리끝-->
                                             </div>
                                         </div>
                                     </div>
