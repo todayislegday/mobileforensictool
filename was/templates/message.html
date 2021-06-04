@@ -23,12 +23,12 @@
                 <div class="row align-items-center">
                     <div class="col-md-12">
                         <div class="page-header-title">
-                            <h5 class="m-b-10">Message Tables</h5>
+                            <h5 class="m-b-10">Message </h5>
                         </div>
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a href="index.html"><i class="feather icon-home"></i></a></li>
-                            <li class="breadcrumb-item"><a href="#!">Tables</a></li>
-                            <li class="breadcrumb-item"><a href="javascript:">Message Tables</a></li>
+                            <li class="breadcrumb-item"><a href="#!">기본기능</a></li>
+                            <li class="breadcrumb-item"><a href="javascript:">{{url}}</a></li>
                         </ul>
                     </div>
                 </div>
@@ -204,7 +204,7 @@ var eng = $(this).attr('id')
 console.log(eng)
 
 var no=eng.replace(/[^0-9]/g,'');
-
+console.log(no)
 //console.log(no+2)
 noo = parseInt(no)
 //console.log(noo+2)
@@ -262,6 +262,7 @@ $("#pre").click(function() {
 });
 
 $("#next").click(function() {
+    console.log(${parseInt($('.active'))
     $(`#pb${parseInt($('.active').eq(1).parent()[0].id)+1}`).trigger('click')
 });
 ////#### 이전, 다음 버튼 끝####////
