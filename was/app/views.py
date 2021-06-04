@@ -100,7 +100,7 @@ def pages(request):
             page_obj = paginator.get_page(page)
 
             context['page']=page_obj
-            context['msg']=m
+            context['content']=m
             
             text=message1_model.objects.values('text')
 
@@ -148,7 +148,7 @@ def pages(request):
             page_obj = paginator.get_page(page)
 
             context['page']=page_obj
-            context['history']=c
+            context['content']=c
         elif context['url']=="chrome-download.html":#지호
             page = request.GET.get('page', '1')
 
@@ -213,11 +213,9 @@ def pages(request):
             webdowndata = webdowndata_model.objects.all()
             webext = webext_model.objects.raw(
                 "SELECT _id, datetime(date_added, 'unixepoch', 'localtime') AS date_added FROM downloads ORDER BY date_added ASC")
-            appinslog = Appinslog_model.objects.raw(
-                "select datetime(first_download_ms/1000, 'unixepoch','localtime'),datetime(delivery_data_timestamp_ms/1000, 'unixepoch','localtime'),datetime(last_update_timestamp_ms/1000, 'unixepoch','localtime'),datetime(install_request_timestamp_ms/1000, 'unixepoch','localtime') from appstate")
+            appinslog=Appinslog_model.objects.raw("select package_name,datetime(first_download_ms/1000, 'unixepoch','localtime') AS first_download_ms,datetime(delivery_data_timestamp_ms/1000, 'unixepoch','localtime') AS delivery_data_timestamp_ms,datetime(last_update_timestamp_ms/1000, 'unixepoch','localtime') AS last_update_timestamp_ms,datetime(install_request_timestamp_ms/1000, 'unixepoch','localtime') AS install_request_timestamp_ms from appstate")
             media = Media_model.objects.raw(
-                "SELECT _id, datetime(date_added, 'unixepoch', 'localtime') AS date_added FROM files ORDER BY date_added ASC")
-
+                "SELECT _id, datetime(date_added, 'unixepoch', 'localtime') AS date_added ,replace(_data,'/storage/emulated','/static/assets/images/media')AS _data FROM files ORDER BY date_added ASC")
             ###함수로 빼기#################
             mms_dict = {}
             i = 0
@@ -287,7 +285,7 @@ def pages(request):
                 media_dict[str(i)].append(md.date_added)
                 media_dict[str(i)].append(md.bucket_display_name)
                 media_dict[str(i)].append(md.owner_package_name)
-                media_dict[str(i)].append(md._data)
+                media_dict[str(i)].append(md.data)
                 i += 1
 
             context['mms'] = mms_dict
@@ -305,40 +303,58 @@ def pages(request):
             context['appinslog'] = appinslog
             context['media'] = media_dict
 
-        
-        elif context['url']=="keyword-view.html":
-            text=message1_model.objects.values('text')
+        elif context['url']=="appins-log.html":
+            page = request.GET.get('page', '1')
 
-            ###############################
-            c=list()
-            for a in text:#쿼리셋->list
-                c.append(a['text'])
-            litost=" ".join(map(str,c)) #list를 전체 문자열로 만든다.
+            m = Appinslog_model.objects.raw("select package_name,datetime(first_download_ms/1000, 'unixepoch','localtime') AS first_download_ms,datetime(delivery_data_timestamp_ms/1000, 'unixepoch','localtime') AS delivery_data_timestamp_ms,datetime(last_update_timestamp_ms/1000, 'unixepoch','localtime') AS last_update_timestamp_ms,datetime(install_request_timestamp_ms/1000, 'unixepoch','localtime') AS install_request_timestamp_ms from appstate")
+            paginator = Paginator(m, 10) 
+            page_obj = paginator.get_page(page)
+
+            context['page']=page_obj
+            context['content']=m
+        elif context['url']=="media.html":
+            page = request.GET.get('page', '1')
+
+            m = Media_model.objects.raw("SELECT _id, datetime(date_added, 'unixepoch', 'localtime') AS date_added ,replace(_data,'/storage/emulated','/static/assets/images/media')AS _data FROM files ORDER BY date_added ASC")
+            paginator = Paginator(m, 10) 
+            page_obj = paginator.get_page(page)
+
+            context['page']=page_obj
+            context['content']=m
+        # elif context['url']=="keyword-view.html":
+        #     text=message1_model.objects.values('text')
+
+        #     ###############################
+        #     c=list()
+        #     for a in text:#쿼리셋->list
+        #         c.append(a['text'])
+        #     litost=" ".join(map(str,c)) #list를 전체 문자열로 만든다.
             
-            c=litost.split()#중복이 있는 list
-            list1=set(c)
-            list1=list(list1)#중복이 제거된 list
+        #     c=litost.split()#중복이 있는 list
+        #     list1=set(c)
+        #     list1=list(list1)#중복이 제거된 list
             
-            list2=list()
-            list3=list()
-            for text in c:
-                list2.append({"text":text})
-            for text in list1:
-                list3.append({"text":text})
-            a=1
+        #     list2=list()
+        #     list3=list()
+        #     for text in c:
+        #         list2.append({"text":text})
+        #     for text in list1:
+        #         list3.append({"text":text})
+        #     a=1
 
-            for a in list2:
-                find =a['text']
-                for e in list3:
-                    if find==e['text']:
-                        try:e['weight']=e['weight']+1
-                        except:e['weight']=1
-            for e in list3:
-                e['html']={"title":f"빈도수:{e['weight']}"}  
+        #     for a in list2:
+        #         find =a['text']
+        #         for e in list3:
+        #             if find==e['text']:
+        #                 try:e['weight']=e['weight']+1
+        #                 except:e['weight']=1
+        #     for e in list3:
+        #         e['html']={"title":f"빈도수:{e['weight']}"}  
 
-            context['words']=list3
+        #     context['words']=list3
  ###########################################################  
-
+        
+    
 
         #print(context)
         return render(request,context['url'],context)

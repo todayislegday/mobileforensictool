@@ -9,11 +9,8 @@
 {% endblock stylesheets %}
 
 {% block content %}
-<button type="button" class="btn btn-primary"  style="margin:50px 10px 10px 30px">키워드 추천</button>
-<div class="btn btn-primary" style="display:none"><i class="fas fa-times" style="margin-right:1px"></i></div>
 
- <div id="keywordbox" style="float:left; z-index:1 ;display:none" > </div> 
-                            
+                          
                            
 <div class="pcoded-content">
     <div class="pcoded-inner-content">
@@ -54,17 +51,23 @@
                                     <table class="table table-hover">
                                         <thead>
                                             <tr>
-                                                 <th>시간</th>
-                                                <th>수신자</th>
-                                                <th>내용</th>
+                                                <th>날짜 및 시간 (UTC+9)</th>
+                                                <th>생성 도구</th>
+                                                <th>저장 위치</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             {% for p in content%}
+                                            {% if 'jpg' in p.data or 'png' in p.data or 'jpeg' in p.data or 'gif' in p.data%} 
+                                            <tr data-html="true" data-placement="left" class='list_data' title="<img src={{p.data}}/>">
+                                            {%elif 'mp4' in p.data or 'm4v' in p.data or 'avi' in p.data or  'wmv' in p.data %}
+                                            <tr data-html="true" data-placement="left" class='list_data' title="<video width='320' height='240' src={{p.data}} controls autoplay/>">
+                                            {%else%}
                                             <tr class='list_data'>
-                                                <td>{{p.created_timestamp}}</td>
-                                                <td>{{p.recipients}}</td>
-                                                <td>{{p.text}}</td>
+                                            {% endif %}  
+                                                <td>{{p.date_added}}</td>
+                                                <td>{{p.owner_package_name }}</td>
+                                                <td>{{p.data}}</td>     
                                             </tr>
                                             {% endfor %}
                                         </tbody>
@@ -131,39 +134,13 @@
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
 
-<script src="/static/assets/js/jqcloud.js"></script>
-{{words|json_script:'dict-id'}}
-
 <script>
- $( document ).ready(function() {
-  
-    var profile = $("#dict-id").text();
-    var profileJson = JSON.parse(profile);
-  
+ 
 
-  $('#keywordbox').jQCloud(profileJson,{
-      width: 400,
-      height: 400,
-      center:{x:0.5,y:0.5},
-      fontSize:{from:0.1,to:0.02},
-      delay: 1,
-      
-
-  }); 
-
-
-
-
-$('.btn').click(function(){
-    $('.btn').toggle();
-    $('#keywordbox').toggle();
+$(document).on('mouseenter','.list_data',function(){//동적으로 생선된 span태그의 이벤트 감지를 위해
+        $('.list_data').tooltip() 
+        console.log($(".tooltip-inner").html())
 })
- });
-
-$(document).on('mouseenter','span',function(){//동적으로 생선된 span태그의 이벤트 감지를 위해
-        $('span').tooltip()
-	}) 
-
     ////////////////
 var class_value = 'page-item';
 a="{{content|length}}"
@@ -217,14 +194,14 @@ for(var i = 0; i< no-5; i++){ //현재 페이지 -5까지 숨김
     $(number).css("display","none");
 }
 
-for(var i1 = noo+5; i1 < pagesu+1; i1++ ){  //숨김
+for(var i1 = noo+3; i1 < pagesu+1; i1++ ){  //숨김
 
     number = "#pb" + i1
     console.log("number:",number)
     $(number).css("display","none");
 }
 
-for(var i2 = no-5; i2<=noo+5; i2++){ //현재페이지 -5부터 +5까지 나타냄
+for(var i2 = no-4; i2<=noo+4; i2++){ //현재페이지 -5부터 +5까지 나타냄
 
     number = "#pb" + i2
     $(number).css("display","");
@@ -262,7 +239,8 @@ $("#pre").click(function() {
 });
 
 $("#next").click(function() {
-    $(`#pb${parseInt($('.active').eq(1).parent()[0].id)+1}`).trigger('click')
+    console.log($('.active'))
+    $(`#pb${parseInt($('.active').eq(0).parent()[0].id)+1}`).trigger('click')
 });
 ////#### 이전, 다음 버튼 끝####////
 
@@ -297,3 +275,5 @@ $( document ).ready(function() {
 </script>
 
 {% endblock javascripts %}
+
+

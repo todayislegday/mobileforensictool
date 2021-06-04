@@ -218,12 +218,13 @@ class Appinslog_model(models.Model): #용하
         app_label = "Appinslog" 
         db_table = 'appstate'
     
-    id= models.AutoField(db_column='package_name',primary_key=True)
+    id= models.TextField(db_column='package_name',primary_key=True)
     title=models.FloatField(blank=True,null=True)
     first_download_ms=models.FloatField(blank=True,null=True)
     delivery_data_timestamp_ms=models.FloatField(blank=True,null=True)
     last_update_timestamp_ms=models.FloatField(blank=True,null=True)
     install_request_timestamp_ms=models.FloatField(blank=True,null=True)
+    package_name= models.TextField(blank=True, null=True)
 
 class Media_model(models.Model): #용하
 
@@ -237,7 +238,7 @@ class Media_model(models.Model): #용하
     title=models.FloatField(blank=True,null=True)
     bucket_display_name = models.TextField(blank=True, null=True)
     owner_package_name = models.TextField(blank=True, null=True)
-    _data = models.TextField(blank=True, null=True)
+    data= models.TextField(db_column='_data',blank=True, null=True)
 
     
 class calendar_model(models.Model): #귀수

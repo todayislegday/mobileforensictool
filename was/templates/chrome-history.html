@@ -58,7 +58,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {% for p in history%}
+                                            {% for p in content%}
                                             <tr class='list_data'>
                                                 <td>{{p.last_visit_time}}</td>
                                                 <td>{{p.title}}</td>
@@ -141,7 +141,7 @@ $(document).on('mouseenter','span',function(){//동적으로 생선된 span태�
 
     ////////////////
 var class_value = 'page-item';
-a="{{history|length}}"
+a="{{content|length}}"
 max_length=a/10
 
 var aa
@@ -247,7 +247,6 @@ $("#next").click(function() {
 
 
 //id부여
-a="{{history|length}}"
 max_length=a/10
 
 var x = document.getElementsByClassName("list_data");
