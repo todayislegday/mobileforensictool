@@ -58,9 +58,9 @@
                                         <tbody>
                                             {% for p in content%}
                                             {% if 'jpg' in p.data or 'png' in p.data or 'jpeg' in p.data or 'gif' in p.data%} 
-                                            <tr data-html="true" data-placement="left" class='list_data' title="<img src={{p.data}}/>">
+                                            <tr data-html="true" data-placement="left" class='list_data' title="<div style='float:right'><div class='feather icon-zoom-in'></div><div class='feather icon-zoom-out' style='display:none'></div><div class='feather icon-x'></div></div><img src={{p.data}}/>">
                                             {%elif 'mp4' in p.data or 'm4v' in p.data or 'avi' in p.data or  'wmv' in p.data %}
-                                            <tr data-html="true" data-placement="left" class='list_data' title="<video width='320' height='240' src={{p.data}} controls autoplay/>">
+                                            <tr data-html="true" data-placement="left" class='list_data' title="<div style='float:right'><div class='feather icon-zoom-in'></div><div class='feather icon-zoom-out' style='display:none'></div><div class='feather icon-x'></div></div><video width='100%' height='100%' src={{p.data}} controls autoplay/>">
                                             {%else%}
                                             <tr class='list_data'>
                                             {% endif %}  
@@ -136,8 +136,35 @@
 <script>
  
 
-$(document).on('mouseenter','.list_data',function(){//동적으로 생선된 span태그의 이벤트 감지를 위해
-        $('.list_data').tooltip() })
+
+
+
+
+
+$(document).ready(function(){
+
+$('.list_data').click(function(){
+    
+      $(".list_data").tooltip({trigger: 'manual'}).tooltip('dispose');
+      $(this).tooltip({placement: 'left',trigger: 'manual'}).tooltip('show');
+
+$('.icon-x').click(function(){
+        $('.tooltip').tooltip({trigger: 'manual'}).tooltip('dispose');
+})
+
+$('.tooltip-inner').click(function(){
+    $('.icon-zoom-in').toggle()
+    $('.icon-zoom-out').toggle() 
+    $('.tooltip-inner').toggleClass('tooltip-zoom');
+})
+
+
+ })
+
+})
+
+
+    //////////
     ////////////////
 var class_value = 'page-item';
 a="{{content|length}}"
@@ -214,7 +241,7 @@ for(var i2 = no-4; i2<=noo+4; i2++){ //현재페이지 -5부터 +5까지 나타�
 $(this).parent().addClass('page-item active')
 
 var x = document.getElementsByClassName("list_data");
-var y=this.id.substring(2,4)
+var y=this.id.substring(2,2+b)
 
 for(var i=0;i<a;i++){
 if(x[i].id!=y){
@@ -248,6 +275,7 @@ $("#next").click(function() {
 //id부여
 a="{{content|length}}"
 max_length=a/10
+b=Math.ceil(max_length).toString().length
 
 var x = document.getElementsByClassName("list_data");
 for(var j=0,i=0;i<a;i++){
@@ -259,7 +287,8 @@ $( document ).ready(function() {
     $("#keyword").keyup(function(e) {
         if($(this).val()==''){
      var id=$("#buttonset").find('li[class="page-item active"]').children("button").attr("id")
-     id=id.substring(2,3)
+     id=id.substring(2,2+b)
+     console.log(id)
     $(`.list_data[id!=${id}]`).css("display","none")
 }
     });

@@ -724,7 +724,7 @@
                                                                     }
                                                                     if(arr[i][5].match('gif|jpe?g|tiff|png|webp|bmp')){//사진 확장자
                                                                     
-                                                                     tb.append(`<tbody><tr data-html="true" data-placement="left" class='list_data' title="<img src=${arr[i][5]}/>">` + 
+                                                                     tb.append(`<tbody><tr data-html="true" data-placement="left" class='list_data' title="<div style='float:right'><div class='feather icon-zoom-in'></div><div class='feather icon-zoom-out' style='display:none'></div><div class='feather icon-x'></div></div><img src=${arr[i][5]}/>">` + 
                                                                     '<td>' + '<i class="fas fa-image"></i>' + '</td>' + 
                                                                     '<td>' + arr[i][1].getFullYear() + '/' + leadingZeros(arr[i][1].getMonth() + 1, 2) + '/' + leadingZeros(arr[i][1].getDate(), 2) + ' ' + leadingZeros(arr[i][1].getHours(), 2) + ':' + leadingZeros(arr[i][1].getMinutes(), 2) + ':' + leadingZeros(arr[i][1].getSeconds(), 2) + '</td>' +
                                                                     '<td>' + browser + '</td>' +
@@ -732,7 +732,7 @@
                                                                     '</tr></tbody>'); 
                                                                     }else if(arr[i][5].match('mp4|m4v|avi|wmv')){//영상 확장자
                                                                     
-                                                                     tb.append(`<tbody><tr data-html="true" data-placement="left" class='list_data' title="<video width='320' height='240' src=${arr[i][5]} controls autoplay/>">` + 
+                                                                     tb.append(`<tbody><tr data-html="true" data-placement="left" class='list_data' title="<div style='float:right'><div class='feather icon-zoom-in'></div><div class='feather icon-zoom-out' style='display:none'></div><div class='feather icon-x'></div></div><video width='320' height='240' src=${arr[i][5]} controls autoplay/>">` + 
                                                                     '<td>' + '<i class="fas fa-image"></i>' + '</td>' + 
                                                                     '<td>' + arr[i][1].getFullYear() + '/' + leadingZeros(arr[i][1].getMonth() + 1, 2) + '/' + leadingZeros(arr[i][1].getDate(), 2) + ' ' + leadingZeros(arr[i][1].getHours(), 2) + ':' + leadingZeros(arr[i][1].getMinutes(), 2) + ':' + leadingZeros(arr[i][1].getSeconds(), 2) + '</td>' +
                                                                     '<td>' + browser + '</td>' +
@@ -781,10 +781,20 @@
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
 <script>
-$(document).on('mouseenter','tr',function(){//동적으로 생선된 span태그의 이벤트 감지를 위해
-        $('tr').tooltip({
-        }) 
-	}) 
+
+$(document).on('click','.list_data',function(){
+        $(".list_data").tooltip({trigger: 'manual'}).tooltip('dispose');
+        $(this).tooltip({placement: 'left',trigger: 'manual'}).tooltip('show');
+         })
+$(document).on('click','.icon-x',function(){
+        $('.tooltip').tooltip({trigger: 'manual'}).tooltip('dispose');
+         }) 
+$(document).on('click','.tooltip-inner',function(){
+         $('.tooltip-inner').toggleClass('tooltip-zoom')
+         $('.icon-zoom-in').toggle()
+         $('.icon-zoom-out').toggle()
+         
+         })  
 </script>
 
 

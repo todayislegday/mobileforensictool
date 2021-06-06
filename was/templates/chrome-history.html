@@ -130,14 +130,9 @@
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
 
-<script src="/static/assets/js/jqcloud.js"></script>
 
 <script>
  
-
-$(document).on('mouseenter','span',function(){//동적으로 생선된 span태그의 이벤트 감지를 위해
-        $('span').tooltip()
-	}) 
 
     ////////////////
 var class_value = 'page-item';
@@ -215,7 +210,7 @@ for(var i2 = no-4; i2<=noo+4; i2++){ //현재페이지 -5부터 +5까지 나타�
 $(this).parent().addClass('page-item active')
 
 var x = document.getElementsByClassName("list_data");
-var y=this.id.substring(2,3)
+var y=this.id.substring(2,2+b)
 
 for(var i=0;i<a;i++){
 if(x[i].id!=y){
@@ -233,11 +228,10 @@ if(x[i].id!=y){
 
 ////#### 이전, 다음 버튼####////
 $("#pre").click(function() {
-        $(`#pb${$('.active').parent()[1].id-1}`).trigger('click')
+        $(`#pb${$('.active').parent()[0].id-1}`).trigger('click')
 });
 
 $("#next").click(function() {
-    console.log($('.active'))
     $(`#pb${parseInt($('.active').eq(0).parent()[0].id)+1}`).trigger('click')
 });
 ////#### 이전, 다음 버튼 끝####////
@@ -247,7 +241,9 @@ $("#next").click(function() {
 
 
 //id부여
+a="{{content|length}}"
 max_length=a/10
+b=Math.ceil(max_length).toString().length
 
 var x = document.getElementsByClassName("list_data");
 for(var j=0,i=0;i<a;i++){
@@ -259,7 +255,8 @@ $( document ).ready(function() {
     $("#keyword").keyup(function(e) {
         if($(this).val()==''){
      var id=$("#buttonset").find('li[class="page-item active"]').children("button").attr("id")
-     id=id.substring(2,3)
+     id=id.substring(2,2+b)
+     console.log(id)
     $(`.list_data[id!=${id}]`).css("display","none")
 }
     });

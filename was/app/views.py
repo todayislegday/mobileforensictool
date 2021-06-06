@@ -117,16 +117,17 @@ def pages(request):
             paginator = Paginator(wifi, 10) 
             page_obj = paginator.get_page(page)
             context['page']=page_obj
-    
+            context['content']=wifi
+
         elif context['url']=="geo-Artifact.html":  ##재식
             if 'id' in request.GET:##ajax 처리
                 id=request.GET['id']
                 OUTPATH="/static/assets/images/"
                 a=map_model.objects.raw("select _id,latitude,longitude,_display_name,replace(_data,'/storage/emulated','/static/assets/images/media') as data,DATETIME(ROUND(datetaken / 1000), 'unixepoch','localtime') AS datetaken from files where _id=%s" %id)
                 return JsonResponse(serializers.serialize('json',a),safe=False)
+              
                 
             map_list=map_model.objects.all().order_by('datetaken')
-            print(map_list)
             map_dict={}
             i=1
             for m in map_list:#queryset->dict(list[])
@@ -137,7 +138,6 @@ def pages(request):
                     map_dict[str(i)].append(m.longt)
                     map_dict[str(i)].append(m.datetaken)
                     i+=1
-            print(map_dict)  
             context['geo']=map_dict
 
         elif context['url']=="chrome-history.html":#지호
@@ -157,6 +157,8 @@ def pages(request):
             page_obj = paginator.get_page(page)
 
             context['page']=page_obj
+            context['content']=c
+
         elif context['url']=="chrome-search.html":#지호
             page = request.GET.get('page', '1')
 
@@ -167,7 +169,7 @@ def pages(request):
 
             context['words']=count(text,'term')
             context['page']=page_obj
-
+            context['content']=c
         elif context['url']=="sam-history.html":#지호
             page = request.GET.get('page', '1')
 
@@ -176,6 +178,7 @@ def pages(request):
             page_obj = paginator.get_page(page)
 
             context['page']=page_obj
+            context['content']=c
         elif context['url']=="sam-download.html":#지호
             page = request.GET.get('page', '1')
 
@@ -184,6 +187,7 @@ def pages(request):
             page_obj = paginator.get_page(page)
 
             context['page']=page_obj
+            context['content']=c
         elif context['url']=="sam-search.html":#지호
             page = request.GET.get('page', '1')
 
@@ -194,7 +198,7 @@ def pages(request):
             text=Sam1_model.objects.values('term')
             context['words']=count(text,'term')
             context['page']=page_obj
-        
+            context['content']=c
         elif context['url'] == "time-line.html":  # 용하
             mms = mms_model.objects.raw(
                 "SELECT _id,address,content,datetime((date / 1000), 'unixepoch','localtime') AS date FROM messages ORDER BY date ASC")
