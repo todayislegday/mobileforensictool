@@ -120,13 +120,20 @@ def pages(request):
             context['content']=wifi
 
         elif context['url']=="geo-Artifact.html":  ##재식
-            if 'id' in request.GET:##ajax 처리
+           
+
+            if 'id' in request.GET:##ajax get 처리
                 id=request.GET['id']
                 OUTPATH="/static/assets/images/"
                 a=map_model.objects.raw("select _id,latitude,longitude,_display_name,replace(_data,'/storage/emulated','/static/assets/images/media') as data,DATETIME(ROUND(datetaken / 1000), 'unixepoch','localtime') AS datetaken from files where _id=%s" %id)
+                print(a)
                 return JsonResponse(serializers.serialize('json',a),safe=False)
-              
-                
+            
+            if request.method=="POST":##ajax post 처리
+                print(request.POST)
+                a=map_model.objects.raw("select _id,latitude,longitude,datetaken from files where %s<=latitude<=%s AND %s<=longitude<=%s" %(request.POST['swlat'],request.POST['nelat'],request.POST['swlng'],request.POST['nelng'], ))
+                return JsonResponse(serializers.serialize('json',a),safe=False)
+
             map_list=map_model.objects.all().order_by('datetaken')
             map_dict={}
             i=1

@@ -49,7 +49,6 @@
                     <div class="card-block">
                         <form method="post" id="geocoding_form6">
                             <div id="map" class="set-map" style="height:650px;"></div>
-                            
                         </form>
                     </div>
                 </div>
@@ -271,76 +270,88 @@ AIzaSyDkfnk4My0Tttw-jj8wa01Ii2PcepoiYLc
         endDate.setMinutes(endDate.getMinutes() + 1); // 시간이 분단위로 끊기니까 마지막 시간 + 1분으로 계산
 
 
-        var bounds  = {
-        'swlat':mapBounds.getSouthWest().lat(), // 지도 좌측 하단 위도
-        'swlng':mapBounds.getSouthWest().lng(), // 좌측 하단 경도
-        'nelat':mapBounds.getNorthEast().lat(), // 우측 상단 위도
-        'nelng':mapBounds.getNorthEast().lng()  // 우측 하단 경도
-        };
+         
 
-        data = {
-            'bounds': bounds
-        }
+        // $.ajax({
+        //     type: "POST",
+        //     url: 'pages',
+        //     dataType:'json',
+        //     data: data,
+        //     success: function(markerList) {
+        //         console.log(markerList);
+        //     }
+        // });
 
+var data  = {
+         "swlat":mapBounds.getSouthWest().lat(), // 지도 좌측 하단 위도
+         "swlng":mapBounds.getSouthWest().lng(), // 좌측 하단 경도
+         "nelat":mapBounds.getNorthEast().lat(), // 우측 상단 위도
+         "nelng":mapBounds.getNorthEast().lng()  // 우측 하단 경도
+         };
 
-        $.ajax({
-            type: "POST",
-            url: 'pages',
-            dataType:'json',
-            data: data,
-            success: function(markerList) {
-                console.log(markerList);
-            }
+google.maps.event.addListener(map,'zoom_changed', function() { // zoom 이벤트
+         $.ajax({
+             type: "POST",
+             url: 'geo-Artifact.html',
+             dataType:'json',
+             data: data,
+             success: function(markerList) { //마커 클리어후 다시 업데이트
+                console.log(JSON.parse(markerList))
+             }
+         });
         });
 
+
         /* ===== 현 위치 마커 표시(프론트) ===== */
-        // for (var i = 0; i < size; i++) {
-        //     marker = markers[i];
+        for (var i = 0; i < size; i++) {
+            marker = markers[i];
 
-        //     if(marker['labelContent'] > endDate) {
-        //         hideMarker(marker);
-        //         continue;
-        //     }
+            if(marker['labelContent'] > endDate) {
+                hideMarker(marker);
+                continue;
+            }
 
-        //     position = marker.getPosition(); // 마커 하나의 위치
+            position = marker.getPosition(); // 마커 하나의 위치
         
-        //     if(marker['labelContent'] >= startDate && marker['labelContent'] <= endDate) {
+            if(marker['labelContent'] >= startDate && marker['labelContent'] <= endDate) {
             
-        //         if(click_id != marker['id']) { //기본형 마커
-        //             marker.setIcon(icon);
-        //             marker.setLabel({text:String(count),  // 이렇게 하면 전체 사진을 시간 순으로 라벨링
-        //                             color: '#3f4d67',
-        //                             fontWeight: 'bold',
-        //                             fontSize:"15px"});
-        //         }
+                if(click_id != marker['id']) { //기본형 마커
+                    marker.setIcon(icon);
+                    marker.setLabel({text:String(count),  // 이렇게 하면 전체 사진을 시간 순으로 라벨링
+                                    color: '#3f4d67',
+                                    fontWeight: 'bold',
+                                    fontSize:"15px"});
+                }
             
-        //         // 마커 id를 여기서 받아서 해당 마커 id만 클릭 커스텀 마커로 셋팅
-        //         else {  // 클릭형 마커
-        //             marker.setIcon(click_icon); 
-        //             marker.setLabel({text:String(count), // 여기서 셋팅을 하는 이유는 setLabel에서 text가 필수로 들어가야 하기 때문
-        //                             color: '#ffffff',
-        //                             fontWeight: 'bold',
-        //                             fontSize:"15px"});
-        //         }
+                // 마커 id를 여기서 받아서 해당 마커 id만 클릭 커스텀 마커로 셋팅
+                else {  // 클릭형 마커
+                    marker.setIcon(click_icon); 
+                    marker.setLabel({text:String(count), // 여기서 셋팅을 하는 이유는 setLabel에서 text가 필수로 들어가야 하기 때문
+                                    color: '#ffffff',
+                                    fontWeight: 'bold',
+                                    fontSize:"15px"});
+                }
             
-        //         if (position.lat() >= startLo.lat() && position.lat() <= endLo.lat() &&
-        //             position.lng() >= startLo.lng() && position.lng() <= endLo.lng()) { // 마커가 현재 화면에 있는지 체크                       
-        //                 showMarker(marker);
-        //         } 
+                if (position.lat() >= startLo.lat() && position.lat() <= endLo.lat() &&
+                    position.lng() >= startLo.lng() && position.lng() <= endLo.lng()) { // 마커가 현재 화면에 있는지 체크                       
+                        showMarker(marker);
+                } 
             
-        //         else {
-        //             hideMarker(marker);
-        //         }
-        //         count++;
-        //     }
-        //     else {
-        //         hideMarker(marker);
-        //     }
-        // }
+                else {
+                    hideMarker(marker);
+                }
+                count++;
+            }
+            else {
+                hideMarker(marker);
+            }
+        }
         
-        // setClusterer(zoom);
+        if(zoom >= 18 ) {
+            setClusterer(zoom);
+        }
         
-        //console.log(count-1 + " 개가 검색되었습니다."); // 추후 html에 띄우고
+        console.log(count-1 + " 개가 검색되었습니다."); // 추후 html에 띄우고
     }
 
     /* 마커 클러스터 커스텀 */
@@ -365,11 +376,6 @@ AIzaSyDkfnk4My0Tttw-jj8wa01Ii2PcepoiYLc
 
         markerCluster = new MarkerClusterer(map, markers, options_markerclusterer); 
 
-        if( zoom < 15 ) {
-            markerCluster.clearMarkers();
-            markerCluster.repaint();
-            return; 
-        }
         // function clearClusters(e) {
         //     e.preventDefault();
         //     e.stopPropagation();
