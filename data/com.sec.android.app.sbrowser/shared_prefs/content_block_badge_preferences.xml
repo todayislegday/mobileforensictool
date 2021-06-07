@@ -1,6 +1,0 @@
-<?xml version='1.0' encoding='utf-8' standalone='yes' ?>
-<map>
-    <string name="content_blocker_new_badge_package"></string>
-    <boolean name="content_blocker_was_extensions_visited_once" value="true" />
-    <boolean name="update_direct_download_badge_flag" value="true" />
-</map>

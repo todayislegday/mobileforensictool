@@ -1,7 +1,0 @@
-<?xml version='1.0' encoding='utf-8' standalone='yes' ?>
-<map>
-    <long name="app_rating_popup_server_request_period" value="172800000" />
-    <string name="etag">&quot;9e529dea395c401b646ba1d6fb8e458f&quot;</string>
-    <boolean name="app_rating_popup_is_enabled_by_server" value="true" />
-    <long name="app_rating_popup_last_updated" value="1619413499271" />
-</map>

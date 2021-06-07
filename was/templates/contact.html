@@ -76,6 +76,7 @@
                                         <thead>
                                             <tr>
                                                 <th>이름</th>
+                                                <th>상태</th>
                                                 <th>연락처</th>
                                                 <th>날짜</th>
                                                 <th>전화 시간</th>
@@ -86,6 +87,11 @@
                                             {% for c in calllog %}
                                             <tr  number={{c.number}} flags="false">
                                                 <td>{{c.name}}</td>
+                                                 {% if c.type == 2 %} 
+                                                 <td>발신</td>
+                                              {%else%} 
+                                                <td>수신</td>
+                                                 {% endif %}
                                                 <td>{{c.number}}</td>
                                                 <td>{{c.date}}</td>
                                                      {% if c.duration %}  

@@ -47,10 +47,10 @@
                                     <table class="table table-hover">
                                         <thead>
                                             <tr>
+                                                <th>시작 시간(UTC+9)</th>
+                                                <th>종료 시간(UTC+9)</th>
                                                 <th>현재 위치</th>
                                                 <th>목표 위치</th>
-                                                <th>시작 시간</th>
-                                                <th>종료 시간</th>
                                                 <th>URL</th>
                                                 <th>original_mime_type</th>
                                                 <th>received_bytes</th>
@@ -58,13 +58,13 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {% for p in content %}
+                                             {% for p in content %}
                                             <tr class='list_data'>
-                                                <td>{{p.current_path}}</td>
-                                                <td>{{p.target_path}}</td>
                                                 <td>{{p.start_time}}</td>
                                                 <td>{{p.end_time}}</td>
-                                                <td>{{p.tab_url}}</td>
+                                                <td>{{p.current_path}}</td>
+                                                <td>{{p.target_path}}</td>
+                                                <td><a href={{p.tab_url}} target="blank">{{p.tab_url}}</td>
                                                 <td>{{p.original_mime_type}}</td>
                                                 <td>{{p.received_bytes}}</td>
                                                 <td>{{p.total_bytes}}</td>

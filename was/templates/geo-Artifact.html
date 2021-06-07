@@ -295,7 +295,7 @@ google.maps.event.addListener(map,'zoom_changed', function() { // zoom 이벤트
              url: 'geo-Artifact.html',
              dataType:'json',
              data: data,
-             success: function(markerList) { //마커 클리어후 다시 업데이트
+             success: function(markerList) { //마커 클리어후 다시업데이트
                 console.log(JSON.parse(markerList))
              }
          });

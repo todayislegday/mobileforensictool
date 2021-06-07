@@ -95,7 +95,8 @@ def pages(request):
         elif context['url']=="message.html": ##어진
             page = request.GET.get('page', '1')
 
-            m=message1_model.objects.raw('SELECT parts._id,parts.text,messages._id,DATETIME(ROUND(messages.created_timestamp / 1000), "unixepoch","localtime") AS created_timestamp,messages.recipients FROM parts,messages where parts._id==messages._id  ORDER BY created_timestamp ASC ')#raw queryset으로 할수없이 만들었다 ...삽질 ..
+            m= mms_model.objects.raw(
+                "SELECT _id,address,content,datetime((date / 1000), 'unixepoch','localtime') AS date FROM messages ORDER BY date ASC")
             paginator = Paginator(m, 10) 
             page_obj = paginator.get_page(page)
 
@@ -121,7 +122,6 @@ def pages(request):
 
         elif context['url']=="geo-Artifact.html":  ##재식
            
-
             if 'id' in request.GET:##ajax get 처리
                 id=request.GET['id']
                 OUTPATH="/static/assets/images/"
@@ -131,7 +131,7 @@ def pages(request):
             
             if request.method=="POST":##ajax post 처리
                 print(request.POST)
-                a=map_model.objects.raw("select _id,latitude,longitude,datetaken from files where %s<=latitude<=%s AND %s<=longitude<=%s" %(request.POST['swlat'],request.POST['nelat'],request.POST['swlng'],request.POST['nelng'], ))
+                a=map_model.objects.raw("select _id,latitude,longitude,datetaken from files where %s<=latitude AND latitude<=%s AND %s<=longitude AND longitude<=%s" %(request.POST['swlat'],request.POST['nelat'],request.POST['swlng'],request.POST['nelng'] ))
                 return JsonResponse(serializers.serialize('json',a),safe=False)
 
             map_list=map_model.objects.all().order_by('datetaken')
