@@ -356,6 +356,19 @@
                         chart.legend.position = "top";
                     </script>
                     
+                    <div class="col-xl-12">
+                        <div class="card" style="margin-bottom: 15px;">
+                            <div class="card-header">
+                                <h5>Duration</h5>
+                                <form id="duration" style="text-align: center;">
+                                    <input id="datetimepicker1" type="text" onchange="send1(this.value)" style="text-align: center;">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input id="datetimepicker2" type="text" onchange="send2(this.value)" style="text-align: center;">
+                                    &nbsp;&nbsp;&nbsp;
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                     <div class="col-sm-12">
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
                             <li class="nav-item">
@@ -368,7 +381,7 @@
                         <div class="tab-content" id="myTabContent">
                             <div class="tab-pane fade show active" id="timeline" role="tabpanel" aria-labelledby="timeline-tab">
                                 <!-- [ Stacked Chart ] start -->
-                                <div class="card">
+                                <div class="card" style="margin-bottom: 0px;">
                                     <div class="card-block2">
                                         <div id="chartdiv"></div>
                                         <!-- Chart code -->
@@ -378,21 +391,7 @@
                             </div>
                             <div class="tab-pane fade" id="result" role="tabpanel" aria-labelledby="result-tab">
                                 <div class="col-xl-12">
-                                    <div class="card" style="margin-bottom: 15px;">
-                                        <div class="card-header">
-                                            <h5>Duration</h5>
-                                            <form id="duration" style="text-align: center;">
-                                                <input id="datetimepicker1" type="text" onchange="send1(this.value)" style="text-align: center;">
-                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                <input id="datetimepicker2" type="text" onchange="send2(this.value)" style="text-align: center;">
-                                                &nbsp;&nbsp;&nbsp;
-                                            </form>
-                                        </div>
-                                    </div>
-                                    <div class="card" style="margin-bottom: 15px;">
-                                        <div class="card-header">
-                                            <h5>Result</h5>
-                                        </div>
+                                    <div class="card" style="margin-bottom: 0px;">
                                         <div class="card-block table-border-style">
                                             <div style="text-align: right; padding: 0px 0px 30px 0px;">
                                                 <select id="contents" onchange="cont()">
@@ -495,6 +494,29 @@
                                                     cont()
                                                 }
 
+                                                function link(str){
+                                                    if (str == 'm') {
+                                                        document.getElementById('contents').value = 'msg'
+                                                        cont()
+                                                    }
+                                                    if (str == 'c') {
+                                                        document.getElementById('contents').value = 'call'
+                                                        cont()
+                                                    }
+                                                    if (str == 'i') {
+                                                        document.getElementById('contents').value = 'internet'
+                                                        cont()
+                                                    }
+                                                    if (str == 'd') {
+                                                        document.getElementById('contents').value = 'download'
+                                                        cont()
+                                                    }
+                                                    if (str == 'md') {
+                                                        document.getElementById('contents').value = 'media'
+                                                        cont()
+                                                    }
+                                                }
+
                                                 function cont(){
                                                     var tb = $("#contenthere");
                                                     var state;
@@ -512,8 +534,8 @@
                                                                         state = '수신'
                                                                     }
                                                                     tb.append('<tbody><tr>' + 
-                                                                    '<td style="width: 10%;">' + '<i class="fas fa-envelope"></i>' + '</td>' + 
-                                                                    '<td style="width: 22.5%;">' + arr[i][1].getFullYear() + '/' + leadingZeros(arr[i][1].getMonth() + 1, 2) + '/' + leadingZeros(arr[i][1].getDate(), 2) + ' ' + leadingZeros(arr[i][1].getHours(), 2) + ':' + leadingZeros(arr[i][1].getMinutes(), 2) + ':' + leadingZeros(arr[i][1].getSeconds(), 2) + '</td>' +
+                                                                    '<td style="width: 10%;text-align: center;background-color: rgba(164, 212, 234, 1);vertical-align: middle;" onclick="link(`m`)">' + '<i class="fas fa-envelope"></i>' + '</td>' + 
+                                                                    '<td style="width: 22.5%;text-align: center;vertical-align: middle;">' + arr[i][1].getFullYear() + '/' + leadingZeros(arr[i][1].getMonth() + 1, 2) + '/' + leadingZeros(arr[i][1].getDate(), 2) + ' ' + leadingZeros(arr[i][1].getHours(), 2) + ':' + leadingZeros(arr[i][1].getMinutes(), 2) + ':' + leadingZeros(arr[i][1].getSeconds(), 2) + '</td>' +
                                                                     '<td style="width: 22.5%;"><p style="font-weight: bold;">상태</p>' + state + '</td>' +
                                                                     '<td style="width: 22.5%;"><p style="font-weight: bold;">번호</p>' + arr[i][2] + '</td>' +
                                                                     '<td style="width: 22.5%;"><p style="font-weight: bold;">내용</p>' + arr[i][3] + '</td>' +
@@ -530,8 +552,8 @@
                                                                         state = '부재중'
                                                                     }
                                                                     tb.append('<tbody><tr>' + 
-                                                                    '<td style="width: 10%;">' + '<i class="fas fa-phone"></i>' + '</td>' + 
-                                                                    '<td style="width: 22.5%;">' + arr[i][1].getFullYear() + '/' + leadingZeros(arr[i][1].getMonth() + 1, 2) + '/' + leadingZeros(arr[i][1].getDate(), 2) + ' ' + leadingZeros(arr[i][1].getHours(), 2) + ':' + leadingZeros(arr[i][1].getMinutes(), 2) + ':' + leadingZeros(arr[i][1].getSeconds(), 2) + '</td>' +
+                                                                    '<td style="width: 10%;text-align: center;background-color: rgba(164, 191, 234, 1);vertical-align: middle;" onclick="link(`c`)">' + '<i class="fas fa-phone"></i>' + '</td>' + 
+                                                                    '<td style="width: 22.5%;text-align: center;vertical-align: middle;">' + arr[i][1].getFullYear() + '/' + leadingZeros(arr[i][1].getMonth() + 1, 2) + '/' + leadingZeros(arr[i][1].getDate(), 2) + ' ' + leadingZeros(arr[i][1].getHours(), 2) + ':' + leadingZeros(arr[i][1].getMinutes(), 2) + ':' + leadingZeros(arr[i][1].getSeconds(), 2) + '</td>' +
                                                                     '<td style="width: 22.5%;"><p style="font-weight: bold;">상태</p>' + state + '</td>' +
                                                                     '<td style="width: 22.5%;"><p style="font-weight: bold;">번호</p>' + arr[i][2] + '</td>' +
                                                                     '<td style="width: 22.5%;"><p style="font-weight: bold;">통화 시간</p>' + arr[i][4] + '</td>' +
@@ -546,10 +568,10 @@
                                                                         browser = 'Samsung Internet'
                                                                     }
                                                                     tb.append('<tbody><tr>' + 
-                                                                    '<td style="width: 10%;">' + '<i class="fas fa-globe"></i>' + '</td>' + 
-                                                                    '<td style="width: 22.5%;">' + arr[i][1].getFullYear() + '/' + leadingZeros(arr[i][1].getMonth() + 1, 2) + '/' + leadingZeros(arr[i][1].getDate(), 2) + ' ' + leadingZeros(arr[i][1].getHours(), 2) + ':' + leadingZeros(arr[i][1].getMinutes(), 2) + ':' + leadingZeros(arr[i][1].getSeconds(), 2) + '</td>' +
+                                                                    '<td style="width: 10%;text-align: center;background-color: rgba(164, 170, 234, 1);vertical-align: middle;" onclick="link(`i`)">' + '<i class="fas fa-globe"></i>' + '</td>' + 
+                                                                    '<td style="width: 22.5%;text-align: center;vertical-align: middle;">' + arr[i][1].getFullYear() + '/' + leadingZeros(arr[i][1].getMonth() + 1, 2) + '/' + leadingZeros(arr[i][1].getDate(), 2) + ' ' + leadingZeros(arr[i][1].getHours(), 2) + ':' + leadingZeros(arr[i][1].getMinutes(), 2) + ':' + leadingZeros(arr[i][1].getSeconds(), 2) + '</td>' +
                                                                     '<td style="width: 22.5%;"><p style="font-weight: bold;">브라우저</p>' + browser + '</td>' +
-                                                                    '<td style="width: 22.5%;"><p style="font-weight: bold;">URL</p>' + arr[i][2] + '</td>' +
+                                                                    '<td style="width: 22.5%;"><p style="font-weight: bold;">URL</p>' + '<a href=' + arr[i][2] + ' target="blank">' + arr[i][2] + '</a>' + '</td>' +
                                                                     '<td style="width: 22.5%;"><p style="font-weight: bold;">Title</p>' + arr[i][3] + '</td>' +
                                                                     '</tr></tbody>'); 
                                                                 }
@@ -557,10 +579,10 @@
                                                             if (arr[i][0] == 'd'){
                                                                 if (arr[i][1] >= startDate && arr[i][1] <= endDate){
                                                                     tb.append('<tbody><tr>' + 
-                                                                    '<td style="width: 10%;">' + '<i class="fas fa-download"></i>' + '</td>' + 
-                                                                    '<td style="width: 22.5%;">' + arr[i][1].getFullYear() + '/' + leadingZeros(arr[i][1].getMonth() + 1, 2) + '/' + leadingZeros(arr[i][1].getDate(), 2) + ' ' + leadingZeros(arr[i][1].getHours(), 2) + ':' + leadingZeros(arr[i][1].getMinutes(), 2) + ':' + leadingZeros(arr[i][1].getSeconds(), 2) + '</td>' +
+                                                                    '<td style="width: 10%;text-align: center;background-color: rgba(179, 164, 234, 1);vertical-align: middle;" onclick="link(`d`)">' + '<i class="fas fa-download"></i>' + '</td>' + 
+                                                                    '<td style="width: 22.5%;text-align: center;vertical-align: middle;">' + arr[i][1].getFullYear() + '/' + leadingZeros(arr[i][1].getMonth() + 1, 2) + '/' + leadingZeros(arr[i][1].getDate(), 2) + ' ' + leadingZeros(arr[i][1].getHours(), 2) + ':' + leadingZeros(arr[i][1].getMinutes(), 2) + ':' + leadingZeros(arr[i][1].getSeconds(), 2) + '</td>' +
                                                                     '<td style="width: 22.5%;"><p style="font-weight: bold;">다운로드 도구</p>' + arr[i][3] + '</td>' +
-                                                                    '<td style="width: 22.5%;"><p style="font-weight: bold;">URI</p>' + arr[i][4] + '</td>' +
+                                                                    '<td style="width: 22.5%;"><p style="font-weight: bold;">URI</p>' + '<a href=' + arr[i][4] + ' target="blank">' + arr[i][4] + '</a>' + '</td>' +
                                                                     '<td style="width: 22.5%;"><p style="font-weight: bold;">다운로드 위치</p>' + arr[i][5] + '</td>' +
                                                                     '</tr></tbody>'); 
                                                                 }
@@ -574,9 +596,9 @@
                                                                     }else{
                                                                         browser = arr[i][3]
                                                                     }
-                                                                    tb.append(`<tbody><tr title=${arr[i][5]}>` + 
-                                                                    '<td style="width: 10;">' + '<i class="fas fa-image"></i>' + '</td>' + 
-                                                                    '<td style="width: 22.5%;">' + arr[i][1].getFullYear() + '/' + leadingZeros(arr[i][1].getMonth() + 1, 2) + '/' + leadingZeros(arr[i][1].getDate(), 2) + ' ' + leadingZeros(arr[i][1].getHours(), 2) + ':' + leadingZeros(arr[i][1].getMinutes(), 2) + ':' + leadingZeros(arr[i][1].getSeconds(), 2) + '</td>' +
+                                                                    tb.append('<tbody><tr>' + 
+                                                                    '<td style="width: 10;text-align: center;background-color: rgba(200, 164, 234, 1);vertical-align: middle;" onclick="link(`md`)">' + '<i class="fas fa-image"></i>' + '</td>' + 
+                                                                    '<td style="width: 22.5%;text-align: center;vertical-align: middle;">' + arr[i][1].getFullYear() + '/' + leadingZeros(arr[i][1].getMonth() + 1, 2) + '/' + leadingZeros(arr[i][1].getDate(), 2) + ' ' + leadingZeros(arr[i][1].getHours(), 2) + ':' + leadingZeros(arr[i][1].getMinutes(), 2) + ':' + leadingZeros(arr[i][1].getSeconds(), 2) + '</td>' +
                                                                     '<td style="width: 22.5%;"><p style="font-weight: bold;">생성 도구</p>' + browser + '</td>' +
                                                                     '<td style="width: 22.5%;"><p style="font-weight: bold;">저장 위치</p>' + arr[i][5] + '</td>' +
                                                                     '<td style="width: 22.5%;"></td>' +
@@ -605,7 +627,7 @@
                                                                         state = '수신'
                                                                     }
                                                                     tb.append('<tbody><tr>' + 
-                                                                    '<td>' + '<i class="fas fa-envelope"></i>' + '</td>' + 
+                                                                    '<td style="text-align: center;background-color: rgba(164, 212, 234, 1);vertical-align: middle;">' + '<i class="fas fa-envelope"></i>' + '</td>' + 
                                                                     '<td>' + arr[i][1].getFullYear() + '/' + leadingZeros(arr[i][1].getMonth() + 1, 2) + '/' + leadingZeros(arr[i][1].getDate(), 2) + ' ' + leadingZeros(arr[i][1].getHours(), 2) + ':' + leadingZeros(arr[i][1].getMinutes(), 2) + ':' + leadingZeros(arr[i][1].getSeconds(), 2) + '</td>' +
                                                                     '<td>' + state + '</td>' +
                                                                     '<td>' + arr[i][2] + '</td>' +
@@ -637,7 +659,7 @@
                                                                         state = '부재중'
                                                                     }
                                                                     tb.append('<tbody><tr>' + 
-                                                                    '<td>' + '<i class="fas fa-phone"></i>' + '</td>' + 
+                                                                    '<td style="text-align: center;background-color: rgba(164, 191, 234, 1);vertical-align: middle;">' + '<i class="fas fa-phone"></i>' + '</td>' + 
                                                                     '<td>' + arr[i][1].getFullYear() + '/' + leadingZeros(arr[i][1].getMonth() + 1, 2) + '/' + leadingZeros(arr[i][1].getDate(), 2) + ' ' + leadingZeros(arr[i][1].getHours(), 2) + ':' + leadingZeros(arr[i][1].getMinutes(), 2) + ':' + leadingZeros(arr[i][1].getSeconds(), 2) + '</td>' +
                                                                     '<td>' + state + '</td>' +
                                                                     '<td>' + arr[i][2] + '</td>' +
@@ -667,10 +689,10 @@
                                                                         browser = 'Samsung Internet'
                                                                     }
                                                                     tb.append('<tbody><tr>' + 
-                                                                    '<td>' + '<i class="fas fa-globe"></i>' + '</td>' + 
+                                                                    '<td style="text-align: center;background-color: rgba(164, 170, 234, 1);vertical-align: middle;">' + '<i class="fas fa-globe"></i>' + '</td>' + 
                                                                     '<td>' + arr[i][1].getFullYear() + '/' + leadingZeros(arr[i][1].getMonth() + 1, 2) + '/' + leadingZeros(arr[i][1].getDate(), 2) + ' ' + leadingZeros(arr[i][1].getHours(), 2) + ':' + leadingZeros(arr[i][1].getMinutes(), 2) + ':' + leadingZeros(arr[i][1].getSeconds(), 2) + '</td>' +
                                                                     '<td>' + browser + '</td>' +
-                                                                    '<td>' + arr[i][2] + '</td>' +
+                                                                    '<td>' + '<a href=' + arr[i][2] + ' target="blank">' + arr[i][2] + '</a>' + '</td>' +
                                                                     '<td>' + arr[i][3] + '</td>' +
                                                                     '</tr></tbody>'); 
                                                                 }
@@ -692,10 +714,10 @@
                                                             if (arr[i][0] == 'd'){
                                                                 if (arr[i][1] >= startDate && arr[i][1] <= endDate){
                                                                     tb.append('<tbody><tr>' + 
-                                                                    '<td>' + '<i class="fas fa-download"></i>' + '</td>' + 
+                                                                    '<td style="text-align: center;background-color: rgba(179, 164, 234, 1);vertical-align: middle;">' + '<i class="fas fa-download"></i>' + '</td>' + 
                                                                     '<td>' + arr[i][1].getFullYear() + '/' + leadingZeros(arr[i][1].getMonth() + 1, 2) + '/' + leadingZeros(arr[i][1].getDate(), 2) + ' ' + leadingZeros(arr[i][1].getHours(), 2) + ':' + leadingZeros(arr[i][1].getMinutes(), 2) + ':' + leadingZeros(arr[i][1].getSeconds(), 2) + '</td>' +
                                                                     '<td>' + arr[i][3] + '</td>' +
-                                                                    '<td>' + arr[i][4] + '</td>' +
+                                                                    '<td>' + '<a href=' + arr[i][4] + ' target="blank">' + arr[i][4] + '</a>' + '</td>' +
                                                                     '<td>' + arr[i][5] + '</td>' +
                                                                     '</tr></tbody>'); 
                                                                 }
@@ -724,15 +746,15 @@
                                                                     }
                                                                     if(arr[i][5].match('gif|jpe?g|tiff|png|webp|bmp')){//사진 확장자
                                                                     
-                                                                     tb.append(`<tbody><tr data-html="true" data-placement="left" class='list_data' title="<div style='float:right'><div class='feather icon-zoom-in'></div><div class='feather icon-zoom-out' style='display:none'></div><div class='feather icon-x'></div></div><img src=${arr[i][5]}/>">` + 
-                                                                    '<td>' + '<i class="fas fa-image"></i>' + '</td>' + 
+                                                                     tb.append(`<tbody><tr data-html="true" data-placement="left" class='list_data' title="<img src=${arr[i][5]}/>">` + 
+                                                                    '<td style="text-align: center;background-color: rgba(200, 164, 234, 1);vertical-align: middle;">' + '<i class="fas fa-image"></i>' + '</td>' + 
                                                                     '<td>' + arr[i][1].getFullYear() + '/' + leadingZeros(arr[i][1].getMonth() + 1, 2) + '/' + leadingZeros(arr[i][1].getDate(), 2) + ' ' + leadingZeros(arr[i][1].getHours(), 2) + ':' + leadingZeros(arr[i][1].getMinutes(), 2) + ':' + leadingZeros(arr[i][1].getSeconds(), 2) + '</td>' +
                                                                     '<td>' + browser + '</td>' +
                                                                     '<td>' + arr[i][5] + '</td>' +
                                                                     '</tr></tbody>'); 
                                                                     }else if(arr[i][5].match('mp4|m4v|avi|wmv')){//영상 확장자
                                                                     
-                                                                     tb.append(`<tbody><tr data-html="true" data-placement="left" class='list_data' title="<div style='float:right'><div class='feather icon-zoom-in'></div><div class='feather icon-zoom-out' style='display:none'></div><div class='feather icon-x'></div></div><video width='320' height='240' src=${arr[i][5]} controls autoplay/>">` + 
+                                                                     tb.append(`<tbody><tr data-html="true" data-placement="left" class='list_data' title="<video width='320' height='240' src=${arr[i][5]} controls autoplay/>">` + 
                                                                     '<td>' + '<i class="fas fa-image"></i>' + '</td>' + 
                                                                     '<td>' + arr[i][1].getFullYear() + '/' + leadingZeros(arr[i][1].getMonth() + 1, 2) + '/' + leadingZeros(arr[i][1].getDate(), 2) + ' ' + leadingZeros(arr[i][1].getHours(), 2) + ':' + leadingZeros(arr[i][1].getMinutes(), 2) + ':' + leadingZeros(arr[i][1].getSeconds(), 2) + '</td>' +
                                                                     '<td>' + browser + '</td>' +
@@ -781,27 +803,11 @@
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
 <script>
-
-$(document).on('click','.list_data',function(){
-        $(".list_data").tooltip({trigger: 'manual'}).tooltip('dispose');
-        $(this).tooltip({placement: 'left',trigger: 'manual'}).tooltip('show');
-         })
-$(document).on('click','.icon-x',function(){
-        $('.tooltip').tooltip({trigger: 'manual'}).tooltip('dispose');
-         }) 
-$(document).on('click','.tooltip-inner',function(){
-         $('.tooltip-inner').toggleClass('tooltip-zoom')
-         $('.icon-zoom-in').toggle()
-         $('.icon-zoom-out').toggle()
-         
-         })  
+$(document).on('mouseenter','tr',function(){//동적으로 생선된 span태그의 이벤트 감지를 위해
+        $('tr').tooltip({
+        }) 
+	}) 
 </script>
 
 
 {% endblock javascripts %}
-
-
-
-
-
-
