@@ -252,3 +252,29 @@ class calendar_model(models.Model): #귀수
     title = models.TextField(blank=True,null=True)
     dtstart = models.FloatField(blank=True,null=True)
     dtend = models.FloatField(blank=True,null=True)
+
+class kakao1_model(models.Model): #w재훈
+   
+    class Meta: 
+        managed = False 
+        app_label = "Kakao1" 
+        db_table = 'chat_logs_dec'
+
+    id = models.AutoField(db_column='_id',primary_key=True)
+    message = models.TextField(blank=True,null=True)
+    chat_id = models.TextField(blank=True,null=True)
+    v=models.TextField(blank=True,null=True)
+
+class kakao2_model(models.Model): #재훈
+   
+    class Meta: 
+        managed = False 
+        app_label = "Kakao2" 
+        db_table = 'friends_dec'
+
+    id = models.AutoField(primary_key=True)
+    name = models.TextField(blank=True,null=True)
+    status_message = models.TextField(blank=True,null=True)
+    nick_name = models.TextField(blank=True,null=True)
+    profile_image_url= models.TextField(blank=True,null=True)
+    

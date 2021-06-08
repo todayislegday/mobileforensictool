@@ -5,7 +5,7 @@ import sys,os,shutil
 import subprocess #서브 프로세스
 import webbrowser #웹브라우저
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))#상위 경로 함수 사용하기 위해서
-from function import read_tar
+from function import read_tar,kakaodecrypt
 from PyQt5.QtCore import QCoreApplication, Qt
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QGridLayout, QFileDialog, QLabel, QProgressBar
 from PyQt5.QtGui import QIcon
@@ -58,8 +58,10 @@ class QtGUI(QWidget):
 				self.label2.repaint()
 				self.label3.repaint()
 
-				read_tar.decompression(self.tarfilepath,self.outputpath)
+				read_tar.decompression(self.tarfilepath,self.outputpath)#필요한 파일 뽑아오기
 				self.progress(self)
+				kakaodecrypt.main(self.outputpath,1)#카카오 db1 해독
+				kakaodecrypt.main(self.outputpath,2)#카카오 db2 해독
 				subprocess.run(f'python {path}/../was/manage.py runserver',shell=True,timeout=0.5)
 			except Exception as e:
 				print(e)

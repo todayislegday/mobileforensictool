@@ -132,6 +132,13 @@ DATABASES = {
     'Calendar': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME':f'{OUTPATH}/data/com.android.providers.calendar/databases/calendar.db',
+    },
+     'Kakao1': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME':f'{OUTPATH}/data/com.kakao.talk/databases/Kakaotalk.db',
+    },'Kakao2': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME':f'{OUTPATH}/data/com.kakao.talk/databases/KakaoTalk2.db',
     }
 
    

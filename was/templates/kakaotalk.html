@@ -1,0 +1,187 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} UI Tabs {% endblock %} 
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}
+<style>
+.profile-title {
+    border-top: 1px solid rgb(202, 200, 200);
+    padding-top: 0.625rem;
+}
+.profile-title > * {
+    font-size: 0.75rem;
+    color: gray;
+    display: inline-block;
+    margin: 0;
+}
+.kakaoli{
+    list-style: none;
+    padding:20px;
+}
+.kakaoli:hover {
+  background-color:#fafafa;
+}
+
+
+
+#myTabContent{
+overflow-y: scroll;
+}
+#myTabContent::-webkit-scrollbar {
+    width: 15px;
+  }
+#myTabContent::-webkit-scrollbar-thumb {
+    background-color: #e6e6e6;
+    border-radius: 10px;
+    background-clip: padding-box;
+    border: 2px solid transparent;
+  }
+#myTabContent::-webkit-scrollbar-track {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: inset 0px 0px 5px white;
+  }
+
+p{
+    height:20px;
+}
+
+
+{% comment %} #myTabContent::-webkit-scrollbar-thumb {
+    
+     background-color: black; /*스크롤바의 색상*/
+} {% endcomment %}
+</style>
+
+{% endblock stylesheets %}
+
+{% block content %}
+
+            <div class="pcoded-content">
+                <div class="pcoded-inner-content">
+                    <!-- [ breadcrumb ] start -->
+                    <div class="page-header">
+                        <div class="page-block">
+                            <div class="row align-items-center">
+                                <div class="col-md-12">
+                                    <div class="page-header-title">
+                                        <h5 class="m-b-10">Kakaotalk</h5>
+                                    </div>
+                                    <ul class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="/"><i class="feather icon-home"></i></a></li>
+                                        <li class="breadcrumb-item"><a href="javascript:">Basic Componants</a></li>
+                                        <li class="breadcrumb-item"><a href="javascript:">Navs & tabs</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- [ breadcrumb ] end -->
+                    <div class="main-body">
+                        <div class="page-wrapper">
+                            <!-- [ Main Content ] start -->
+                            <div class="row">
+                                <!-- [ tabs ] start -->
+                                <div class="col-sm-12">
+                                    <h5>Basic Tabs</h5>
+                                    <hr>
+                                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                        <li class="nav-item"  style="width:50%">
+                                            <a class="nav-link active text-uppercase" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true"><i class="fas fa-user" style="margin-left:50%"></i></a>
+                                        </li>
+                                        <li class="nav-item" style="width:50%">
+                                            <a class="nav-link text-uppercase" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false"><i class="far fa-comments" style="margin-left:50%"></i></a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content" id="myTabContent" style="padding: 30px;height:1000px">
+                                        {% comment %} 친구목록 {% endcomment %}
+                                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                        <h4 style="margin:10px 20px">친구</h4>
+                                         <div style="margin-top: 30px;">
+                                                <ul>
+                                                    <li class='kakaoli'>
+                                                    <img src="https://p.kakaocdn.net/th/talkp/wmhzwyaCo2/erPyilZg9YQOd7qWXtT741/rdspld_110x110_c.jpg" alt="나의프로필사진" style="float: left;width: 3.125rem; border-radius: 70%;overflow: hidden;margin-right: 20px;">
+                                                    <div class="profile">
+                                                        <p>영호</p>
+                                                        <p>i luv bit-coin💕</p>
+                                                    </div>
+                                                    </li>
+                                                </ul>
+                                           </div>
+                                                <div class="profile-title">
+                                                        <h2 style="margin: 20px;">친구 {{friends|length}}</h2>
+                                                </div>
+                                                <div style="margin-top: 30px;">
+                                                <ul>
+                                                 {% for p in friends%}
+                                                    <li class='kakaoli'>
+                                                     {% if p.profile_image_url %} 
+                                                    <img src={{p.profile_image_url}}  style="float: left;width: 3.125rem; border-radius: 70%;overflow: hidden;margin-right: 20px;">
+                                                    {% else %}
+                                                   <img src="/static/assets/images/user.PNG"  style="float: left;width: 3.125rem; border-radius: 70%;overflow: hidden;margin-right: 20px;">
+                                                    {% endif %}
+                                                    <div class="profile">
+                                                    {% if p.nick_name %} 
+                                                      <p>{{p.nick_name}}</p>
+                                                    {% else %}    
+                                                     <p>{{p.name}}</p>
+                                                   {% endif %}
+                                                    
+                                                    {% if p.status_message %} 
+                                                        <p>{{p.status_message}}</p>
+                                                    {% else %}
+                                                         <p></p>
+                                                     {% endif %}
+                                                    </div>
+                                                    </li>
+                                               {% endfor %}
+                                                </ul>
+                                           </div>
+                                        </div>
+                                            
+
+
+                                            {% comment %} 채팅목록 {% endcomment %}
+                                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                            <h4 style="margin:10px 20px">채팅</h4>
+                                        </div>     
+                                    </div>
+                                </div>
+                                
+                                </div>
+                                <!-- [ tabs ] end -->
+                            </div>
+                            <!-- [ Main Content ] end -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+<script>
+
+$(document).ready(function(){
+  $('.nav-item').click(function(){
+      console.log($(this).find('a')[0].id)
+      if($(this).find('a')[0].id=="home-tab"){
+    $('.fa-user').removeClass('far')
+    $('.fa-user').addClass('fas')
+    $('.fa-comments').removeClass('fas')
+    $('.fa-comments').addClass('far')
+      }else{
+    $('.fa-user').removeClass('fas')
+    $('.fa-user').addClass('far')
+    $('.fa-comments').removeClass('far')
+    $('.fa-comments').addClass('fas')
+      }
+  })
+
+})
+</script>
+
+{% endblock javascripts %}
