@@ -103,10 +103,41 @@ p{
                                                     <li class='kakaoli'>
                                                     <img src="https://p.kakaocdn.net/th/talkp/wmhzwyaCo2/erPyilZg9YQOd7qWXtT741/rdspld_110x110_c.jpg" alt="나의프로필사진" style="float: left;width: 3.125rem; border-radius: 70%;overflow: hidden;margin-right: 20px;">
                                                     <div class="profile">
-                                                        <p>영호</p>
+                                                        <p style='font-weight:bold ; color:black'>영호</p>
                                                         <p>i luv bit-coin💕</p>
                                                     </div>
                                                     </li>
+                                                </ul>
+                                           </div>
+                                           <div class="profile-title">
+                                                        <h2 style="margin: 20px;">채널 {{plusfriends|length}}</h2>
+                                                </div>
+                                                <div style="margin-top: 30px;">
+                                                <ul>
+                                                 {% for p in plusfriends%}
+                                                    <li class='kakaoli'>
+                                                     {% if p.profile_image_url %} 
+                                                    <img src={{p.profile_image_url}}  style="float: left;width: 3.125rem; border-radius: 70%;overflow: hidden;margin-right: 20px;">
+                                                    {% else %}
+                                                   <img src="/static/assets/images/user.PNG"  style="float: left;width: 3.125rem; border-radius: 70%;overflow: hidden;margin-right: 20px;">
+                                                    {% endif %}
+                                                    <div class="profile">
+                                                    {% if p.contact_name %}
+                                                        <p id={{p.id}} style='font-weight:bold ;color:black'>{{p.contact_name}}</p>
+                                                    {% elif p.nick_name %} 
+                                                      <p id={{p.id}} style='font-weight:bold ;color:black'>{{p.nick_name}}</p>                                                 
+                                                    {% else %}    
+                                                     <p id={{p.id}} style='font-weight:bold ; color:black'>{{p.name}}</p>
+                                                   {% endif %}
+                                                    
+                                                    {% if p.status_message %} 
+                                                        <p>{{p.status_message}}</p>
+                                                    {% else %}
+                                                         <p></p>
+                                                     {% endif %}
+                                                    </div>
+                                                    </li>
+                                               {% endfor %}
                                                 </ul>
                                            </div>
                                                 <div class="profile-title">
@@ -122,10 +153,12 @@ p{
                                                    <img src="/static/assets/images/user.PNG"  style="float: left;width: 3.125rem; border-radius: 70%;overflow: hidden;margin-right: 20px;">
                                                     {% endif %}
                                                     <div class="profile">
-                                                    {% if p.nick_name %} 
-                                                      <p>{{p.nick_name}}</p>
+                                                    {% if p.contact_name %}
+                                                        <p id={{p.id}} style='font-weight:bold ;color:black'>{{p.contact_name}}</p>
+                                                    {% elif p.nick_name %} 
+                                                      <p id={{p.id}} style='font-weight:bold ;color:black'>{{p.nick_name}}</p>                                                 
                                                     {% else %}    
-                                                     <p>{{p.name}}</p>
+                                                     <p id={{p.id}} style='font-weight:bold ; color:black'>{{p.name}}</p>
                                                    {% endif %}
                                                     
                                                     {% if p.status_message %} 
@@ -166,8 +199,8 @@ p{
 <script>
 
 $(document).ready(function(){
-  $('.nav-item').click(function(){
-      console.log($(this).find('a')[0].id)
+  $('.nav-item').click(function(){//탭 변화
+
       if($(this).find('a')[0].id=="home-tab"){
     $('.fa-user').removeClass('far')
     $('.fa-user').addClass('fas')
@@ -180,6 +213,10 @@ $(document).ready(function(){
     $('.fa-comments').addClass('fas')
       }
   })
+
+console.log($('img:contains("open")'))
+
+
 
 })
 </script>

@@ -277,4 +277,16 @@ class kakao2_model(models.Model): #재훈
     status_message = models.TextField(blank=True,null=True)
     nick_name = models.TextField(blank=True,null=True)
     profile_image_url= models.TextField(blank=True,null=True)
-    
+    contact_name=models.TextField(blank=True,null=True)
+
+class kakao3_model(models.Model): #w재훈
+   
+    class Meta: 
+        managed = False 
+        app_label = "Kakao1" 
+        db_table = 'chat_rooms'
+
+    id = models.AutoField(db_column='_id',primary_key=True)
+    message = models.TextField(blank=True,null=True)
+    last_updated_at = models.FloatField(blank=True,null=True)
+    active_members_count=models.TextField(blank=True,null=True) #사람수
