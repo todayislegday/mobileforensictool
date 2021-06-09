@@ -333,46 +333,14 @@ def pages(request):
             context['page']=page_obj
             context['content']=m
         elif context['url']=="kakaotalk.html": #재훈
-            context['chrooms']=kakao1_model.objects.all()
+            #context['chrooms']=kakao1_model.objects.all() 채팅방 실제 생성
             context['friends']=kakao2_model.objects.raw("select * from friends_dec where v  not like '%%plusFriendProfile%%' ")
             context['plusfriends']=kakao2_model.objects.raw("select * from friends_dec where v  like '%%plusFriendProfile%%' ")
-        print(context)
-        # elif context['url']=="keyword-view.html":
-        #     text=message1_model.objects.values('text')
-
-        #     ###############################
-        #     c=list()
-        #     for a in text:#쿼리셋->list
-        #         c.append(a['text'])
-        #     litost=" ".join(map(str,c)) #list를 전체 문자열로 만든다.
-            
-        #     c=litost.split()#중복이 있는 list
-        #     list1=set(c)
-        #     list1=list(list1)#중복이 제거된 list
-            
-        #     list2=list()
-        #     list3=list()
-        #     for text in c:
-        #         list2.append({"text":text})
-        #     for text in list1:
-        #         list3.append({"text":text})
-        #     a=1
-
-        #     for a in list2:
-        #         find =a['text']
-        #         for e in list3:
-        #             if find==e['text']:
-        #                 try:e['weight']=e['weight']+1
-        #                 except:e['weight']=1
-        #     for e in list3:
-        #         e['html']={"title":f"빈도수:{e['weight']}"}  
-
-        #     context['words']=list3
+        
  ###########################################################  
         
     
 
-        #print(context)
         return render(request,context['url'],context)
     
     except template.TemplateDoesNotExist:
