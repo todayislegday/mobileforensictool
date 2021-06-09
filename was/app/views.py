@@ -334,7 +334,8 @@ def pages(request):
             context['content']=m
         elif context['url']=="kakaotalk.html": #재훈
             context['chrooms']=kakao1_model.objects.all()
-            context['friends']=kakao2_model.objects.all()
+            context['friends']=kakao2_model.objects.raw("select * from friends_dec where v  not like '%%plusFriendProfile%%' ")
+            context['plusfriends']=kakao2_model.objects.raw("select * from friends_dec where v  like '%%plusFriendProfile%%' ")
         print(context)
         # elif context['url']=="keyword-view.html":
         #     text=message1_model.objects.values('text')
