@@ -83,6 +83,7 @@ AIzaSyDkfnk4My0Tttw-jj8wa01Ii2PcepoiYLc
     var map;
     var markers = []; // 마커리스트
     var markerCluster;
+    var clsuter_flag = 0;
     var infowindow = new google.maps.InfoWindow();
     var geocoder = new google.maps.Geocoder();
     var icon, click_icon;
@@ -113,14 +114,15 @@ AIzaSyDkfnk4My0Tttw-jj8wa01Ii2PcepoiYLc
     }
     
     function initialize() {
+        var pre_zoom, now_zoom;
 
         initDate();
 
         map = new google.maps.Map(document.getElementById('map'), {
         zoom: 8,
         center: {
-            lat: 36.769982, // 원래는 첫 마커로 하려 했는데 첫 마커가 혼자 떨어져 있을 경우
-            lng: 127.81598  // 한 눈에 보기 힘들기 때문에 전체 지도를 첫 화면으로 띄움
+            lat: 36.769982, 
+            lng: 127.81598
         },
         mapTypeId: google.maps.MapTypeId.ROADMAP,
         streetViewControl : false, // 스크릿뷰 컨트롤은 필요없음
@@ -141,21 +143,41 @@ AIzaSyDkfnk4My0Tttw-jj8wa01Ii2PcepoiYLc
         click_icon = { // 클릭시 커스텀 마커
             path : 'M172.268 501.67C26.97 291.031 0 269.413 0 192 0 85.961 85.961 0 192 0s192 85.961 192 192c0 77.413-26.97 99.031-172.268 309.67-9.535 13.774-29.93 13.773-39.464 0z',
             fillColor: '#3f4d67',
-            fillOpacity: 0.6,
+            fillOpacity: 0.8,
             anchor: new google.maps.Point(250,520),
             strokeWeight: 2,
             strokeColor : '#3f4d67',
             labelOrigin: {x:200, y: 200},
             scale: 0.07
         }
- 
-        initMarker();
-        
+
         google.maps.event.addListener(map, 'idle', function() { // 맵 로딩이 완료 후 함수 실행
+            // console.log(map.getZoom());
+            // if(map.getZoom() >= 10) {
+            //     clsuter_flag = 1;
+            // }
+
+            // else {
+            //     clsuter_flag = 0;
+            // }
+            
             updateMarkers();
         });
 
-            // Custom InfoWindow
+        // google.maps.event.addListener(map, 'zoom_changed', function() { // 맵 로딩이 완료 후 함수 실행
+        //     now_zoom = map.getZoom();
+        //     console.log('pre_zoom ' + pre_zoom + ' now_zoom ' + now_zoom);
+
+        //     if(pre_zoom > 10 && pre_zoom > now_zoom) {
+        //         console.log("here");
+        //         markerCluster.clearMarkers();
+        //     }
+            
+        //     pre_zoom = now_zoom;
+        // });
+
+
+        // Custom InfoWindow
         google.maps.event.addListener(infowindow, 'domready', function() {
             var iwOuter = $('.gm-style-iw');
             var iwBackground = iwOuter.prev();
@@ -167,99 +189,14 @@ AIzaSyDkfnk4My0Tttw-jj8wa01Ii2PcepoiYLc
 
         google.maps.event.addListener(map, 'click', function() {
             infowindow.close();
-            click_id = -1; // 클릭이 끝나면 마커 id를 다시 -1로
-            updateMarkers(); // 업데이트 한번 더
-            
+            setMarker_OriginIcon();
+            click_id = -1; // 클릭이 끝나면 마커 id를 다시 -1로      
         });
     }
 
-    /* 다중 마커 셋팅 */
-    function initMarker() {
-
-        for (var i = 1; i <= size; i++) {
-            var marker = new google.maps.Marker({
-                id: profileJson[i][0],     // id
-                position: { lat: profileJson[i][1], lng: profileJson[i][2] },
-                map: map,
-                labelContent : String(profileJson[i][3])
-            });
-        
-            google.maps.event.addListener(marker, 'click', (function (marker) { // 마커 클릭 이벤트
-                return function () {
-                    setInfoWindow(marker);
-                }
-            })(marker, i));
-            markers.push(marker);
-        }   
-    }
-
-
-    /* 인포윈도우 셋팅 with Ajax + reverse GeoCoding */
-    function setInfoWindow(marker) {
-        var address;
-        geocoder.geocode({ location: marker['position'] }, (results, status) => {
-            if (status === "OK") {
-                if (results[1]) {
-                    address = results[1]['formatted_address'];
-
-                    $.ajax({
-                        url: '/geo-Artifact.html',
-                        data: { id: marker.id },        // 마커 id 값으로 data 불러오고
-                        success: function (data) {      // data엔 id로 검색한 필요한 좌표에 대한 부가적인 정보를 서버에서 전달하여 담겨있다.
-                            dataJson = JSON.parse(data) // JSON으로 파싱
-                            video_type = ['.mp4']; // 여기에 영상 확장자 다 넣어
-                            var path = dataJson[0]['fields']['data']; // 경로를 넣어, 나중에 확장자 구하려고
-
-                            click_id = marker.id; // 클릭한 마커 id를 전역으로
-                            var contentString = '<div class="iw-content" id = "info-content">' +
-                                '<div class= "iw-image"> ' +
-                                '<img id="info-img" src="' + dataJson[0]['fields']['data'] + '"style="max-width:100%"></img>' +
-                                // '<video id="info-video" controls src="' + dataJson[0]['fields']['data'] + '" style="max-width:100%"></video>' +
-                                '</div>' +
-                                '<div class= "iw-body"> ' +
-                                '<ul id = "iw-info-list" class="info-list">' +
-                                '<li id="info-Name">파일 명 : ' + dataJson[0]['fields']['displayname'] + '</li>' +
-                                '<li id="info-Date">촬영 시각 : ' + dataJson[0]['fields']['datetaken'] + '</li>' +
-                                '<li id="info-Add">상세 주소 : ' + address + '</li>' +
-                                '</ul>' +
-                                '</div>' +
-                                '</div>';
-                                
-                            for (var j = 0; j < video_type.length; j++) {
-                                if (path.substr(-4) == video_type[j]) {      // 경로 뒤 4개(확장자)를 잘라서 영상 확장자와 비교
-                                    contentString = contentString.replace('<img id="info-img', '<video controls id="info-video"');
-                                    contentString = contentString.replace('</img>', '</vedio>');
-                                }
-                            
-                                infowindow.setContent(contentString);
-                                infowindow.open(map, marker);
-                                updateMarkers(); // 줌과 이동 옵션을 지우고 클릭시 업데이트를 새로 하는 걸로
-                            }
-                        }
-                    });
-
-                } 
-                else {
-                 window.alert("No results found");
-                }
-            } 
-            else {
-                window.alert("Geocoder failed due to: " + status);
-            }
-        });
-
-        
-    }
-
-     /* 화면이 바뀔 때 마다 마커 업데이트 */
-     function updateMarkers() { 
-        var mapBounds = map.getBounds(); // 화면 경계 좌표 얻어서  
-        var startLo = mapBounds.getSouthWest();
-        var endLo = mapBounds.getNorthEast();      
-        var marker, position;
-        let count = 1;
-        var zoom = map.getZoom();
-
+    /* 화면이 바뀔 때 마다 마커 업데이트 */
+    function updateMarkers() { 
+        var mapBounds = map.getBounds(); // 화면 경계 좌표 얻어서        
         var startDate = new Date(document.getElementById("start-date").value);
         var endDate = new Date(document.getElementById("end-date").value);
 
@@ -269,93 +206,100 @@ AIzaSyDkfnk4My0Tttw-jj8wa01Ii2PcepoiYLc
         }
         endDate.setMinutes(endDate.getMinutes() + 1); // 시간이 분단위로 끊기니까 마지막 시간 + 1분으로 계산
 
+        var data  = {
+            "swlat":mapBounds.getSouthWest().lat(), // 지도 좌측 하단 위도
+            "swlng":mapBounds.getSouthWest().lng(), // 좌측 하단 경도
+            "nelat":mapBounds.getNorthEast().lat(), // 우측 상단 위도
+            "nelng":mapBounds.getNorthEast().lng(),  // 우측 하단 경도
+            "startDate":Math.floor(startDate.getTime() / 1000),
+            "endDate":Math.floor(endDate.getTime() / 1000)
+        };
 
-         
-
-        // $.ajax({
-        //     type: "POST",
-        //     url: 'pages',
-        //     dataType:'json',
-        //     data: data,
-        //     success: function(markerList) {
-        //         console.log(markerList);
-        //     }
-        // });
-
-var data  = {
-         "swlat":mapBounds.getSouthWest().lat(), // 지도 좌측 하단 위도
-         "swlng":mapBounds.getSouthWest().lng(), // 좌측 하단 경도
-         "nelat":mapBounds.getNorthEast().lat(), // 우측 상단 위도
-         "nelng":mapBounds.getNorthEast().lng()  // 우측 하단 경도
-         };
-
-google.maps.event.addListener(map,'zoom_changed', function() { // zoom 이벤트
-         $.ajax({
-             type: "POST",
-             url: 'geo-Artifact.html',
-             dataType:'json',
-             data: data,
-             success: function(markerList) { //마커 클리어후 다시업데이트
-                console.log(JSON.parse(markerList))
-             }
-         });
+        $.ajax({
+            type: "POST",
+            url: 'geo-Artifact.html',
+            dataType:'json',
+            data: data,
+            success: function(markerList) { //마커 클리어후 다시 업데이트
+                markerJson = JSON.parse(markerList);
+                console.log(markerJson.length + " 개가 검색되었습니다."); // 추후 html에 띄우고
+                if(markerJson.length == markers.length) {
+                    return;
+                }
+                deleteMarkers();
+                if(clsuter_flag = 0) {
+                    markerCluster.setMap(null);
+                }
+                addMarkers(markerJson);
+            }
         });
+    }
+    function addMarkers(markerJson) {
 
-
-        /* ===== 현 위치 마커 표시(프론트) ===== */
-        for (var i = 0; i < size; i++) {
-            marker = markers[i];
-
-            if(marker['labelContent'] > endDate) {
-                hideMarker(marker);
-                continue;
-            }
-
-            position = marker.getPosition(); // 마커 하나의 위치
+        var marker;
         
-            if(marker['labelContent'] >= startDate && marker['labelContent'] <= endDate) {
-            
-                if(click_id != marker['id']) { //기본형 마커
-                    marker.setIcon(icon);
-                    marker.setLabel({text:String(count),  // 이렇게 하면 전체 사진을 시간 순으로 라벨링
-                                    color: '#3f4d67',
-                                    fontWeight: 'bold',
-                                    fontSize:"15px"});
-                }
-            
-                // 마커 id를 여기서 받아서 해당 마커 id만 클릭 커스텀 마커로 셋팅
-                else {  // 클릭형 마커
+        for( var i=0; i<markerJson.length; i++) {
+            marker = new google.maps.Marker({
+                id: markerJson[i]['pk'],     // id
+                position: { lat: markerJson[i]['fields']['lat'], lng: markerJson[i]['fields']['longt'] },
+                map: map,
+                icon: icon,
+                label : {text:String(i+1),  // 이렇게 하면 전체 사진을 시간 순으로 라벨링
+                        color: '#3f4d67',
+                        fontWeight: 'bold',
+                        fontSize:"15px"
+                },
+                labelContent : String(markerJson[i]['fields']['datetaken']), // timestamp
+                zIndex: i
+            });
+
+            google.maps.event.addListener(marker, 'click', (function (marker) { // 마커 클릭 이벤트
+                return function () {
+                    if(click_id != -1) {
+                        setMarker_OriginIcon();
+                    }
+
+                    click_id = marker.id; // 클릭한 마커 id를 전역으로
+
                     marker.setIcon(click_icon); 
-                    marker.setLabel({text:String(count), // 여기서 셋팅을 하는 이유는 setLabel에서 text가 필수로 들어가야 하기 때문
-                                    color: '#ffffff',
-                                    fontWeight: 'bold',
-                                    fontSize:"15px"});
+                    marker.setLabel({text: marker.getLabel().text, // setLabel에서 text가 필수로 들어가야 함
+                                color: '#ffffff',
+                                fontWeight: 'bold',
+                                fontSize:"15px"});
+                    setInfoWindow(marker);
                 }
-            
-                if (position.lat() >= startLo.lat() && position.lat() <= endLo.lat() &&
-                    position.lng() >= startLo.lng() && position.lng() <= endLo.lng()) { // 마커가 현재 화면에 있는지 체크                       
-                        showMarker(marker);
-                } 
-            
-                else {
-                    hideMarker(marker);
-                }
-                count++;
-            }
-            else {
-                hideMarker(marker);
-            }
+            })(marker, i));
+            markers.push(marker);
         }
+
+        // console.log(clsuter_flag);
+        // if(clsuter_flag == 1) {
+        //     setClusterer();
+        // }
         
-        if(zoom >= 18 ) {
-            setClusterer(zoom);
-        }
-        
-        console.log(count-1 + " 개가 검색되었습니다."); // 추후 html에 띄우고
     }
 
+    /* click마커 아이콘 -> 기본 마커 아이콘으로 변환 */
+    function setMarker_OriginIcon() {
+        for(var i=0; i<markers.length; i++) {
+            if(markers[i].id == click_id) {
+                markers[i].setIcon(icon);
+                markers[i].setLabel({text: markers[i].getLabel().text,
+                            color: '#3f4d67',
+                            fontWeight: 'bold',
+                            fontSize:"15px"});
+                break;
+            }
+        }
+    }
+    
+
     /* 마커 클러스터 커스텀 */
-    function setClusterer(zoom) {
+    function setClusterer() {
+
+        // if(map.getZoom() <= 10) {
+        //     return;
+        // }
         var clusterStyle = [
             {
                 textColor : 'red',//'#3f4d67',
@@ -368,19 +312,13 @@ google.maps.event.addListener(map,'zoom_changed', function() { // zoom 이벤트
         var options_markerclusterer = {
             gridSize: 20,
             maxZoom: 22,
-            zoomOnClick: false,
-            ignoreHiddenMarkers: true,
             styles: clusterStyle
             // imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
         };
 
         markerCluster = new MarkerClusterer(map, markers, options_markerclusterer); 
 
-        // function clearClusters(e) {
-        //     e.preventDefault();
-        //     e.stopPropagation();
-        //     markerClusterer.clearMarkers();
-        // }
+        console.log(markerCluster);
 
         // const styles = markerCluster.getStyles();
         // for (let i=0; i<styles.length; i++) {
@@ -407,15 +345,69 @@ google.maps.event.addListener(map,'zoom_changed', function() { // zoom 이벤트
         });
     }
 
+    /* 인포윈도우 셋팅 with Ajax + reverse GeoCoding */
+    function setInfoWindow(marker) {
+        var address;
+        geocoder.geocode({ location: marker['position'] }, (results, status) => {
+            if (status === "OK") {
+                if (results[1]) {
+                    address = results[1]['formatted_address'];
 
-    function showMarker(marker) {
-        if (marker.getMap()) return;
-        marker.setMap(map);
+                    $.ajax({
+                        url: '/geo-Artifact.html',
+                        data: { id: marker.id },        // 마커 id 값으로 data 불러오고
+                        success: function (data) {      // data엔 id로 검색한 필요한 좌표에 대한 부가적인 정보를 서버에서 전달하여 담겨있다.
+                            dataJson = JSON.parse(data) // JSON으로 파싱
+                            video_type = ['.mp4']; // 여기에 영상 확장자 다 넣어
+                            var path = dataJson[0]['fields']['data']; // 경로를 넣어, 나중에 확장자 구하려고
+
+                            var contentString = '<div class="iw-content" id = "info-content">' +
+                                '<div class= "iw-image"> ' +
+                                '<img id="info-img" src="' + path + '"style="max-width:100%"></img>' +
+                                // '<video id="info-video" controls src="' + dataJson[0]['fields']['data'] + '" style="max-width:100%"></video>' +
+                                '</div>' +
+                                '<div class= "iw-body"> ' +
+                                '<ul id = "iw-info-list" class="info-list">' +
+                                '<li id="info-Name">파일 명 : ' + dataJson[0]['fields']['displayname'] + '</li>' +
+                                '<li id="info-Date">촬영 시각 : ' + dataJson[0]['fields']['datetaken'] + '</li>' +
+                                '<li id="info-Add">상세 주소 : ' + address + '</li>' +
+                                '</ul>' +
+                                '</div>' +
+                                '</div>';
+
+                            for (var j = 0; j < video_type.length; j++) {
+                                if (path.substr(-4) == video_type[j]) {      // 경로 뒤 4개(확장자)를 잘라서 영상 확장자와 비교
+                                    contentString = contentString.replace('<img id="info-img', '<video controls id="info-video"');
+                                    contentString = contentString.replace('</img>', '</vedio>');
+                                }
+
+                                infowindow.setContent(contentString);
+                                infowindow.open(map, marker);
+                                updateMarkers(); // 줌과 이동 옵션을 지우고 클릭시 업데이트를 새로 하는 걸로
+                            }
+                        }
+                    });
+                } 
+                else {
+                    window.alert("No results found");
+                }
+            } 
+            else {
+                window.alert("Geocoder failed due to: " + status);
+            }
+        });   
     }
 
-    function hideMarker(marker) {
-        if (!marker.getMap()) return;
-        marker.setMap(null);
+    function removeAllMarkers() {
+        for (let i = 0; i < markers.length; i++) {
+            if (!markers[i].getMap()) continue;
+            markers[i].setMap(null);
+        }
+    }
+
+    function deleteMarkers() {
+        removeAllMarkers();
+        markers = [];
     }
 
     google.maps.event.addDomListener(window, 'load', initialize);
