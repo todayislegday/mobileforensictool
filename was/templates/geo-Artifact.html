@@ -211,8 +211,8 @@ AIzaSyDkfnk4My0Tttw-jj8wa01Ii2PcepoiYLc
             "swlng":mapBounds.getSouthWest().lng(), // 좌측 하단 경도
             "nelat":mapBounds.getNorthEast().lat(), // 우측 상단 위도
             "nelng":mapBounds.getNorthEast().lng(),  // 우측 하단 경도
-            "startDate":Math.floor(startDate.getTime() / 1000),
-            "endDate":Math.floor(endDate.getTime() / 1000)
+            "startDate":startDate.getTime(), //수정
+            "endDate":endDate.getTime()  //수정
         };
 
         $.ajax({
@@ -352,39 +352,59 @@ AIzaSyDkfnk4My0Tttw-jj8wa01Ii2PcepoiYLc
             if (status === "OK") {
                 if (results[1]) {
                     address = results[1]['formatted_address'];
-
                     $.ajax({
                         url: '/geo-Artifact.html',
-                        data: { id: marker.id },        // 마커 id 값으로 data 불러오고
+                        data: { "id": marker.id,
+                                "lat":marker.position.lat(),
+                                "lng":marker.position.lng() },        // 마커 id 값으로 data 불러오고
                         success: function (data) {      // data엔 id로 검색한 필요한 좌표에 대한 부가적인 정보를 서버에서 전달하여 담겨있다.
                             dataJson = JSON.parse(data) // JSON으로 파싱
-                            video_type = ['.mp4']; // 여기에 영상 확장자 다 넣어
-                            var path = dataJson[0]['fields']['data']; // 경로를 넣어, 나중에 확장자 구하려고
-
-                            var contentString = '<div class="iw-content" id = "info-content">' +
-                                '<div class= "iw-image"> ' +
-                                '<img id="info-img" src="' + path + '"style="max-width:100%"></img>' +
-                                // '<video id="info-video" controls src="' + dataJson[0]['fields']['data'] + '" style="max-width:100%"></video>' +
-                                '</div>' +
-                                '<div class= "iw-body"> ' +
-                                '<ul id = "iw-info-list" class="info-list">' +
-                                '<li id="info-Name">파일 명 : ' + dataJson[0]['fields']['displayname'] + '</li>' +
-                                '<li id="info-Date">촬영 시각 : ' + dataJson[0]['fields']['datetaken'] + '</li>' +
-                                '<li id="info-Add">상세 주소 : ' + address + '</li>' +
-                                '</ul>' +
-                                '</div>' +
-                                '</div>';
-
-                            for (var j = 0; j < video_type.length; j++) {
-                                if (path.substr(-4) == video_type[j]) {      // 경로 뒤 4개(확장자)를 잘라서 영상 확장자와 비교
-                                    contentString = contentString.replace('<img id="info-img', '<video controls id="info-video"');
-                                    contentString = contentString.replace('</img>', '</vedio>');
+                            console.log(dataJson[0]['fields']['data'].substr(-4))
+                            // video_type = ['.mp4']; // 여기에 영상 확장자 다 넣어
+                            //var path = dataJson[0]['fields']['data']; // 경로를 넣어, 나중에 확장자 구하려고
+                            var contentString=""
+                            
+                            for(var i=0;i<dataJson.length;i++){
+                                var a=''
+                                var lf=''
+                                var rf=''
+                                if(i!=0)a='none'
+                                if(i==0)lf='none'
+                                if(i==dataJson.length-1)rf='none'
+                                
+                                if(dataJson[i]['fields']['data'].substr(-4)!='.mp4'){
+                             contentString += `<div class="iw-content" id = "${i}" style="display:${a}"> 
+                                <div class= "iw-image"> 
+                               <i class="fas fa-chevron-left" style="display:${lf};margin:5px"></i><i class="fas fa-chevron-right"style='float:right;display:${rf};margin:5px' ></i>
+                                <img id="info-img" src=${dataJson[i]['fields']['data']} style="height:300px">  </img>
+                                </div>
+                                <div class= "iw-body">
+                                <ul id = "iw-info-list" class="info-list">
+                                <li id="info-Name">파일 명 :  ${dataJson[i]['fields']['displayname']}</li>
+                                <li id="info-Date">촬영 시각 : ${dataJson[i]['fields']['datetaken']} </li>
+                                <li id="info-Add">상세 주소 : ${address} </li>
+                                </ul>
+                                </div>
+                                </div>`
+                                }else{
+                                   contentString += `<div class="iw-content" id ="${i}" style="display:${a}"> 
+                                <div class= "iw-video">  <i class="fas fa-chevron-left" style="display:${lf};margin:5px"></i><i class="fas fa-chevron-right"style='float:right ;display:${rf};margin:5px'></i>
+                                <video controls id="info-video" src=${dataJson[i]['fields']['data']} style="width:300px;height:300px"> </video>
+                                </div>
+                                <div class= "iw-body">
+                                <ul id = "iw-info-list" class="info-list">
+                                <li id="info-Name">파일 명 :  ${dataJson[i]['fields']['displayname']}</li>
+                                <li id="info-Date">촬영 시각 : ${dataJson[i]['fields']['datetaken']} </li>
+                                <li id="info-Add">상세 주소 : ${address} </li>
+                                </ul>
+                                </div>
+                                </div>`         
                                 }
-
-                                infowindow.setContent(contentString);
+                            }
+                            
+                              infowindow.setContent(contentString);
                                 infowindow.open(map, marker);
                                 updateMarkers(); // 줌과 이동 옵션을 지우고 클릭시 업데이트를 새로 하는 걸로
-                            }
                         }
                     });
                 } 
@@ -414,4 +434,18 @@ AIzaSyDkfnk4My0Tttw-jj8wa01Ii2PcepoiYLc
 
 
 </script>
+<script>
+$(document).on('click','.fa-chevron-right',function(){
+    var id=$(this).closest('.iw-content')[0].id
+    $(`#${id}`).css("display",'none')
+    $(`#${parseInt(id)+1}`).css("display",'')
+})
+$(document).on('click','.fa-chevron-left',function(){
+     var id=$(this).closest('.iw-content')[0].id
+    $(`#${id}`).css("display",'none')
+    $(`#${parseInt(id)-1}`).css("display",'')
+})
+
+</script>
+
 {% endblock javascripts %}

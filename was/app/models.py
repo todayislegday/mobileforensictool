@@ -253,7 +253,7 @@ class calendar_model(models.Model): #귀수
     dtstart = models.FloatField(blank=True,null=True)
     dtend = models.FloatField(blank=True,null=True)
 
-class kakao1_model(models.Model): #w재훈
+class kakao1_model(models.Model): #재훈
    
     class Meta: 
         managed = False 
