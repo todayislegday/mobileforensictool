@@ -41,9 +41,7 @@ class QtGUI(QWidget):
 		if self.tarfilepath!='' and self.buildfilepath!=''and self.outputpath!='':#파일 경로를 지정하였다면 시스템 명령으로 대시보드를 띄운다.
 			try:
 				path=os.path.dirname(os.path.abspath(__file__))
-				self.progress(self)
 				f=open(f"{path}/../경로.txt",'w')
-				self.progress(self)
 				data = f"{self.tarfilepath}\n{self.outputpath}"  #파일 경로를 기록한다. 추후에 was에서 읽음
 				f.write(data)
 				f.close()
@@ -61,7 +59,9 @@ class QtGUI(QWidget):
 				read_tar.decompression(self.tarfilepath,self.outputpath)#필요한 파일 뽑아오기
 				self.progress(self)
 				kakaodecrypt.main(self.outputpath,1)#카카오 db1 해독
+				self.progress(self)
 				kakaodecrypt.main(self.outputpath,2)#카카오 db2 해독
+				self.progress(self)
 				subprocess.run(f'python {path}/../was/manage.py runserver',shell=True,timeout=0.5)
 			except Exception as e:
 				print(e)
