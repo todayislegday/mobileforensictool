@@ -3,7 +3,6 @@
 {% block title %} Timeline {% endblock %} 
 
 {% block stylesheets %}
-<link rel="stylesheet" href="/static/assets/css/jqcloud.min.css">
 <link rel="stylesheet" href="/static/assets/css/right_box.css">
 {% endblock stylesheets %}
 
@@ -36,7 +35,10 @@
                     <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
                     <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
                     <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
-                    <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+                    <link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" /> 
+                    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script> 
+                    <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
+                    <script src="//cdn.amcharts.com/lib/4/plugins/rangeSelector.js"></script> 
                     <link rel="stylesheet" type="text/css" href="/static/assets/css/jquery.datetimepicker.css"/ >
                     <script src="/static/assets/js/jquery.datetimepicker.full.min.js"></script>
 
@@ -355,13 +357,16 @@
                         // Add a legend
                         chart.legend = new am4charts.Legend();
                         chart.legend.position = "top";
+
+                        
                     </script>
                     
                     <div class="col-xl-12">
                         <div class="card" style="margin-bottom: 15px;">
                             <div class="card-header">
                                 <h5>Duration</h5>
-                                <form id="duration" style="text-align: center;">
+                                <div id="selectordiv"></div>
+                                <form id="duration" style="text-align: center; display:none">
                                     <input id="datetimepicker1" type="text" onchange="send1(this.value)" style="text-align: center;">
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     <input id="datetimepicker2" type="text" onchange="send2(this.value)" style="text-align: center;">
@@ -474,6 +479,19 @@
                                                 $('#datetimepicker2').val(tmpDate);
                                                 $('#datetimepicker2').datetimepicker();
 
+                                                var selector = new am4plugins_rangeSelector.DateAxisRangeSelector();
+                                                selector.container = document.getElementById("selectordiv");
+                                                selector.axis = dateAxis;
+
+
+                                                selector.events.on("drawn", function(ev) {
+                                                $(".amcharts-range-selector-range-wrapper input").datepicker({
+                                                    dateFormat: "yy-mm-dd",
+                                                    onSelect: function() {
+                                                    selector.updateZoom();
+                                                    }
+                                                });
+                                                });  
                                                 function leadingZeros(n, digits) {
                                                     var zero = '';
                                                     n = n.toString();
@@ -804,6 +822,23 @@
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
 <script>
+$(document).ready(function(){
+
+
+    $("#result-tab").click(function(){
+      $('#duration').css("display","")
+      $('#selectordiv').css("display","none")
+    })
+
+    $("#timeline-tab").click(function(){
+      $('#duration').css("display","none")
+      $('#selectordiv').css("display","")
+    })
+
+
+})
+
+
 
 $(document).on('click','.list_data',function(){
         $(".list_data").tooltip({trigger: 'manual'}).tooltip('dispose');
