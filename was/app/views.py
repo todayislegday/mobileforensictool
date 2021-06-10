@@ -103,9 +103,9 @@ def pages(request):
             context['page']=page_obj
             context['content']=m
             
-            text=message1_model.objects.values('text')
-
-            context['words']=count(text,'text')
+            text=mms_model.objects.values('content')
+            
+            context['words']=count(text,'content')
 
         elif context['url']=="wifi.html": ##귀수
             path=os.path.dirname(os.path.abspath(__file__))
