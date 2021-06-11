@@ -123,14 +123,13 @@ def pages(request):
         elif context['url']=="geo-Artifact.html":  ##재식
            
             if 'id' in request.GET:##ajax get 처리
-                id=request.GET['id']
                 OUTPATH="/static/assets/images/"
-                a=map_model.objects.raw("select _id,latitude,longitude,_display_name,replace(_data,'/storage/emulated','/static/assets/images/media') as data,DATETIME(ROUND(datetaken / 1000), 'unixepoch','localtime') AS datetaken from files where latitude=%s AND longitude=%s" %(request.GET['lat'],request.GET['lng']))
+                a=map_model.objects.raw("select _id,latitude,longitude,_display_name,replace(_data,'/storage/emulated','/static/assets/images/media') as data,DATETIME(ROUND(datetaken / 1000), 'unixepoch','localtime') AS datetaken from files where  (latitude>=%s AND latitude<=%s) AND (longitude>=%s AND longitude<=%s)" %((float)(request.GET['lat'])-0.000001,(float)(request.GET['lat'])+0.000001,(float)(request.GET['lng'])-0.000001,(float)(request.GET['lng'])+0.000001))#오차 처리
                 return JsonResponse(serializers.serialize('json',a),safe=False)
             
             if request.method=="POST":##ajax post 처리
-                print(request.POST)
-                a=map_model.objects.raw("select _id,latitude,longitude,datetaken from files where (%s<=latitude AND latitude<=%s) AND (%s<=longitude AND longitude<=%s) AND (%s<=datetaken AND datetaken<=%s)" %(request.POST['swlat'],request.POST['nelat'],request.POST['swlng'],request.POST['nelng'],request.POST['startDate'],request.POST['endDate'] ))
+                
+                a=map_model.objects.raw("select _id,latitude,longitude,datetaken from files where (%s<=latitude AND latitude<=%s) AND (%s<=longitude AND longitude<=%s) AND (%s<=datetaken AND datetaken<=%s) ORDER BY datetaken ASC" %(request.POST['swlat'],request.POST['nelat'],request.POST['swlng'],request.POST['nelng'],request.POST['startDate'],request.POST['endDate'] ))
                 return JsonResponse(serializers.serialize('json',a),safe=False)
 
             map_list=map_model.objects.all().order_by('datetaken')
@@ -145,6 +144,7 @@ def pages(request):
                     map_dict[str(i)].append(m.datetaken)
                     i+=1
             context['geo']=map_dict
+            print(map_dict)
 
         elif context['url']=="chrome-history.html":#지호
             page = request.GET.get('page', '1')
