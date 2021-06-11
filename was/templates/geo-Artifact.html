@@ -94,6 +94,7 @@ AIzaSyDkfnk4My0Tttw-jj8wa01Ii2PcepoiYLc
         /*======= datepicker 초기 설정 =======*/
         let firstDate = new Date(profileJson[1][3]); // 첫 마커의 dateTaken
         let lastDate =  new Date(profileJson[size][3]); // 마지막 마커의 dateTaken
+        lastDate.setMinutes(lastDate.getMinutes()+1)//초가 짤리게 들어감,따라서 +1
 
         let tmpFormat = firstDate.getFullYear() + '-' + (firstDate.getMonth() + 1) + '-' + firstDate.getDate() + ' ' + firstDate.getHours() + ':' + firstDate.getMinutes();
         $('#start-date').val(tmpFormat);
