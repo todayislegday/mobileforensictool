@@ -224,8 +224,8 @@ AIzaSyDkfnk4My0Tttw-jj8wa01Ii2PcepoiYLc
             data: data,
             success: function(markerList) { //마커 클리어후 다시 업데이트
                 markerJson = JSON.parse(markerList);
-                console.log(markerJson.length + " 개가 검색되었습니다."); // 추후 html에 띄우고
-                if(markerJson.length == markers.length) {
+                console.log(markerJson)
+                if(markerJson.length == markers.length) {//ajax이후 맵에서 마커에대한 변경이 없다면 return
                     return;
                 }
                 deleteMarkers();
@@ -239,7 +239,6 @@ AIzaSyDkfnk4My0Tttw-jj8wa01Ii2PcepoiYLc
     function addMarkers(markerJson) {
 
         var marker;
-        console.log(markerJson)
         for( var i=0; i<markerJson.length; i++) {
             marker = new google.maps.Marker({
                 id: markerJson[i]['pk'],     // id

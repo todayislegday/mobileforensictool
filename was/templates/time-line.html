@@ -471,7 +471,6 @@
 
                                                 var startDate = arr[0][1];
                                                 var endDate = arr[arr.length - 1][1];
-
                                                 let tmpDate = startDate.getFullYear() + '/' + leadingZeros(startDate.getMonth() + 1, 2) + '/' + leadingZeros(startDate.getDate(), 2) + ' ' + leadingZeros(startDate.getHours(), 2) + ':' + '00';
                                                 $('#datetimepicker1').val(tmpDate);
                                                 $('#datetimepicker1').datetimepicker();
@@ -484,11 +483,20 @@
                                                 selector.axis = dateAxis;
 
 
-                                                selector.events.on("drawn", function(ev) {
+                                                selector.events.on("drawn", function() {
                                                 $(".amcharts-range-selector-range-wrapper input").datepicker({
                                                     dateFormat: "yy-mm-dd",
-                                                    onSelect: function() {
+                                                    onSelect: function(value) {
                                                     selector.updateZoom();
+                                                   if($(this).attr('class')=="amcharts-range-selector-from-input hasDatepicker")//start end 둘중에 어디서 나오는지 식별
+                                                    {
+                                                         $('#datetimepicker1').val(value+" 00:00");
+                                                         $('#datetimepicker1').change();
+                                                         
+                                                    }else{
+                                                         $('#datetimepicker2').val(value+" 00:00");
+                                                         $('#datetimepicker2').change();
+                                                    }
                                                     }
                                                 });
                                                 });  
