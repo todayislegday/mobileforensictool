@@ -73,7 +73,7 @@
                         var mdprofile = document.getElementById("dict-id-md").textContent
                         var mdprofileJson = JSON.parse(mdprofile)
 
-                        var mSize = "{{mms|length}}" // 마커 개수
+                        var mSize = "{{mms|length}}" 
                         var cSize = "{{calllog|length}}"
                         var chSize = "{{chromeurlhistory|length}}"
                         var sSize = "{{Samurlhistory|length}}"
@@ -560,13 +560,23 @@
                                                                     }else{
                                                                         state = '수신'
                                                                     }
-                                                                    tb.append('<tbody><tr>' + 
+                                                                    if(arr[i][6]){
+                                                                     tb.append(`<tbody><tr data-html="true" data-placement="left" class='list_data' title="<div style='float:right'><div class='feather icon-zoom-in'></div><div class='feather icon-zoom-out' style='display:none'></div><div class='feather icon-x'></div></div><img src=${arr[i][3]}/>">` + 
                                                                     '<td style="width: 10%;text-align: center;background-color: rgba(164, 212, 234, 1);vertical-align: middle;" onclick="link(`m`)">' + '<i class="fas fa-envelope"></i>' + '</td>' + 
                                                                     '<td style="width: 22.5%;text-align: center;vertical-align: middle;">' + arr[i][1].getFullYear() + '/' + leadingZeros(arr[i][1].getMonth() + 1, 2) + '/' + leadingZeros(arr[i][1].getDate(), 2) + ' ' + leadingZeros(arr[i][1].getHours(), 2) + ':' + leadingZeros(arr[i][1].getMinutes(), 2) + ':' + leadingZeros(arr[i][1].getSeconds(), 2) + '</td>' +
                                                                     '<td style="width: 22.5%;"><p style="font-weight: bold;">상태</p>' + state + '</td>' +
                                                                     '<td style="width: 22.5%;"><p style="font-weight: bold;">번호</p>' + arr[i][2] + '</td>' +
                                                                     '<td style="width: 22.5%;"><p style="font-weight: bold;">내용</p>' + arr[i][3] + '</td>' +
                                                                     '</tr></tbody>'); 
+                                                                    }else{
+                                                                    tb.append('<tbody><tr id>' + 
+                                                                    '<td style="width: 10%;text-align: center;background-color: rgba(164, 212, 234, 1);vertical-align: middle;" onclick="link(`m`)">' + '<i class="fas fa-envelope"></i>' + '</td>' + 
+                                                                    '<td style="width: 22.5%;text-align: center;vertical-align: middle;">' + arr[i][1].getFullYear() + '/' + leadingZeros(arr[i][1].getMonth() + 1, 2) + '/' + leadingZeros(arr[i][1].getDate(), 2) + ' ' + leadingZeros(arr[i][1].getHours(), 2) + ':' + leadingZeros(arr[i][1].getMinutes(), 2) + ':' + leadingZeros(arr[i][1].getSeconds(), 2) + '</td>' +
+                                                                    '<td style="width: 22.5%;"><p style="font-weight: bold;">상태</p>' + state + '</td>' +
+                                                                    '<td style="width: 22.5%;"><p style="font-weight: bold;">번호</p>' + arr[i][2] + '</td>' +
+                                                                    '<td style="width: 22.5%;"><p style="font-weight: bold;">내용</p>' + arr[i][3] + '</td>' +
+                                                                    '</tr></tbody>'); 
+                                                                    }
                                                                 }
                                                             }
                                                             if (arr[i][0] == 'c'){
@@ -623,13 +633,32 @@
                                                                     }else{
                                                                         browser = arr[i][3]
                                                                     }
-                                                                    tb.append('<tbody><tr>' + 
+                                                                   if(arr[i][5].match('gif|jpe?g|tiff|png|webp|bmp')){//사진 확장자
+        
+                                                                    tb.append(`<tbody><tr data-html="true" data-placement="left" class='list_data' title="<div style='float:right'><div class='feather icon-zoom-in'></div><div class='feather icon-zoom-out' style='display:none'></div><div class='feather icon-x'></div></div><img src=${arr[i][5]}/>">` + 
                                                                     '<td style="width: 10;text-align: center;background-color: rgba(200, 164, 234, 1);vertical-align: middle;" onclick="link(`md`)">' + '<i class="fas fa-image"></i>' + '</td>' + 
                                                                     '<td style="width: 22.5%;text-align: center;vertical-align: middle;">' + arr[i][1].getFullYear() + '/' + leadingZeros(arr[i][1].getMonth() + 1, 2) + '/' + leadingZeros(arr[i][1].getDate(), 2) + ' ' + leadingZeros(arr[i][1].getHours(), 2) + ':' + leadingZeros(arr[i][1].getMinutes(), 2) + ':' + leadingZeros(arr[i][1].getSeconds(), 2) + '</td>' +
                                                                     '<td style="width: 22.5%;"><p style="font-weight: bold;">생성 도구</p>' + browser + '</td>' +
                                                                     '<td style="width: 22.5%;"><p style="font-weight: bold;">저장 위치</p>' + arr[i][5] + '</td>' +
                                                                     '<td style="width: 22.5%;"></td>' +
                                                                     '</tr></tbody>'); 
+                                                                   }else if(arr[i][5].match('mp4|m4v|avi|wmv')){
+                                                                     tb.append(`<tbody><tr data-html="true" data-placement="left" class='list_data' title="<div style='float:right'><div class='feather icon-zoom-in'></div><div class='feather icon-zoom-out' style='display:none'></div><div class='feather icon-x'></div></div><video width='320' height='240' src=${arr[i][5]} controls autoplay/>">` + 
+                                                                    '<td style="width: 10;text-align: center;background-color: rgba(200, 164, 234, 1);vertical-align: middle;" onclick="link(`md`)">' + '<i class="fas fa-image"></i>' + '</td>' + 
+                                                                    '<td style="width: 22.5%;text-align: center;vertical-align: middle;">' + arr[i][1].getFullYear() + '/' + leadingZeros(arr[i][1].getMonth() + 1, 2) + '/' + leadingZeros(arr[i][1].getDate(), 2) + ' ' + leadingZeros(arr[i][1].getHours(), 2) + ':' + leadingZeros(arr[i][1].getMinutes(), 2) + ':' + leadingZeros(arr[i][1].getSeconds(), 2) + '</td>' +
+                                                                    '<td style="width: 22.5%;"><p style="font-weight: bold;">생성 도구</p>' + browser + '</td>' +
+                                                                    '<td style="width: 22.5%;"><p style="font-weight: bold;">저장 위치</p>' + arr[i][5] + '</td>' +
+                                                                    '<td style="width: 22.5%;"></td>' +
+                                                                    '</tr></tbody>');        
+                                                                   }else{
+                                                                         tb.append('<tbody><tr>' + 
+                                                                    '<td style="width: 10;text-align: center;background-color: rgba(200, 164, 234, 1);vertical-align: middle;" onclick="link(`md`)">' + '<i class="fas fa-image"></i>' + '</td>' + 
+                                                                    '<td style="width: 22.5%;text-align: center;vertical-align: middle;">' + arr[i][1].getFullYear() + '/' + leadingZeros(arr[i][1].getMonth() + 1, 2) + '/' + leadingZeros(arr[i][1].getDate(), 2) + ' ' + leadingZeros(arr[i][1].getHours(), 2) + ':' + leadingZeros(arr[i][1].getMinutes(), 2) + ':' + leadingZeros(arr[i][1].getSeconds(), 2) + '</td>' +
+                                                                    '<td style="width: 22.5%;"><p style="font-weight: bold;">생성 도구</p>' + browser + '</td>' +
+                                                                    '<td style="width: 22.5%;"><p style="font-weight: bold;">저장 위치</p>' + arr[i][5] + '</td>' +
+                                                                    '<td style="width: 22.5%;"></td>' +
+                                                                    '</tr></tbody>'); 
+                                                                   }
                                                                 }
                                                             }
                                                         }
@@ -653,13 +682,23 @@
                                                                     }else{
                                                                         state = '수신'
                                                                     }
-                                                                    tb.append('<tbody><tr>' + 
+                                                                    if(arr[i][6]){
+                                                                    tb.append(`<tbody><tr data-html="true" data-placement="left" class='list_data' title="<div style='float:right'><div class='feather icon-zoom-in'></div><div class='feather icon-zoom-out' style='display:none'></div><div class='feather icon-x'></div></div><img src=${arr[i][3]}/>">`+ 
                                                                     '<td style="text-align: center;background-color: rgba(164, 212, 234, 1);vertical-align: middle;">' + '<i class="fas fa-envelope"></i>' + '</td>' + 
                                                                     '<td>' + arr[i][1].getFullYear() + '/' + leadingZeros(arr[i][1].getMonth() + 1, 2) + '/' + leadingZeros(arr[i][1].getDate(), 2) + ' ' + leadingZeros(arr[i][1].getHours(), 2) + ':' + leadingZeros(arr[i][1].getMinutes(), 2) + ':' + leadingZeros(arr[i][1].getSeconds(), 2) + '</td>' +
                                                                     '<td>' + state + '</td>' +
                                                                     '<td>' + arr[i][2] + '</td>' +
                                                                     '<td>' + arr[i][3] + '</td>' +
-                                                                    '</tr></tbody>'); 
+                                                                    '</tr></tbody>');
+                                                                    }else{
+                                                                     tb.append('<tbody><tr>' + 
+                                                                    '<td style="text-align: center;background-color: rgba(164, 212, 234, 1);vertical-align: middle;">' + '<i class="fas fa-envelope"></i>' + '</td>' + 
+                                                                    '<td>' + arr[i][1].getFullYear() + '/' + leadingZeros(arr[i][1].getMonth() + 1, 2) + '/' + leadingZeros(arr[i][1].getDate(), 2) + ' ' + leadingZeros(arr[i][1].getHours(), 2) + ':' + leadingZeros(arr[i][1].getMinutes(), 2) + ':' + leadingZeros(arr[i][1].getSeconds(), 2) + '</td>' +
+                                                                    '<td>' + state + '</td>' +
+                                                                    '<td>' + arr[i][2] + '</td>' +
+                                                                    '<td>' + arr[i][3] + '</td>' +
+                                                                    '</tr></tbody>');
+                                                                    } 
                                                                 }
                                                             }
                                                         }

@@ -64,9 +64,13 @@
                                             <tr data-html="true" data-placement="left" class='list_data' title="<div style='float:right'><div class='feather icon-zoom-in'></div><div class='feather icon-zoom-out' style='display:none'></div><div class='feather icon-x'></div></div><video width='100%' height='100%' src={{p.data}} controls autoplay/>">
                                             {%else%}
                                             <tr class='list_data'>
-                                            {% endif %}  
+                                            {% endif %}
                                                 <td>{{p.date_added}}</td>
+                                            {% if p.owner_package_name %}  
                                                 <td>{{p.owner_package_name }}</td>
+                                            {% else%}
+                                                <td>Camera</td>
+                                            {% endif %}
                                                 <td>{{p.data}}</td>     
                                             </tr>
                                             {% endfor %}

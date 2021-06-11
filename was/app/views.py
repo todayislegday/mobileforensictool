@@ -88,7 +88,7 @@ def pages(request):
             paginator = Paginator(c, 10) 
             page_obj = paginator.get_page(page)
             
-            context['calllog']=calllog_model.objects.raw("SELECT _id,datetime((date / 1000), 'unixepoch','localtime') AS date FROM calls where m_content IS NULL ORDER BY date ASC ") #메시지 아닌것만
+            context['calllog']=calllog_model.objects.raw("SELECT _id,datetime((date / 1000), 'unixepoch','localtime') AS date FROM calls where m_content IS NULL AND frequent=1 ORDER BY date ASC ") #메시지 아닌것만
             context['contact']=c
             context['page']=page_obj
             
@@ -96,7 +96,7 @@ def pages(request):
             page = request.GET.get('page', '1')
 
             m= mms_model.objects.raw(
-                "SELECT _id,address,content,datetime((date / 1000), 'unixepoch','localtime') AS date FROM messages ORDER BY date ASC")
+                "SELECT _id,address,datetime((date / 1000), 'unixepoch','localtime') AS date,replace(content,'/data','/static/assets/images')AS content FROM messages ORDER BY date ASC")
             paginator = Paginator(m, 10) 
             page_obj = paginator.get_page(page)
 
@@ -206,10 +206,10 @@ def pages(request):
             context['page']=page_obj
             context['content']=c
         elif context['url'] == "time-line.html":  # 용하
-            mms = mms_model.objects.raw(
-                "SELECT _id,address,content,datetime((date / 1000), 'unixepoch','localtime') AS date FROM messages ORDER BY date ASC")
+            mms= mms_model.objects.raw(
+                "SELECT _id,address,datetime((date / 1000), 'unixepoch','localtime') AS date,replace(content,'/data','/static/assets/images')AS content FROM messages ORDER BY date ASC")
             calllog = calllog_model.objects.raw(
-                "SELECT _id,datetime((date / 1000), 'unixepoch','localtime') AS date  FROM calls  where m_content IS NULL  ORDER BY date ASC")
+                "SELECT _id,datetime((date / 1000), 'unixepoch','localtime') AS date  FROM calls  where m_content IS NULL AND frequent=1  ORDER BY date ASC")
             chromekeyword = chrome2_model.objects.all()
             chromeurlhistory = chrome3_model.objects.raw(
                 "SELECT urls.id, urls.url, urls.title, datetime(visits.visit_time/1000000 + (strftime('%%s','1601-01-01')),'unixepoch','localtime') AS visit_time FROM urls, visits WHERE urls.id=visits.url ORDER BY visits.visit_time ASC")
@@ -236,6 +236,7 @@ def pages(request):
                 mms_dict[i].append(m.content)
                 mms_dict[i].append(m.date)
                 mms_dict[i].append(m.box_type)
+                mms_dict[i].append(m.content_type)
                 i += 1
             ###################################
 

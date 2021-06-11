@@ -61,7 +61,11 @@
                                         </thead>
                                         <tbody>
                                             {% for p in content%}
+                                            {% if p.content_type %} 
+                                            <tr data-html="true" data-placement="left" class='list_data' title="<div style='float:right'><div class='feather icon-zoom-in'></div><div class='feather icon-zoom-out' style='display:none'></div><div class='feather icon-x'></div></div><img src={{p.content}}/>">
+                                            {% else %}
                                             <tr class='list_data'>
+                                            {% endif %}
                                                 <td>{{p.date}}</td>
                                                {% if p.box_type == 2 %} 
                                                  <td>발신</td>
@@ -142,6 +146,24 @@
 <script>
  $( document ).ready(function() {
   
+$('.list_data').click(function(){
+    
+      $(".list_data").tooltip({trigger: 'manual'}).tooltip('dispose');
+      $(this).tooltip({placement: 'left',trigger: 'manual'}).tooltip('show');
+
+$('.icon-x').click(function(){
+        $('.tooltip').tooltip({trigger: 'manual'}).tooltip('dispose');
+})
+
+$('.tooltip-inner').click(function(){
+    $('.icon-zoom-in').toggle()
+    $('.icon-zoom-out').toggle() 
+    $('.tooltip-inner').toggleClass('tooltip-zoom');
+})
+
+
+ })
+
     var profile = $("#dict-id").text();
     var profileJson = JSON.parse(profile);
   
