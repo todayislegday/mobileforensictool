@@ -124,11 +124,11 @@ def pages(request):
            
             if 'id' in request.GET:##ajax get 처리
                 OUTPATH="/static/assets/images/"
-                a=map_model.objects.raw("select _id,latitude,longitude,_display_name,replace(_data,'/storage/emulated','/static/assets/images/media') as data,DATETIME(ROUND(datetaken / 1000), 'unixepoch','localtime') AS datetaken from files where  (latitude>=%s AND latitude<=%s) AND (longitude>=%s AND longitude<=%s)" %((float)(request.GET['lat'])-0.000001,(float)(request.GET['lat'])+0.000001,(float)(request.GET['lng'])-0.000001,(float)(request.GET['lng'])+0.000001))#오차 처리
+                a=map_model.objects.raw("select _id,latitude,longitude,_display_name,replace(_data,'/storage/emulated','/static/assets/images/media') as data,DATETIME(ROUND(datetaken / 1000), 'unixepoch','localtime') AS datetaken from files where  (latitude>=%s AND latitude<=%s) AND (longitude>=%s AND longitude<=%s)  AND (%s<=datetaken AND datetaken<=%s) ORDER BY datetaken ASC" %((float)(request.GET['lat'])-0.000001,(float)(request.GET['lat'])+0.000001,(float)(request.GET['lng'])-0.000001,(float)(request.GET['lng'])+0.000001,request.GET['startDate'],request.GET['endDate']))#오차 처리
                 return JsonResponse(serializers.serialize('json',a),safe=False)
             
             if request.method=="POST":##ajax post 처리
-                
+                print(request.POST)
                 a=map_model.objects.raw("select _id,latitude,longitude,datetaken from files where (%s<=latitude AND latitude<=%s) AND (%s<=longitude AND longitude<=%s) AND (%s<=datetaken AND datetaken<=%s) ORDER BY datetaken ASC" %(request.POST['swlat'],request.POST['nelat'],request.POST['swlng'],request.POST['nelng'],request.POST['startDate'],request.POST['endDate'] ))
                 return JsonResponse(serializers.serialize('json',a),safe=False)
 

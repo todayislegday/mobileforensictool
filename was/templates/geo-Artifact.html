@@ -206,13 +206,14 @@ AIzaSyDkfnk4My0Tttw-jj8wa01Ii2PcepoiYLc
         }
         endDate.setMinutes(endDate.getMinutes() + 1); // 시간이 분단위로 끊기니까 마지막 시간 + 1분으로 계산
 
+
         var data  = {
             "swlat":mapBounds.getSouthWest().lat(), // 지도 좌측 하단 위도
             "swlng":mapBounds.getSouthWest().lng(), // 좌측 하단 경도
             "nelat":mapBounds.getNorthEast().lat(), // 우측 상단 위도
             "nelng":mapBounds.getNorthEast().lng(),  // 우측 하단 경도
-            "startDate":startDate.getTime(), //수정
-            "endDate":endDate.getTime()  //수정
+            "startDate":new Date($("#start-date").val()).getTime(), //수정
+            "endDate":new Date($("#end-date").val()).getTime()  //수정
         };
 
         $.ajax({
@@ -356,7 +357,10 @@ AIzaSyDkfnk4My0Tttw-jj8wa01Ii2PcepoiYLc
                         url: '/geo-Artifact.html',
                         data: { "id": marker.id,
                                 "lat":marker.position.lat(),
-                                "lng":marker.position.lng() },        // 마커 id 값으로 data 불러오고
+                                "lng":marker.position.lng(),
+                                "startDate":new Date($("#start-date").val()).getTime(), //수정
+                                "endDate":new Date($("#end-date").val()).getTime()  //수정
+                                 },        // 마커 id 값으로 data 불러오고
                         success: function (data) {      // data엔 id로 검색한 필요한 좌표에 대한 부가적인 정보를 서버에서 전달하여 담겨있다.
                             dataJson = JSON.parse(data) // JSON으로 파싱
                             console.log(dataJson[0]['fields']['data'].substr(-4))
@@ -374,8 +378,8 @@ AIzaSyDkfnk4My0Tttw-jj8wa01Ii2PcepoiYLc
                                 
                                 if(dataJson[i]['fields']['data'].substr(-4)!='.mp4'){
                              contentString += `<div class="iw-content" id = "${i}" style="display:${a}"> 
-                                <div class= "iw-image"> 
-                               <i class="fas fa-chevron-left" style="display:${lf};margin:5px"></i><i class="fas fa-chevron-right"style='float:right;display:${rf};margin:5px' ></i>
+                                <div class= "iw-image" style="text-align:center"> 
+                               <i class="fas fa-chevron-left" style="display:${lf};margin:5px;float:left"></i>${i+1}/${dataJson.length}<i class="fas fa-chevron-right"style='float:right;display:${rf};margin:5px' ></i>
                                 <img id="info-img" src=${dataJson[i]['fields']['data']} style="height:300px">  </img>
                                 </div>
                                 <div class= "iw-body">
@@ -388,7 +392,7 @@ AIzaSyDkfnk4My0Tttw-jj8wa01Ii2PcepoiYLc
                                 </div>`
                                 }else{
                                    contentString += `<div class="iw-content" id ="${i}" style="display:${a}"> 
-                                <div class= "iw-video">  <i class="fas fa-chevron-left" style="display:${lf};margin:5px"></i><i class="fas fa-chevron-right"style='float:right ;display:${rf};margin:5px'></i>
+                                <div class= "iw-video" style="text-align:center">  <i class="fas fa-chevron-left" style="display:${lf};margin:5px;float:left"></i>${i+1}/${dataJson.length}<i class="fas fa-chevron-right"style='float:right ;display:${rf};margin:5px'></i>
                                 <video controls id="info-video" src=${dataJson[i]['fields']['data']} style="width:300px;height:300px"> </video>
                                 </div>
                                 <div class= "iw-body">
