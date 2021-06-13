@@ -56,7 +56,8 @@
 {% block content %}
 
 <div id='timelinebutton' style="cursor:pointer;float:left;margin-top:10%;font-size:16px;background: #3f4d67;color: white;width: 40px;padding: 10px;height: 120px;">타<br>임<br>라<br>인</div>
-<div id='timelinetab' style='transition:0.3s;height:80%;width:0%;background: rgb(63, 77, 103,0.7);z-index: 1;position: absolute;'><div style="float:right"><div class="feather icon-x" style="color:white;margin:10px;cursor:pointer"></div><div class="feather icon-refresh-ccw" title="새로고침" style="color:white;margin:10px;cursor:pointer" ></div></div><div style=" overflow-y:auto;height: 86.5%;margin-top: 30%;">
+<div id='timelinetab' style='transition:0.3s;height:100%;width:0%;background: rgb(63, 77, 103,0.7);z-index: 1;position: absolute;'><div style="float:right"><div class="feather icon-x" style="color:white;margin:10px;cursor:pointer"></div><div class="feather icon-refresh-ccw" title="새로고침" style="color:white;margin:10px;cursor:pointer" ></div></div><div style=" overflow-y:auto;height: 90%;margin-top: 30%;">
+<ul style="padding-left:10px"><li style="font-size: 25px;color: white;list-style: none;font-weight:bold">순서&emsp;&emsp;시간 </li></ul>
 <ul id='tabul' style="padding-left: 0px;">
 </ul>
 
@@ -279,7 +280,7 @@ AIzaSyDkfnk4My0Tttw-jj8wa01Ii2PcepoiYLc
             marker = new google.maps.Marker({
                 id: markerJson[i]['pk'],     // id
                 position: { lat: markerJson[i]['fields']['lat'], lng: markerJson[i]['fields']['longt'] },
-                day:`${days.getFullYear()}-${days.getMonth()+1}-${days.getDate()}&nbsp;${days.getHours()}:${days.getMinutes()}:${days.getSeconds()}(UTC+9)`,
+                day:`${days.getFullYear()}-${days.getMonth()+1}-${days.getDate()}&nbsp;${days.getHours()}:${days.getMinutes()}:${days.getSeconds()}`,
                 map: map,
                 icon: icon,
                 label : {text:String(i+1),  // 이렇게 하면 전체 사진을 시간 순으로 라벨링
@@ -462,7 +463,7 @@ AIzaSyDkfnk4My0Tttw-jj8wa01Ii2PcepoiYLc
 function a (){
  var b=``;
  for(var i=0;i<markers.length;i++){
-     b+=`<li class="tabli" style='color:white;cursor:pointer' id=${i}>${i+1}번째 방문 장소&emsp;시간:${markers[i].day}<br>위도:${markers[i].position.lat()},경도:${markers[i].position.lng()}</li>`
+     b+=`<li class="tabli" style='font-size:20px;color:white;cursor:pointer' id=${i}>${i+1}&emsp;&emsp;&emsp;&emsp;${markers[i].day}</li>`
  }
  return b
 }
@@ -490,12 +491,43 @@ $(document).ready(function(){//타임라인 탭 css
 
 })
 
-
+click_icon2 = { // 클릭시 커스텀 마커
+            path : 'M172.268 501.67C26.97 291.031 0 269.413 0 192 0 85.961 85.961 0 192 0s192 85.961 192 192c0 77.413-26.97 99.031-172.268 309.67-9.535 13.774-29.93 13.773-39.464 0z',
+            fillColor: '#3f4d67',
+            fillOpacity: 1,
+            anchor: new google.maps.Point(250,520),
+            strokeWeight: 2,
+            strokeColor : '#3f4d67',
+            labelOrigin: {x:200, y: 200},
+            scale: 0.09
+        }
  $(document).on('click','.tabli',function(){ //동적으로 타임라인 li클릭시 해당 마커 눌림
        google.maps.event.trigger(markers[$(this).attr('id')],'click');
 
     })
+$(document).on('click','.tabli',function(){ //동적으로 타임라인 li클릭시 해당 마커 눌림
+       google.maps.event.trigger(markers[$(this).attr('id')],'click');
 
+    })
+$(document).on('mouseover','.tabli',function(){ //동적으로 타임라인 li클릭시 해당 마커 눌림
+ markers[$(this).attr('id')].zIndex=100
+ var label={text:parseInt([$(this).attr('id')])+1,
+            color:'#ffffff',
+            fontWeight: 'bold',
+            fontSize:"15px"}
+ markers[$(this).attr('id')].label=label;
+ markers[$(this).attr('id')].setIcon(click_icon2)
+ 
+    })
+$(document).on('mouseout','.tabli',function(){ //동적으로 타임라인 li클릭시 해당 마커 눌림
+markers[$(this).attr('id')].zIndex=0
+var label={text:parseInt([$(this).attr('id')])+1,
+            color: '#3f4d67',
+            fontWeight: 'bold',
+            fontSize:"15px"}
+ markers[$(this).attr('id')].label=label;
+ markers[$(this).attr('id')].setIcon(icon)
+    })
 
 $(document).on('click','.fa-chevron-right',function(){//중복된 사진 넘기기
     var id=$(this).closest('.iw-content')[0].id
@@ -504,7 +536,7 @@ $(document).on('click','.fa-chevron-right',function(){//중복된 사진 넘기�
     $(`#iw${parseInt(id)+1}`).css("display",'')
 })
 $(document).on('click','.fa-chevron-left',function(){
-     var id=$(this).closest('.iw-content')[0].id
+    var id=$(this).closest('.iw-content')[0].id
     id=id.slice(2,id.length)
     $(`#iw${id}`).css("display",'none')
     $(`#iw${parseInt(id)-1}`).css("display",'')
