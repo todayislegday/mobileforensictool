@@ -3,11 +3,58 @@
 {% block title %} Google Maps {% endblock %}
 
 <!-- Specific CSS goes HERE -->
-{% block stylesheets %}{% endblock stylesheets %}
+{% block stylesheets %}
+<style>
+::-webkit-scrollbar {
+    width: 15px;
+}
+::-webkit-scrollbar-thumb {
+    background-color: #e6e6e6;
+    border-radius: 10px;
+    background-clip: padding-box;
+    border: 2px solid transparent;
+  }
+::-webkit-scrollbar-track {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: inset 0px 0px 5px white;
+  }
+ .tabli{
+    list-style: none;
+    padding:20px;
+} 
+
+.tabli:hover {
+  background-color:#fafafa;
+} 
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.rotatecss{
+    -webkit-animation: spin 1s linear infinite; 
+}
+
+</style>
+{% endblock stylesheets %}
 
 {% block content %}
 
-<div class="pcoded-content">
+<div id='timelinebutton' style="cursor:pointer;float:left;margin-top:10%;font-size:16px;background: #3f4d67;color: white;width: 40px;padding: 10px;height: 120px;">타<br>임<br>라<br>인</div>
+<div id='timelinetab' style='display:none;height:80%;width:30%;background: rgb(63, 77, 103,0.7);z-index: 1;position: absolute;'><div style="float:right"><div class="feather icon-x" style="color:white;margin:10px;cursor:pointer"></div><div class="feather icon-refresh-ccw" title="새로고침" style="color:white;margin:10px;cursor:pointer" ></div></div><div style=" overflow-y:auto;height: 86.5%;margin-top: 30%;">
+<ul id='tabul' style="padding-left: 0px;">
+</ul>
+
+</div>
+</div>
+<div class="pcoded-content" style='position:unset'>
     <div class="pcoded-inner-content">
         <!-- [ breadcrumb ] start -->
         <div class="page-header">
@@ -77,6 +124,9 @@ AIzaSyDkfnk4My0Tttw-jj8wa01Ii2PcepoiYLc
 
 "{{geo|json_script:'dict-id'}}
 <script type="text/javascript">
+
+
+
 
     var profile = document.getElementById("dict-id").textContent;
     var profileJson = JSON.parse(profile);
@@ -162,7 +212,7 @@ AIzaSyDkfnk4My0Tttw-jj8wa01Ii2PcepoiYLc
             //     clsuter_flag = 0;
             // }
             
-            updateMarkers();
+            updateMarkers()
         });
 
         // google.maps.event.addListener(map, 'zoom_changed', function() { // 맵 로딩이 완료 후 함수 실행
@@ -196,7 +246,8 @@ AIzaSyDkfnk4My0Tttw-jj8wa01Ii2PcepoiYLc
     }
 
     /* 화면이 바뀔 때 마다 마커 업데이트 */
-    function updateMarkers() { 
+    async function updateMarkers() { 
+        await $(".icon-refresh-ccw").trigger("click") //동기 함수작동
         var mapBounds = map.getBounds(); // 화면 경계 좌표 얻어서        
         var startDate = new Date(document.getElementById("start-date").value);
         var endDate = new Date(document.getElementById("end-date").value);
@@ -224,7 +275,6 @@ AIzaSyDkfnk4My0Tttw-jj8wa01Ii2PcepoiYLc
             data: data,
             success: function(markerList) { //마커 클리어후 다시 업데이트
                 markerJson = JSON.parse(markerList);
-                console.log(markerJson)
                 if(markerJson.length == markers.length) {//ajax이후 맵에서 마커에대한 변경이 없다면 return
                     return;
                 }
@@ -237,12 +287,13 @@ AIzaSyDkfnk4My0Tttw-jj8wa01Ii2PcepoiYLc
         });
     }
     function addMarkers(markerJson) {
-
         var marker;
         for( var i=0; i<markerJson.length; i++) {
+            days=new Date(markerJson[i]['fields']['datetaken'])
             marker = new google.maps.Marker({
                 id: markerJson[i]['pk'],     // id
                 position: { lat: markerJson[i]['fields']['lat'], lng: markerJson[i]['fields']['longt'] },
+                day:`${days.getFullYear()}-${days.getMonth()+1}-${days.getDate()}&nbsp;${days.getHours()}:${days.getMinutes()}:${days.getSeconds()}(UTC+9)`,
                 map: map,
                 icon: icon,
                 label : {text:String(i+1),  // 이렇게 하면 전체 사진을 시간 순으로 라벨링
@@ -261,7 +312,6 @@ AIzaSyDkfnk4My0Tttw-jj8wa01Ii2PcepoiYLc
                     }
 
                     click_id = marker.id; // 클릭한 마커 id를 전역으로
-
                     marker.setIcon(click_icon); 
                     marker.setLabel({text: marker.getLabel().text, // setLabel에서 text가 필수로 들어가야 함
                                 color: '#ffffff',
@@ -319,7 +369,6 @@ AIzaSyDkfnk4My0Tttw-jj8wa01Ii2PcepoiYLc
 
         markerCluster = new MarkerClusterer(map, markers, options_markerclusterer); 
 
-        console.log(markerCluster);
 
         // const styles = markerCluster.getStyles();
         // for (let i=0; i<styles.length; i++) {
@@ -363,7 +412,6 @@ AIzaSyDkfnk4My0Tttw-jj8wa01Ii2PcepoiYLc
                                  },        // 마커 id 값으로 data 불러오고
                         success: function (data) {      // data엔 id로 검색한 필요한 좌표에 대한 부가적인 정보를 서버에서 전달하여 담겨있다.
                             dataJson = JSON.parse(data) // JSON으로 파싱
-                            console.log(dataJson[0]['fields']['data'].substr(-4))
                             // video_type = ['.mp4']; // 여기에 영상 확장자 다 넣어
                             //var path = dataJson[0]['fields']['data']; // 경로를 넣어, 나중에 확장자 구하려고
                             var contentString=""
@@ -377,7 +425,7 @@ AIzaSyDkfnk4My0Tttw-jj8wa01Ii2PcepoiYLc
                                 if(i==dataJson.length-1)rf='none'
                                 
                                 if(dataJson[i]['fields']['data'].substr(-4)!='.mp4'){
-                             contentString += `<div class="iw-content" id = "${i}" style="display:${a}"> 
+                             contentString += `<div class="iw-content" id = "iw${i}" style="display:${a}"> 
                                 <div class= "iw-image" style="text-align:center"> 
                                <i class="fas fa-chevron-left" style="display:${lf};margin:5px;float:left"></i>${i+1}/${dataJson.length}<i class="fas fa-chevron-right"style='float:right;display:${rf};margin:5px' ></i>
                                 <img id="info-img" src=${dataJson[i]['fields']['data']} style="height:300px">  </img>
@@ -391,7 +439,7 @@ AIzaSyDkfnk4My0Tttw-jj8wa01Ii2PcepoiYLc
                                 </div>
                                 </div>`
                                 }else{
-                                   contentString += `<div class="iw-content" id ="${i}" style="display:${a}"> 
+                                   contentString += `<div class="iw-content" id ="iw${i}" style="display:${a}"> 
                                 <div class= "iw-video" style="text-align:center">  <i class="fas fa-chevron-left" style="display:${lf};margin:5px;float:left"></i>${i+1}/${dataJson.length}<i class="fas fa-chevron-right"style='float:right ;display:${rf};margin:5px'></i>
                                 <video controls id="info-video" src=${dataJson[i]['fields']['data']} style="width:300px;height:300px"> </video>
                                 </div>
@@ -436,18 +484,55 @@ AIzaSyDkfnk4My0Tttw-jj8wa01Ii2PcepoiYLc
 
     google.maps.event.addDomListener(window, 'load', initialize);
 
+function a (){
+ var b=``;
+ for(var i=0;i<markers.length;i++){
+     b+=`<li class="tabli" style='color:white;cursor:pointer' id=${i}>${i+1}번째 방문 장소&emsp;시간:${markers[i].day}<br>위도:${markers[i].position.lat()},경도:${markers[i].position.lng()}</li>`
+ }
+ return b
+}
 
-</script>
-<script>
-$(document).on('click','.fa-chevron-right',function(){
+$(document).ready(function(){//타임라인 탭 css
+
+    $("#timelinebutton").click(function(){
+        $(this).toggle()
+        $("#timelinetab").toggle()
+        $('#tabul').html(a())
+    })
+    $('.icon-x').click(function(){
+         $("#timelinetab").toggle()
+          $("#timelinebutton").toggle()
+    })
+      $('.icon-refresh-ccw').click(function(){
+          console.log(1)
+            $('#tabul').html(a())
+            $(".icon-refresh-ccw").addClass("rotatecss")
+            setTimeout(function(){
+            $(".icon-refresh-ccw").removeClass("rotatecss")
+             }, 1000);
+    })
+ 
+
+})
+
+
+ $(document).on('click','.tabli',function(){ //동적으로 타임라인 li클릭시 해당 마커 눌림
+       google.maps.event.trigger(markers[$(this).attr('id')],'click');
+
+    })
+
+
+$(document).on('click','.fa-chevron-right',function(){//중복된 사진 넘기기
     var id=$(this).closest('.iw-content')[0].id
-    $(`#${id}`).css("display",'none')
-    $(`#${parseInt(id)+1}`).css("display",'')
+    id=id.slice(2,id.length)
+    $(`#iw${id}`).css("display",'none')
+    $(`#iw${parseInt(id)+1}`).css("display",'')
 })
 $(document).on('click','.fa-chevron-left',function(){
      var id=$(this).closest('.iw-content')[0].id
-    $(`#${id}`).css("display",'none')
-    $(`#${parseInt(id)-1}`).css("display",'')
+    id=id.slice(2,id.length)
+    $(`#iw${id}`).css("display",'none')
+    $(`#iw${parseInt(id)-1}`).css("display",'')
 })
 
 </script>

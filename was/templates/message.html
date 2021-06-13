@@ -62,7 +62,7 @@
                                         <tbody>
                                             {% for p in content%}
                                             {% if p.content_type %} 
-                                            <tr data-html="true" data-placement="left" class='list_data' title="<div style='float:right'><div class='feather icon-zoom-in'></div><div class='feather icon-zoom-out' style='display:none'></div><div class='feather icon-x'></div></div><img src={{p.content}}/>">
+                                            <tr data-html="true" data-placement="left" class='list_data' style='cursor:pointer' title="<div style='float:right'><div class='feather icon-zoom-in'></div><div class='feather icon-zoom-out' style='display:none'></div><div class='feather icon-x'></div></div><img src={{p.content}}/>">
                                             {% else %}
                                             <tr class='list_data'>
                                             {% endif %}

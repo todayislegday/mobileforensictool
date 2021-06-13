@@ -59,9 +59,9 @@
                                         <tbody>
                                             {% for p in content%}
                                             {% if 'jpg' in p.data or 'png' in p.data or 'jpeg' in p.data or 'gif' in p.data%} 
-                                            <tr data-html="true" data-placement="left" class='list_data' title="<div style='float:right'><div class='feather icon-zoom-in'></div><div class='feather icon-zoom-out' style='display:none'></div><div class='feather icon-x'></div></div><img src={{p.data}}/>">
+                                            <tr data-html="true" data-placement="left" class='list_data' style='cursor:pointer' title="<div style='float:right'><div class='feather icon-zoom-in'></div><div class='feather icon-zoom-out' style='display:none'></div><div class='feather icon-x'></div></div><img src={{p.data}} />">
                                             {%elif 'mp4' in p.data or 'm4v' in p.data or 'avi' in p.data or  'wmv' in p.data %}
-                                            <tr data-html="true" data-placement="left" class='list_data' title="<div style='float:right'><div class='feather icon-zoom-in'></div><div class='feather icon-zoom-out' style='display:none'></div><div class='feather icon-x'></div></div><video width='100%' height='100%' src={{p.data}} controls autoplay/>">
+                                            <tr data-html="true" data-placement="left" class='list_data' style='cursor:pointer' title="<div style='float:right'><div class='feather icon-zoom-in'></div><div class='feather icon-zoom-out' style='display:none'></div><div class='feather icon-x'></div></div><video width='100%' height='100%' src={{p.data}} controls autoplay/>">
                                             {%else%}
                                             <tr class='list_data'>
                                             {% endif %}
