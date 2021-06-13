@@ -103,7 +103,7 @@
                         }
 
                         for (var i = 0; i < cSize; i++) {
-                            cDate = new Date(mprofileJson[i][3])
+                            cDate = new Date(cprofileJson[i][2])
 
                             if (cDate < startDate) {
                                 startDate = cDate
@@ -177,12 +177,12 @@
                         var mdCount = 0;
 
                         var imsi = startDate
+                       
                         imsi.setHours(imsi.getHours() - 1)
-
                         for (let i = 0; ; i++) {
                             imsi.setHours(imsi.getHours() + 1)
 
-                            if (imsi.getHours() > endDate.getHours() && imsi.getDate() > endDate.getMonth() && imsi.getMonth() > endDate.getMonth() && imsi.getFullYear() >= endDate.getFullYear()) {
+                            if (imsi.getHours() > endDate.getHours() && imsi.getDate() > endDate.getDate() && imsi.getMonth() >= endDate.getMonth() && imsi.getFullYear() >= endDate.getFullYear()) {
                                 break;
                             }
                             
@@ -249,7 +249,7 @@
 
                             messages = mCount
                             calls = cCount*/
-                            
+                                                        
                             data.push({ hour: new Date(imsi.getFullYear(), imsi.getMonth(), imsi.getDate(), imsi.getHours()), messages: messages, calls: calls, internet: internet, downloads: downloads, media: media});
                         }
 
