@@ -214,9 +214,9 @@ class KakaoDbDecrypt:
 def main(path,flag):
   import sys
   if flag==1:
-    sys.argv=a=[sys.argv[0],f'{path}/data/com.kakao.talk/databases/Kakaotalk.db']
+    sys.argv=[sys.argv[0],f'{path}/data/com.kakao.talk/databases/Kakaotalk.db']
   else:
-    sys.argv=a=[sys.argv[0],f'{path}/data/com.kakao.talk/databases/KakaoTalk2.db']
+    sys.argv=[sys.argv[0],f'{path}/data/com.kakao.talk/databases/KakaoTalk2.db']
   print(sys.argv)
   do_print = False
   dec_suffix = '_dec'

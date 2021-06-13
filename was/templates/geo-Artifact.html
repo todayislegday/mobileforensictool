@@ -517,16 +517,16 @@ $(document).on('mouseover','.tabli',function(){ //동적으로 타임라인 li�
             fontSize:"15px"}
  markers[$(this).attr('id')].label=label;
  markers[$(this).attr('id')].setIcon(click_icon2)
- 
+ console.log(markers[$(this).attr('id')].zIndex)
     })
 $(document).on('mouseout','.tabli',function(){ //동적으로 타임라인 li클릭시 해당 마커 눌림
 markers[$(this).attr('id')].zIndex=$(this).attr('id')
 var label={text:parseInt([$(this).attr('id')])+1,
             color: '#3f4d67',
-            fontWeight: 'bold',
             fontSize:"15px"}
  markers[$(this).attr('id')].label=label;
  markers[$(this).attr('id')].setIcon(icon)
+ console.log(markers[$(this).attr('id')].zIndex)
     })
 
 $(document).on('click','.fa-chevron-right',function(){//중복된 사진 넘기기
