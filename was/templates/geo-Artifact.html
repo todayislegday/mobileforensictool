@@ -210,31 +210,9 @@ AIzaSyDkfnk4My0Tttw-jj8wa01Ii2PcepoiYLc
             scale: 0.07
         }
 
-        google.maps.event.addListener(map, 'idle', function() { // 맵 로딩이 완료 후 함수 실행
-            // console.log(map.getZoom());
-            // if(map.getZoom() >= 10) {
-            //     clsuter_flag = 1;
-            // }
-
-            // else {
-            //     clsuter_flag = 0;
-            // }
-            
+        google.maps.event.addListener(map, 'idle', function() { // 맵 로딩이 완료 후 함수 실행     
             updateMarkers()
         });
-
-        // google.maps.event.addListener(map, 'zoom_changed', function() { // 맵 로딩이 완료 후 함수 실행
-        //     now_zoom = map.getZoom();
-        //     console.log('pre_zoom ' + pre_zoom + ' now_zoom ' + now_zoom);
-
-        //     if(pre_zoom > 10 && pre_zoom > now_zoom) {
-        //         console.log("here");
-        //         markerCluster.clearMarkers();
-        //     }
-            
-        //     pre_zoom = now_zoom;
-        // });
-
 
         // Custom InfoWindow
         google.maps.event.addListener(infowindow, 'domready', function() {
@@ -331,10 +309,7 @@ AIzaSyDkfnk4My0Tttw-jj8wa01Ii2PcepoiYLc
             markers.push(marker);
         }
 
-        // console.log(clsuter_flag);
-        // if(clsuter_flag == 1) {
-        //     setClusterer();
-        // }
+      
         
     }
 
@@ -356,9 +331,7 @@ AIzaSyDkfnk4My0Tttw-jj8wa01Ii2PcepoiYLc
     /* 마커 클러스터 커스텀 */
     function setClusterer() {
 
-        // if(map.getZoom() <= 10) {
-        //     return;
-        // }
+       
         var clusterStyle = [
             {
                 textColor : 'red',//'#3f4d67',
@@ -372,18 +345,12 @@ AIzaSyDkfnk4My0Tttw-jj8wa01Ii2PcepoiYLc
             gridSize: 20,
             maxZoom: 22,
             styles: clusterStyle
-            // imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
         };
 
         markerCluster = new MarkerClusterer(map, markers, options_markerclusterer); 
 
 
-        // const styles = markerCluster.getStyles();
-        // for (let i=0; i<styles.length; i++) {
-        //     styles[i].textColor = "red";
-        //     styles[i].textSize = 18;
-        // }
-        //console.log(markerClusterer.getStyles());
+      
 
         google.maps.event.addListener(markerCluster, 'clusterclick', function(cluster) {    
             var cluMarkers = cluster.getMarkers();
