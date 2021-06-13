@@ -510,7 +510,7 @@ $(document).on('click','.tabli',function(){ //동적으로 타임라인 li클릭
 
     })
 $(document).on('mouseover','.tabli',function(){ //동적으로 타임라인 li클릭시 해당 마커 눌림
- markers[$(this).attr('id')].zIndex=100
+ markers[$(this).attr('id')].zIndex=10000
  var label={text:parseInt([$(this).attr('id')])+1,
             color:'#ffffff',
             fontWeight: 'bold',
@@ -520,7 +520,7 @@ $(document).on('mouseover','.tabli',function(){ //동적으로 타임라인 li�
  
     })
 $(document).on('mouseout','.tabli',function(){ //동적으로 타임라인 li클릭시 해당 마커 눌림
-markers[$(this).attr('id')].zIndex=0
+markers[$(this).attr('id')].zIndex=$(this).attr('id')
 var label={text:parseInt([$(this).attr('id')])+1,
             color: '#3f4d67',
             fontWeight: 'bold',
