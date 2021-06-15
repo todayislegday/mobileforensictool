@@ -90,77 +90,55 @@
                         var dDate = 0
                         var mdDate = 0
 
-                        for (var i = 0; i < mSize; i++) {
-                            mDate = new Date(mprofileJson[i][3])
 
-                            if (i == 0) {
-                                startDate = mDate
+                            
+                            startDate = new Date(mprofileJson[0][3])
+                            endDate = new Date(mprofileJson[mSize-1][3])
+      
+                            if (new Date(cprofileJson[0][2]) < startDate) {
+                                startDate = new Date(cprofileJson[0][2])
                             }
 
-                            if (i == mSize - 1) {
-                                endDate = mDate
+                            if (new Date(cprofileJson[cSize-1][2]) > endDate) {
+                                endDate = new Date(cprofileJson[cSize-1][2])
                             }
-                        }
-
-                        for (var i = 0; i < cSize; i++) {
-                            cDate = new Date(cprofileJson[i][2])
-
-                            if (cDate < startDate) {
-                                startDate = cDate
-                            }
-
-                            if (cDate > endDate) {
-                                endDate = cDate
-                            }
-                        }
-
-                        for (var i = 0; i < chSize; i++) {
-                            chDate = new Date(chprofileJson[i][3])
-
-                            if (chDate < startDate) {
-                                startDate = chDate
-                            }
-
-                            if (chDate > endDate) {
-                                endDate = chDate
-                            }
-                        }
-
-                        for (var i = 0; i < sSize; i++) {
-                            sDate = new Date(sprofileJson[i][3])
-
-                            if (sDate < startDate) {
-                                startDate = sDate
-                            }
-
-                            if (sDate > endDate) {
-                                endDate = sDate
-                            }
-                        }
                         
-                        for (var i = 0; i < dSize; i++) {
-                            dDate = new Date(dprofileJson[i][1])
-                            
-                            if (dDate < startDate) {
-                                startDate = dDate
+
+                            if (new Date(chprofileJson[0][3]) < startDate) {
+                                startDate = new Date(chprofileJson[0][3])
                             }
 
-                            if (dDate > endDate) {
-                                endDate = dDate
+                            if (new Date(chprofileJson[chSize-1][3]) > endDate) {
+                                endDate = new Date(chprofileJson[chSize-1][3])
                             }
-                        }
+                        
 
-                        for (var i = 0; i < mdSize; i++) {
-                            mdDate = new Date(mdprofileJson[i][1])
-                            
-                            if (mdDate < startDate) {
-                                startDate = mdDate
+                            if (new Date(sprofileJson[0][3]) < startDate) {
+                                startDate = new Date(sprofileJson[0][3])
                             }
 
-                            if (mdDate > endDate) {
-                                endDate = mdDate
+                            if (new Date(sprofileJson[sSize-1][3]) > endDate) {
+                                endDate = new Date(sprofileJson[sSize-1][3])
                             }
-                        }
+                        
+                        
+                            if (new Date(dprofileJson[0][1]) < startDate) {
+                                startDate = new Date(dprofileJson[0][1])
+                            }
+
+                            if (new Date(dprofileJson[dSize-1][1]) > endDate) {
+                                endDate = new Date(dprofileJson[dSize-1][1])
+                            }
+                        
+
+                            if (new Date(mprofileJson[0][1]) < startDate) {
+                                startDate = new Date(mprofileJson[0][1])
+                            }
+
+                            if (new Date(mprofileJson[cSize-1][1]) > endDate) {
+                                endDate = new Date(mprofileJson[cSize-1][1])
+                            }
+                        
 
                         var data = [];
 
@@ -175,9 +153,18 @@
                         var iCount = 0;
                         var dCount = 0;
                         var mdCount = 0;
+                        
+                        var mStart = 0;
+                        var cStart = 0;
+                        var chStart = 0;
+                        var sStart = 0;
+                        var dStart = 0;
+                        var mdStart = 0;
 
                         var imsi = startDate
                        
+                        
+
                         imsi.setHours(imsi.getHours() - 1)
                         for (let i = 0; ; i++) {
                             imsi.setHours(imsi.getHours() + 1)
@@ -187,43 +174,63 @@
                             }
                             
                             mCount = 0
-                            for (var m = 0; m < mSize; m++) {
+                            for (var m = mStart; m < mSize; m++) {
                                 mDate = new Date(mprofileJson[m][3])
                                 if (mDate.getHours() == imsi.getHours() && mDate.getDate() == imsi.getDate() && mDate.getMonth() == imsi.getMonth() && mDate.getFullYear() == imsi.getFullYear()) {
                                     mCount += 1;
+                                }
+                                if (mDate.getHours() > imsi.getHours() && mDate.getDate() == imsi.getDate() && mDate.getMonth() == imsi.getMonth() && mDate.getFullYear() == imsi.getFullYear()) {
+                                    mStart=m;
+                                    break;
                                 }
                             }
                             messages = mCount;
 
                             cCount = 0
-                            for (var c = 0; c < cSize; c++) {
+                            for (var c = cStart; c < cSize; c++) {
                                 cDate = new Date(cprofileJson[c][2])
                                 if (cDate.getHours() == imsi.getHours() && cDate.getDate() == imsi.getDate() && cDate.getMonth() == imsi.getMonth() && cDate.getFullYear() == imsi.getFullYear()) {
                                     cCount += 1;
+                                }
+                                 if (cDate.getHours() > imsi.getHours() && cDate.getDate() == imsi.getDate() && cDate.getMonth() == imsi.getMonth() && cDate.getFullYear() == imsi.getFullYear()) {
+                                    cStart=c;
+                                    break;
                                 }
                             }
                             calls = cCount
 
                             iCount = 0
-                            for (var ch = 0; ch < chSize; ch++){
+                            for (var ch = chStart; ch < chSize; ch++){
                                 chDate = new Date(chprofileJson[ch][3])
                                 if (chDate.getHours() == imsi.getHours() && chDate.getDate() == imsi.getDate() && chDate.getMonth() == imsi.getMonth() && chDate.getFullYear() == imsi.getFullYear()) {
                                     iCount += 1;
                                 }
+                                if (chDate.getHours() > imsi.getHours() && chDate.getDate() == imsi.getDate() && chDate.getMonth() == imsi.getMonth() && chDate.getFullYear() == imsi.getFullYear()) {
+                                    chStart=ch;
+                                    break;
+                                }
                             }
-                            for(var s = 0; s < sSize; s++){
+                            for(var s = sStart; s < sSize; s++){
                                 sDate = new Date(sprofileJson[s][3])
                                 if (sDate.getHours() == imsi.getHours() && sDate.getDate() == imsi.getDate() && sDate.getMonth() == imsi.getMonth() && sDate.getFullYear() == imsi.getFullYear()) {
                                     iCount += 1;
+                                }
+                                if (sDate.getHours() > imsi.getHours() && sDate.getDate() == imsi.getDate() && sDate.getMonth() == imsi.getMonth() && sDate.getFullYear() == imsi.getFullYear()) {
+                                    sStart=s;
+                                    break;
                                 }
                             }
                             internet = iCount
 
                             dCount = 0
-                            for(var d = 0; d < dSize; d++){
+                            for(var d = dStart; d < dSize; d++){
                                 dDate = new Date(dprofileJson[d][1])
                                 if (dDate.getHours() == imsi.getHours() && dDate.getDate() == imsi.getDate() && dDate.getMonth() == imsi.getMonth() && dDate.getFullYear() == imsi.getFullYear()) {
                                     dCount += 1;
+                                }
+                                if (dDate.getHours() > imsi.getHours() && dDate.getDate() == imsi.getDate() && dDate.getMonth() == imsi.getMonth() && dDate.getFullYear() == imsi.getFullYear()) {
+                                    dStart=d
+                                    break;
                                 }
                             }
                             downloads = dCount
@@ -234,21 +241,13 @@
                                 if (mdDate.getHours() == imsi.getHours() && mdDate.getDate() == imsi.getDate() && mdDate.getMonth() == imsi.getMonth() && mdDate.getFullYear() == imsi.getFullYear()) {
                                     mdCount += 1;
                                 }
+                                if (mdDate.getHours() > imsi.getHours() && mdDate.getDate() == imsi.getDate() && mdDate.getMonth() == imsi.getMonth() && mdDate.getFullYear() == imsi.getFullYear()) {
+                                    mdStart=md
+                                    break;
+                                }
                             }
                             media = mdCount
 
-                            /*mCount -= Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 10);
-                            cCount -= Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 10);
-
-                            if (mCount < 0) {
-                            mCount = Math.round(Math.random() * 10);
-                            }
-                            if (cCount < 0) {
-                                cCount = Math.round(Math.random() * 10);
-                            }
-
-                            messages = mCount
-                            calls = cCount*/
                                                         
                             data.push({ hour: new Date(imsi.getFullYear(), imsi.getMonth(), imsi.getDate(), imsi.getHours()), messages: messages, calls: calls, internet: internet, downloads: downloads, media: media});
                         }
