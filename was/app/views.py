@@ -3,14 +3,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django import template
 from django.template import loader
 from django.http import HttpResponse,JsonResponse
-from django.db.models import Value,TextField
-from .models import contacts_model,message1_model,message2_model,map_model,calllog_model,mms_model,chrome2_model,chrome3_model,chrome4_model,chrome5_model,chrome6_model,Sam1_model, Sam2_model,Sam3_model,Sam4_model,Sam5_model,webdowndata_model,webext_model,Appinslog_model,Media_model,calendar_model,kakao1_model,kakao2_model
-from .countkeyword import count
-from .crawling import image1
-from django.core.paginator import Paginator
-from django.views.decorators.csrf import csrf_exempt
-from django.core import serializers
-import os,mmap
+
 
 
 # 루트 디렉터리로 처음 띄울 페이지 지정
