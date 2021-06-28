@@ -10,7 +10,7 @@ from .crawling import image1
 from django.core.paginator import Paginator
 from django.views.decorators.csrf import csrf_exempt
 from django.core import serializers
-import os,mmap
+import os,mm
 
 
 # 루트 디렉터리로 처음 띄울 페이지 지정
