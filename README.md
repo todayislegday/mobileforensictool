@@ -3,7 +3,7 @@
 <br />
 <p align="center">
   <a href="http://kshieldjr.org/">
-    <img src="images/logo.PNG" alt="Logo" width="80" height="80">
+    <img src="images/logo.PNG" alt="Logo" width="256" height="256">
   </a>
 
   <h3 align="center">K-shield.Jr</h3>
@@ -44,41 +44,35 @@
 
 <!-- ABOUT THE PROJECT -->
 ## 프로젝트 내용
-
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
-
-
+안드로이드 OS.v==10 대상의 모바일 포렌식 시각화 tool 입니다.
+<img src="images/screen1.PNG" >
+<img src="images/screen2.PNG">
+<img src="images/screen3.PNG" >
+<img src="images/screen4.PNG" >
+<img src="images/screen5.PNG" >
+<img src="images/screen6.PNG" >
+<img src="images/screen7.PNG" >
 
 
 
 <!-- GETTING STARTED -->
-## 시작전 설치
+## 시작전
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+이 프로젝트를 실행하기전에 필요한 행위.
 
 ### 의존성 설치
 
-This is an example of how to list things you need to use the software and how to install them.
-* npm
+* requirements.txt
   ```sh
-  npm install npm@latest -g
+  $ pip install -r requirements.txt
   ```
 
 ### Google Api키 발급
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
+1. 키 발급 [https://webruden.tistory.com/378](https://webruden.tistory.com/378)
+2. was/templates/geo-Artifact.html의 125Line에 key파라미터에 발급받은 api key를 넣어주세요.
    ```sh
-   git clone https://github.com/your_username_/Project-Name.git
-   ```
-3. Install NPM packages
-   ```sh
-   npm install
-   ```
-4. Enter your API in `config.js`
-   ```JS
-   const API_KEY = 'ENTER YOUR API';
+   <script src="https://maps.googleapis.com/maps/api/js?key=yourkey&libraries=&v=weekly"></script>
    ```
 
 
@@ -86,18 +80,16 @@ This is an example of how to list things you need to use the software and how to
 <!-- USAGE EXAMPLES -->
 ## 사용용도
 
-
+보안 목적으로만 사용해주세요!
 
 
 <!-- 프로젝트 기여 -->
 ## 프로젝트 기여
 
 
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+1. 데이터 추출
+2. Djnago 백엔드 작성
+3. 프론트엔드 전반적인 기여
 
 
 
@@ -123,20 +115,3 @@ My Name - [@my_email](https://dldydduq456.com/your_username) - dldydduq456@naver
 
 
 
-
-
-<!-- MARKDOWN LINKS & IMAGES -->
-<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/othneildrew/Best-README-Template.svg?style=for-the-badge
-[contributors-url]: https://github.com/othneildrew/Best-README-Template/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/othneildrew/Best-README-Template.svg?style=for-the-badge
-[forks-url]: https://github.com/othneildrew/Best-README-Template/network/members
-[stars-shield]: https://img.shields.io/github/stars/othneildrew/Best-README-Template.svg?style=for-the-badge
-[stars-url]: https://github.com/othneildrew/Best-README-Template/stargazers
-[issues-shield]: https://img.shields.io/github/issues/othneildrew/Best-README-Template.svg?style=for-the-badge
-[issues-url]: https://github.com/othneildrew/Best-README-Template/issues
-[license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=for-the-badge
-[license-url]: https://github.com/othneildrew/Best-README-Template/blob/master/LICENSE.txt
-[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/othneildrew
-[product-screenshot]: images/screenshot.png
