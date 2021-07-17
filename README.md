@@ -17,13 +17,13 @@
   <summary>README.md 목차</summary>
   <ol>
     <li>
-      <a href="#프로젝트 내용">프로젝트 내용</a>
+      <a href="#프로젝트내용">프로젝트 내용</a>
     </li>
     <li>
       <a href="#시작전">시작전 설치</a>
       <ul>
-        <li><a href="#의존성 설치">의존성 설치</a></li>
-        <li><a href="#Google Api키 발급">Google Api키 발급</a></li>
+        <li><a href="##의존성 설치">의존성 설치</a></li>
+        <li><a href="##Google Api키 발급">Google Api키 발급</a></li>
       </ul>
     </li>
     <li><a href="#사용용도">사용용도</a></li>
