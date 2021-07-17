@@ -3,7 +3,7 @@
 <br />
 <p align="center">
   <a href="http://kshieldjr.org/">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+    <img src="images/logo.PNG" alt="Logo" width="80" height="80">
   </a>
 
   <h3 align="center">K-shield.Jr</h3>
